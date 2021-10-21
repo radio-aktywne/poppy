@@ -1,0 +1,27 @@
+<html>
+
+<head>
+</head>
+
+<body>
+	<button onclick="onClick()">Start stream</button>
+</body>
+<script>
+	function onClick() {
+		console.log("onclick");
+		navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+			console.log("onstream");
+			const ws = new WebSocket('ws://{{env "EMIWEB_TARGET_HOST"}}:{{env "EMIWEB_TARGET_PORT"}}');
+			const mediaRecorder = new MediaRecorder(stream, {
+				mimeType: 'audio/webm'
+			});
+			mediaRecorder.addEventListener('dataavailable', e => {
+				console.log("ondataavailable");
+				ws.send(e.data);
+			});
+			mediaRecorder.start(1000);
+		});
+	}
+</script>
+
+</html>
