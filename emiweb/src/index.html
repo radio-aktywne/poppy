@@ -4,17 +4,20 @@
 </head>
 
 <body>
+	<label>Title
+		<input type="text" id="title" />
+	</label>
 	<button onclick="onClick()">Start stream</button>
 </body>
 <script>
 	function onClick() {
 		console.log("onclick");
+		var input = document.getElementById("title").value;
+		var target = `ws://{{env "EMIWEB_TARGET_HOST"}}:{{env "EMIWEB_TARGET_PORT"}}/${input}`;
 		navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
 			console.log("onstream");
-			const ws = new WebSocket('ws://{{env "EMIWEB_TARGET_HOST"}}:{{env "EMIWEB_TARGET_PORT"}}');
-			const mediaRecorder = new MediaRecorder(stream, {
-				mimeType: 'audio/webm'
-			});
+			const ws = new WebSocket(target);
+			const mediaRecorder = new MediaRecorder(stream);
 			mediaRecorder.addEventListener('dataavailable', e => {
 				console.log("ondataavailable");
 				ws.send(e.data);
