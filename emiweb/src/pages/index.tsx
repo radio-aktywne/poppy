@@ -1,5 +1,6 @@
 import * as React from "react";
 import Layout from "../components/layout";
+import { geckos } from "@geckos.io/client";
 
 const title = "emiweb";
 
@@ -9,21 +10,30 @@ export default function Index({}) {
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then(async (stream) => {
-        console.log("onstream");
-        await fetch("/api/stream");
-        const ws = new WebSocket("ws://" + location.host + "/api/stream");
-        const mediaRecorder = new MediaRecorder(stream);
-        mediaRecorder.addEventListener("dataavailable", (e) => {
-          console.log("ondataavailable");
-          ws.send(e.data);
+        const url = `${location.origin}/api`;
+        const channel = geckos({ url: url, port: null });
+
+        await channel.onConnect((error) => {
+          if (error) {
+            console.error(error.message);
+            return;
+          }
+
+          const mediaRecorder = new MediaRecorder(stream);
+
+          mediaRecorder.addEventListener("dataavailable", async (e) => {
+            const data = await e.data.arrayBuffer();
+            channel.raw.emit(data);
+          });
+
+          mediaRecorder.start(1000);
         });
-        mediaRecorder.start(1000);
       });
   };
 
   return (
     <Layout title={title}>
-      <button onClick={handleClick}>xD</button>
+      <button onClick={handleClick}>Go Live</button>
     </Layout>
   );
 }
