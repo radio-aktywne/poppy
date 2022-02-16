@@ -1,3 +1,7 @@
 **
-!emiweb/src/**
-!emiweb/Caddyfile
+!emiweb/
+emiweb/.next/
+emiweb/docs/
+emiweb/node_modules/
+emiweb/README.md
+emiweb/tsconfig.tsbuildinfo
