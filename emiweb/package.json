@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "ssl-proxy": "npx local-ssl-proxy --source ${PROXY_PORT:=11001} --target ${PORT:=11000}",
     "dev": "next dev -p ${PORT:=11000}",
     "build": "next build",
     "start": "next start -p ${PORT:=11000}"
