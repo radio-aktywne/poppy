@@ -1,11 +1,13 @@
 {
   "private": true,
   "scripts": {
+    "ssl-proxy": "npx local-ssl-proxy --source ${PROXY_PORT:=11001} --target ${PORT:=11000}",
     "dev": "next dev -p ${PORT:=11000}",
     "build": "next build",
     "start": "next start -p ${PORT:=11000}"
   },
   "dependencies": {
+    "@geckos.io/client": "^2.1.8",
     "http-proxy-middleware": "^2.0.3",
     "next": "^12.0.10",
     "normalize.css": "^8.0.1",
@@ -15,6 +17,7 @@
   "devDependencies": {
     "@types/node": "^17.0.18",
     "@types/react": "^17.0.39",
+    "local-ssl-proxy": "^1.3.0",
     "prettier": "^2.5.1",
     "typescript": "^4.5.5"
   }

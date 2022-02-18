@@ -1,15 +1,38 @@
-export const get = async (endpoint) => {
-    const response = await fetch(endpoint);
-    return await response.json();
+import { ClientChannel, geckos } from "@geckos.io/client";
+
+const stripPrefixSlash = (path: string): string => {
+  return path.startsWith("/") ? path.slice(1) : path;
 };
 
-export const post = async (endpoint, body) => {
-    const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-    });
-    return await response.json();
+const stripSuffixSlash = (path: string): string => {
+  return path.endsWith("/") ? path.slice(0, -1) : path;
+};
+
+const toApiPath = (endpoint: string): string => {
+  return stripSuffixSlash(`/api/${stripPrefixSlash(endpoint)}`);
+};
+
+export const get = async (endpoint: string): Promise<any> => {
+  const path = toApiPath(endpoint);
+  const response = await fetch(path);
+  return await response.json();
+};
+
+export const post = async (endpoint: string, body: any): Promise<any> => {
+  const path = toApiPath(endpoint);
+  const init = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+  const response = await fetch(path, init);
+  return await response.json();
+};
+
+export const createWebrtcChannel = (endpoint: string): ClientChannel => {
+  const path = toApiPath(endpoint);
+  const url = (location?.origin || "") + path;
+  return geckos({ url: url, port: null });
 };
