@@ -2,7 +2,7 @@
 
 Emission web UI 🎤
 
-`emiweb` is a web UI that you can use to transmit your voice over WebSockets.
+`emiweb` is a web UI that you can use to transmit your voice over WebRTC.
 
 To start the server make sure you have [`npm`](https://www.npmjs.com)
 and [`next.js`](https://nextjs.org) installed, then run:
