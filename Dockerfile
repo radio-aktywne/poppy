@@ -12,9 +12,6 @@ RUN npm ci --only-production
 FROM node:$NODE_IMAGE_TAG AS builder
 WORKDIR /app
 
-ENV EMIWEB_API_HOST=localhost \
-    EMIWEB_API_PORT=10000
-
 COPY --from=deps /app/node_modules ./node_modules
 COPY ./emiweb/ ./
 
@@ -43,7 +40,9 @@ USER nextjs
 
 EXPOSE 11000
 
-ENV PORT 11000
+ENV PORT=11000 \
+    EMIWEB_API_HOST=localhost \
+    EMIWEB_API_PORT=10000
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
