@@ -11,8 +11,13 @@ RUN npm ci --only-production
 # Rebuild the source code only when needed
 FROM node:$NODE_IMAGE_TAG AS builder
 WORKDIR /app
+
+ENV EMIWEB_API_HOST=localhost \
+    EMIWEB_API_PORT=10000
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY ./emiweb/ ./
+
 RUN npm run build
 
 # Production image, copy all the files and run next
