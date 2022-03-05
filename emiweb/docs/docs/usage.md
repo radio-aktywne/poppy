@@ -7,5 +7,5 @@ and [`next.js`](https://nextjs.org) installed, then run:
 npm run start
 ```
 
-Then you can visit [`http://localhost:11000`](http://localhost:11000) by default
+Then you can visit [`http://localhost:13000`](http://localhost:13000) by default
 in your browser and start streaming.

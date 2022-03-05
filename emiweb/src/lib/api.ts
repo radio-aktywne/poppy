@@ -12,20 +12,25 @@ const toApiPath = (endpoint: string): string => {
   return stripSuffixSlash(`/api/${stripPrefixSlash(endpoint)}`);
 };
 
-export const get = async (endpoint: string): Promise<any> => {
+export const get = async (endpoint: string, headers: {} = {}): Promise<any> => {
   const path = toApiPath(endpoint);
-  const response = await fetch(path);
+  const response = await fetch(path, { headers: headers });
   return await response.json();
 };
 
-export const post = async (endpoint: string, body: any): Promise<any> => {
+export const post = async (
+  endpoint: string,
+  body: any = undefined,
+  headers: {} = {}
+): Promise<any> => {
   const path = toApiPath(endpoint);
   const init = {
     method: "POST",
     headers: {
+      ...headers,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body),
+    body: body === undefined ? undefined : JSON.stringify(body),
   };
   const response = await fetch(path, init);
   return await response.json();
