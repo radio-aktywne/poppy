@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import Layout from "../components/layout";
-import { createWebrtcChannel } from "../lib/api";
+import { createWebrtcChannel, post } from "../lib/api";
 import { AudioRecorder } from "../lib/media";
 import { ClientChannel } from "@geckos.io/client";
 
@@ -17,8 +17,12 @@ export default function Index() {
   };
   const handleStartClick = async () => {
     if (recorder.isRecording()) return;
-    if (streamTitle) channel.emit("title", streamTitle);
-    channel.emit("start");
+    const response = await post("/stream/reserve", {
+      reservation: {
+        title: streamTitle || undefined
+      }
+    });
+    channel.emit("start", response.token.token);
     await recorder.start();
   };
   const handleStopClick = async () => {
@@ -28,7 +32,7 @@ export default function Index() {
   };
 
   React.useEffect(() => {
-    const channel = createWebrtcChannel("");
+    const channel = createWebrtcChannel("/stream");
     channel
       .onConnect(() => {
         recorder.onData(async (data) => channel.raw.emit(data));
