@@ -38,11 +38,10 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
-EXPOSE 11000
+EXPOSE 13000
 
-ENV PORT=11000 \
-    EMIWEB_API_HOST=localhost \
-    EMIWEB_API_PORT=10000
+ENV PORT=13000 \
+    EMIWEB_EMIGATE_URL=http://localhost:12000
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry

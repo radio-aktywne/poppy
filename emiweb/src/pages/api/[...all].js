@@ -9,11 +9,10 @@ export const config = {
 
 const apiPath = "api";
 
-const apiHost = process.env.EMIWEB_API_HOST || "localhost";
-const apiPort = process.env.EMIWEB_API_PORT || "10000";
+const apiUrl = process.env.EMIWEB_EMIGATE_URL || "http://localhost:12000";
 
 const apiOptions = {
-  target: `http://${apiHost}:${apiPort}`,
+  target: apiUrl,
   pathRewrite: {
     [`^/${apiPath}`]: "",
   },

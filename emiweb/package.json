@@ -1,10 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "ssl-proxy": "npx local-ssl-proxy --source ${PROXY_PORT:=11001} --target ${PORT:=11000}",
-    "dev": "next dev -p ${PORT:=11000}",
+    "ssl-proxy": "npx local-ssl-proxy --source ${PROXY_PORT:=13001} --target ${PORT:=13000}",
+    "dev": "next dev -p ${PORT:=13000}",
     "build": "next build",
-    "start": "next start -p ${PORT:=11000}"
+    "start": "next start -p ${PORT:=13000}"
   },
   "dependencies": {
     "@geckos.io/client": "^2.1.8",
