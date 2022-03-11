@@ -41,7 +41,9 @@ USER nextjs
 EXPOSE 13000
 
 ENV PORT=13000 \
-    EMIWEB_EMIGATE_URL=http://localhost:12000
+    EMIWEB_EMIGATE_URL=http://localhost:12000 \
+    EMIWEB_WEBAUTH_URL=http://localhst:22000 \
+    EMIWEB_WEBAUTH_PUBLIC_URL=http://localhost:22000
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
