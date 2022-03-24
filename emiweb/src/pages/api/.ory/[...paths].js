@@ -1,6 +1,6 @@
 import { config, createApiHandler } from "@ory/integrations/next-edge";
 
-const apiUrl = process.env.EMIWEB_WEBAUTH_URL || "http://localhost:22000";
+const apiUrl = process.env.EMIWEB_WEBAUTH_URL || "http://localhost:23000";
 
 export { config };
 
