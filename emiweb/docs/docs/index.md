@@ -1,6 +1,6 @@
 # emiweb
 
-Emission web UI 🎤
+emission web ui 🎤
 
 `emiweb` is a web UI that you can use to transmit your voice over WebRTC.
 

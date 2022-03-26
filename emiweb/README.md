@@ -2,7 +2,7 @@
 
 <div align="center">
 
-Emission web UI 🎤
+emission web ui 🎤
 
 [![Testing docker build](https://github.com/radio-aktywne/emiweb/actions/workflows/docker-build.yml/badge.svg)](https://github.com/radio-aktywne/emiweb/actions/workflows/docker-build.yml)
 [![Deploying docs](https://github.com/radio-aktywne/emiweb/actions/workflows/docs.yml/badge.svg)](https://github.com/radio-aktywne/emiweb/actions/workflows/docs.yml)
