@@ -23,7 +23,10 @@ export default function Index({ loginUrl }) {
     if (recorder.isRecording()) return;
     const response = await post("/stream/reserve", {
       reservation: {
-        title: streamTitle || undefined,
+        event: {
+          id: streamTitle || undefined,
+          title: streamTitle || undefined,
+        },
       },
     });
     channel.emit("start", response.token.token);
