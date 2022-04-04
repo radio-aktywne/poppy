@@ -22,10 +22,12 @@ export default function Index({ loginUrl }) {
   const handleStartClick = async () => {
     if (recorder.isRecording()) return;
     const response = await post("/stream/reserve", {
-      reservation: {
-        event: {
-          id: streamTitle || undefined,
-          title: streamTitle || undefined,
+      event: {
+        show: {
+          label: streamTitle || undefined,
+          metadata: {
+            title: streamTitle || undefined,
+          },
         },
       },
     });
