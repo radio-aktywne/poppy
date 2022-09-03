@@ -4,9 +4,8 @@ import Layout from "../components/layout";
 import { createWebrtcChannel, post } from "../lib/api";
 import { AudioRecorder } from "../lib/media";
 import { ClientChannel } from "@geckos.io/client";
-import { Session } from "@ory/kratos-client";
+import { Session } from "@ory/client";
 import ory from "../lib/ory";
-import { AxiosError } from "axios";
 
 const title: string = "emiweb";
 const recorder: AudioRecorder = new AudioRecorder();
@@ -47,7 +46,7 @@ export default function Index({ loginUrl }) {
         // User has a session!
         setSession(data);
       })
-      .catch((error: AxiosError) => {
+      .catch(() => {
         // Redirect to login page
         const searchParams = new URLSearchParams();
         searchParams.append("return_to", window.location.href);
