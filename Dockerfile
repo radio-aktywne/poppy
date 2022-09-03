@@ -26,10 +26,7 @@ ENV NODE_ENV production
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 
-# You only need to copy next.config.js if you are NOT using the default configuration
-# COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./package.json
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
@@ -41,13 +38,9 @@ USER nextjs
 EXPOSE 13000
 
 ENV PORT=13000 \
+    NEXT_TELEMETRY_DISABLED=1 \
     EMIWEB_EMIGATE_URL=http://localhost:12000 \
     EMIWEB_WEBAUTH_URL=http://localhst:23000 \
     EMIWEB_WEBAUTH_PUBLIC_URL=http://localhost:23000
-
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry.
-ENV NEXT_TELEMETRY_DISABLED 1
 
 CMD ["node", "server.js"]
