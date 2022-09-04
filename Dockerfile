@@ -40,7 +40,7 @@ EXPOSE 13000
 ENV PORT=13000 \
     NEXT_TELEMETRY_DISABLED=1 \
     EMIWEB_EMIGATE_URL=http://localhost:12000 \
-    EMIWEB_WEBAUTH_URL=http://localhst:23000 \
-    EMIWEB_WEBAUTH_PUBLIC_URL=http://localhost:23000
+    EMIWEB_AUTHGATE_URL=http://localhost:20000 \
+    EMIWEB_WEBAUTH_PUBLIC_URL=http://localhost:21000
 
 CMD ["node", "server.js"]

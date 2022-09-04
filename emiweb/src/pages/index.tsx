@@ -85,7 +85,7 @@ export async function getServerSideProps() {
   return {
     props: {
       loginUrl:
-        process.env.EMIWEB_WEBAUTH_PUBLIC_URL || "http://localhost:23000",
+        process.env.EMIWEB_WEBAUTH_PUBLIC_URL || "http://localhost:21000",
     },
   };
 }

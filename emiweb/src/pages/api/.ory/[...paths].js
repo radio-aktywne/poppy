@@ -1,9 +1,10 @@
 import { config, createApiHandler } from "@ory/integrations/next-edge";
 
-const apiUrl = process.env.EMIWEB_WEBAUTH_URL || "http://localhost:23000";
+const baseUrl = process.env.EMIWEB_AUTHGATE_URL || "http://localhost:20000";
+const apiUrl = `${baseUrl}/authe`;
 
 export { config };
 
 export default createApiHandler({
-  apiBaseUrlOverride: `${apiUrl}/api/.ory`,
+  apiBaseUrlOverride: apiUrl,
 });
