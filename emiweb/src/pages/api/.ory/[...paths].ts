@@ -7,4 +7,5 @@ export { config };
 
 export default createApiHandler({
   apiBaseUrlOverride: apiUrl,
+  forceCookieDomain: process.env.EMIWEB_COOKIE_DOMAIN || "localhost",
 });
