@@ -7,16 +7,14 @@ export const config = {
   },
 };
 
-const apiPath = "api";
-
 const apiUrl = process.env.EMIWEB_EMIGATE_URL || "http://localhost:12000";
 
 const apiOptions = {
   target: apiUrl,
   pathRewrite: {
-    [`^/${apiPath}`]: "",
+    ["^/api"]: "",
   },
   changeOrigin: true,
 };
 
-export default createProxyMiddleware(`/${apiPath}`, apiOptions);
+export default createProxyMiddleware("/api", apiOptions);

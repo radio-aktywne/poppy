@@ -84,8 +84,7 @@ export default function Index({ loginUrl }) {
 export async function getServerSideProps() {
   return {
     props: {
-      loginUrl:
-        process.env.EMIWEB_WEBAUTH_PUBLIC_URL || "http://localhost:21000",
+      loginUrl: "/api/auth/ui",
     },
   };
 }
