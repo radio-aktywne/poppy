@@ -39,6 +39,7 @@ EXPOSE 13000
 
 ENV PORT=13000 \
     NEXT_TELEMETRY_DISABLED=1 \
-    EMIWEB_EMIGATE_URL=http://localhost:12000
+    EMIWEB_EMIGATE_URL=http://localhost:12000 \
+    EMIWEB_COOKIE_DOMAIN=localhost
 
 CMD ["node", "server.js"]
