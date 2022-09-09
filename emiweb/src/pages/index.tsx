@@ -12,6 +12,7 @@ const recorder: AudioRecorder = new AudioRecorder();
 
 export default function Index({ loginUrl }) {
   const [session, setSession] = useState<Session | undefined>();
+  const [record, setRecord] = useState<boolean>(false);
   const [streamTitle, setStreamTitle] = useState<string>("");
   const [channel, setChannel] = useState<ClientChannel | undefined>(undefined);
 
@@ -29,6 +30,7 @@ export default function Index({ loginUrl }) {
           },
         },
       },
+      record: record,
     });
     channel.emit("start", response.token.token);
     await recorder.start();
@@ -77,6 +79,14 @@ export default function Index({ loginUrl }) {
       />
       <button onClick={handleStartClick}>Start</button>
       <button onClick={handleStopClick}>Stop</button>
+      <label>
+        <input
+          type="checkbox"
+          checked={record}
+          onChange={(event) => setRecord(event.target.checked)}
+        />
+        Record
+      </label>
     </Layout>
   );
 }
