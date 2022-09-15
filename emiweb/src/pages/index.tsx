@@ -1,13 +1,15 @@
 import * as React from "react";
 import { useState } from "react";
-import Layout from "../components/layout";
+import Layout from "../components/Layout";
 import { createWebrtcChannel, post } from "../lib/api";
 import { AudioRecorder } from "../lib/media";
 import { ClientChannel } from "@geckos.io/client";
 import { Session } from "@ory/client";
 import ory from "../lib/ory";
+import { Box, Button, Checkbox, Group, TextInput } from "@mantine/core";
+import Head from "next/head";
+import { useLabels } from "../contexts/labels";
 
-const title: string = "emiweb";
 const recorder: AudioRecorder = new AudioRecorder();
 
 export default function Index({ loginUrl }) {
@@ -15,6 +17,8 @@ export default function Index({ loginUrl }) {
   const [record, setRecord] = useState<boolean>(false);
   const [streamTitle, setStreamTitle] = useState<string>("");
   const [channel, setChannel] = useState<ClientChannel | undefined>(undefined);
+
+  const labels = useLabels();
 
   const handleStreamTitleChange = (event) => {
     setStreamTitle(event.target.value);
@@ -71,23 +75,29 @@ export default function Index({ loginUrl }) {
   if (session === undefined) return null;
 
   return (
-    <Layout title={title}>
-      <input
-        type="text"
-        value={streamTitle}
-        onChange={handleStreamTitleChange}
-      />
-      <button onClick={handleStartClick}>Start</button>
-      <button onClick={handleStopClick}>Stop</button>
-      <label>
-        <input
-          type="checkbox"
-          checked={record}
-          onChange={(event) => setRecord(event.target.checked)}
+    <Box>
+      <Head>
+        <title>{labels.index.title}</title>
+      </Head>
+      <Layout>
+        <TextInput
+          label={labels.index.inputs.title.label}
+          value={streamTitle}
+          onChange={handleStreamTitleChange}
         />
-        Record
-      </label>
-    </Layout>
+        <Group position="right">
+          <Checkbox
+            label={labels.index.checkboxes.record}
+            checked={record}
+            onChange={(event) => setRecord(event.target.checked)}
+          />
+          <Button onClick={handleStartClick}>
+            {labels.index.buttons.start}
+          </Button>
+          <Button onClick={handleStopClick}>{labels.index.buttons.stop}</Button>
+        </Group>
+      </Layout>
+    </Box>
   );
 }
 
