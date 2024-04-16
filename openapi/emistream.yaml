@@ -1,0 +1,258 @@
+info:
+  title: emistream app
+  version: 0.13.0
+  description: Emission streaming logic 🔴
+openapi: 3.1.0
+servers:
+  - url: /
+paths:
+  /check:
+    get:
+      summary: Check availability
+      description: Check the current availability of the stream.
+      operationId: CheckCheck
+      responses:
+        "200":
+          description: Request fulfilled, document follows
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Availability"
+      deprecated: false
+  /ping:
+    get:
+      summary: Ping
+      description: Do nothing.
+      operationId: PingPing
+      responses:
+        "204":
+          description: Request fulfilled, nothing follows
+          headers:
+            cache-control:
+              schema:
+                type: string
+              name: cache-control
+              in: header
+              required: false
+              deprecated: false
+              allowEmptyValue: false
+              allowReserved: false
+          content:
+            application/json:
+              schema:
+                type: "null"
+      deprecated: false
+  /reserve:
+    post:
+      summary: Reserve a stream
+      description: Reserve a stream to be able to go live.
+      operationId: ReserveReserve
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReserveRequest"
+        required: true
+      responses:
+        "201":
+          description: Document created, URL follows
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReserveResponse"
+        "400":
+          description: Bad request syntax or unsupported method
+          content:
+            application/json:
+              schema:
+                properties:
+                  status_code:
+                    type: integer
+                  detail:
+                    type: string
+                  extra:
+                    additionalProperties: {}
+                    type:
+                      - "null"
+                      - object
+                      - array
+                type: object
+                required:
+                  - detail
+                  - status_code
+                description: Validation Exception
+                examples:
+                  ValidationException:
+                    value:
+                      status_code: 400
+                      detail: Bad Request
+                      extra: {}
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                properties:
+                  status_code:
+                    type: integer
+                  detail:
+                    type: string
+                  extra:
+                    additionalProperties: {}
+                    type:
+                      - "null"
+                      - object
+                      - array
+                type: object
+                required:
+                  - detail
+                  - status_code
+                description: Conflict Exception
+                examples:
+                  ConflictException:
+                    value:
+                      status_code: 409
+                      detail: Conflict
+                      extra: {}
+        "422":
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                properties:
+                  status_code:
+                    type: integer
+                  detail:
+                    type: string
+                  extra:
+                    additionalProperties: {}
+                    type:
+                      - "null"
+                      - object
+                      - array
+                type: object
+                required:
+                  - detail
+                  - status_code
+                description: Unprocessable Content Exception
+                examples:
+                  UnprocessableContentException:
+                    value:
+                      status_code: 422
+                      detail: Unprocessable Content
+                      extra: {}
+      deprecated: false
+  /sse:
+    get:
+      summary: Get SSE stream
+      description: Get a stream of Server-Sent Events.
+      operationId: SseSubscribe
+      responses:
+        "200":
+          description: Request fulfilled, document follows
+          headers:
+            content-length:
+              schema:
+                type: string
+              name: ""
+              in: header
+              description: File size in bytes
+              required: false
+              deprecated: false
+              allowEmptyValue: false
+              allowReserved: false
+            last-modified:
+              schema:
+                type: string
+                format: date-time
+              name: ""
+              in: header
+              description: Last modified data-time in RFC 2822 format
+              required: false
+              deprecated: false
+              allowEmptyValue: false
+              allowReserved: false
+            etag:
+              schema:
+                type: string
+              name: ""
+              in: header
+              description: Entity tag
+              required: false
+              deprecated: false
+              allowEmptyValue: false
+              allowReserved: false
+          content:
+            "":
+              schema:
+                type: string
+                contentMediaType: application/octet-stream
+      deprecated: false
+components:
+  schemas:
+    Availability:
+      properties:
+        event:
+          oneOf:
+            - type: "null"
+            - type: string
+              format: uuid
+          title: Availability.Event
+          description: Identifier of the event that is currently on air.
+        checkedAt:
+          title: Availability.CheckedAt
+          description: Time in UTC at which the availability was checked.
+      type: object
+      required:
+        - checkedAt
+      title: Availability
+    ReserveRequest:
+      properties:
+        event:
+          type: string
+          format: uuid
+          title: Request.Event
+          description: Identifier of the event to reserve the stream for.
+        format:
+          type: string
+          const: ogg
+          title: Request.Format
+          description: Format of the audio stream.
+        record:
+          type: boolean
+          title: Request.Record
+          description: Whether to record the stream.
+      type: object
+      required:
+        - event
+      title: ReserveRequest
+    ReserveResponse:
+      properties:
+        credentials:
+          $ref: "#/components/schemas/Credentials"
+        port:
+          type: integer
+          title: Response.Port
+          description: Port to use to connect to the stream.
+      type: object
+      required:
+        - credentials
+        - port
+      title: ReserveResponse
+    Credentials:
+      properties:
+        token:
+          type: string
+          title: Credentials.Token
+          description: Token to use to connect to the stream.
+        expiresAt:
+          title: Credentials.ExpiresAt
+          description: Time in UTC at which the token expires if not used.
+      type: object
+      required:
+        - expiresAt
+        - token
+      title: Credentials
+      description: Credentials to use to connect to the stream.

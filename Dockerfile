@@ -1,45 +1,104 @@
-ARG NODE_IMAGE_TAG=17.5.0-alpine3.15
+# Use generic base image with Nix installed
+FROM nixos/nix:2.20.5 AS base-env
 
-# Install dependencies only when needed
-FROM node:$NODE_IMAGE_TAG AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
-WORKDIR /app
-COPY ./emiweb/package.json ./emiweb/package-lock.json ./
-RUN npm ci --only-production
+# Configure Nix
+RUN echo "extra-experimental-features = nix-command flakes" >> /etc/nix/nix.conf
 
-# Rebuild the source code only when needed
-FROM node:$NODE_IMAGE_TAG AS builder
-WORKDIR /app
+# Set working directory to something other than root
+WORKDIR /env/
 
-COPY --from=deps /app/node_modules ./node_modules
-COPY ./emiweb/ ./
+# Copy Nix files
+COPY flake.lock *.nix ./
 
-RUN npm run build
+# Copy env script
+COPY scripts/env.sh scripts/env.sh
 
-# Production image, copy all the files and run next
-FROM node:$NODE_IMAGE_TAG AS runner
-WORKDIR /app
+FROM base-env AS build-env
 
-ENV NODE_ENV production
+# Build build shell closure and activation script
+RUN \
+    # Mount cached store paths
+    --mount=type=cache,target=/nix-store-cache/ \
+    # Mount Nix evaluation cache
+    --mount=type=cache,target=/root/.cache/nix/ \
+    ./scripts/env.sh build build/ /nix-store-cache/
 
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
+FROM base-env AS runtime-env
 
-COPY --from=builder /app/public ./public
+# Build runtime shell closure and activation script
+RUN \
+    # Mount cached store paths
+    --mount=type=cache,target=/nix-store-cache/ \
+    # Mount Nix evaluation cache
+    --mount=type=cache,target=/root/.cache/nix/ \
+    ./scripts/env.sh runtime build/ /nix-store-cache/
 
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Ubuntu is probably the safest choice for a runtime container right now
+FROM ubuntu:23.10 as build
 
-USER nextjs
+# Use bash as default shell
+SHELL ["/bin/bash", "-c"]
 
-EXPOSE 13000
+# Copy build shell closure and activation script
+COPY --from=build-env /env/build/closure/ /nix/store/
+COPY --from=build-env /env/build/activate /env/activate
 
-ENV PORT=13000 \
-    NEXT_TELEMETRY_DISABLED=1 \
-    EMIWEB_EMIGATE_URL=http://localhost:12000 \
-    EMIWEB_COOKIE_DOMAIN=localhost
+# Set working directory to something other than root
+WORKDIR /build/
 
-CMD ["node", "server.js"]
+# Setup entrypoint for RUN commands
+COPY scripts/shell.sh scripts/shell.sh
+SHELL ["/build/scripts/shell.sh"]
+
+# Copy package files
+COPY package.json package-lock.json ./
+
+# Install dependencies
+# hadolint ignore=SC2239
+RUN npm ci
+
+# Copy everything else
+COPY ./ ./
+
+# Build and keep only runtime dependencies
+# hadolint ignore=SC2239
+RUN npm run build && npm prune --production
+
+# Ubuntu is probably the safest choice
+FROM ubuntu:23.10 AS runtime
+
+# Use bash as default shell
+SHELL ["/bin/bash", "-c"]
+
+# Copy runtime shell closure and activation script
+COPY --from=runtime-env /env/build/closure/ /nix/store/
+COPY --from=runtime-env /env/build/activate /env/activate
+
+# Set working directory to something other than root
+WORKDIR /app/
+
+# Create app user
+RUN useradd --create-home app
+
+# Setup entrypoint for RUN commands
+COPY scripts/shell.sh scripts/shell.sh
+SHELL ["/app/scripts/shell.sh"]
+
+# Copy app files from build
+COPY --from=build /build/build/ build/
+# Copy dependencies from build
+COPY --from=build /build/node_modules/ node_modules/
+# Copy public files
+COPY --from=build /build/public/ public/
+# Copy package files
+COPY --from=build /build/package.json /build/package-lock.json ./
+# Copy Next.js config
+COPY --from=build /build/next.config.mjs ./
+
+# Setup main entrypoint
+COPY scripts/entrypoint.sh scripts/entrypoint.sh
+ENTRYPOINT ["/app/scripts/entrypoint.sh", "npm", "run", "--", "run"]
+CMD []
+
+# Setup ownership
+RUN chown --recursive app: ./

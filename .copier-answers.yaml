@@ -1,0 +1,15 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 0.1.0
+_src_path: gh:radio-aktywne/template-app-next
+accountname: radio-aktywne
+appname: emiweb
+description: Emission web UI 🎤
+docs: true
+docsurl: https://radio-aktywne.github.io/app-emiweb
+envprefix: EMIWEB
+imagename: apps/emiweb
+port: 13000
+registry: true
+releases: true
+reponame: app-emiweb
+repourl: https://github.com/radio-aktywne/app-emiweb
