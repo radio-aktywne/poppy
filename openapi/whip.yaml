@@ -1,0 +1,59 @@
+info:
+  title: WHIP
+  description: WebRTC-HTTP ingestion protocol
+openapi: 3.1.0
+servers:
+  - url: /
+paths:
+  /whip/endpoint:
+    post:
+      summary: Create a session
+      description: Create a session to ingest a stream
+      operationId: CreateSession
+      requestBody:
+        content:
+          application/sdp:
+            schema:
+              type: string
+        required: true
+      responses:
+        "201":
+          description: Session created
+          headers:
+            location:
+              description: URL to the created session resource
+              schema:
+                type: string
+          content:
+            application/sdp:
+              schema:
+                type: string
+        "400":
+          description: Bad request syntax or unsupported method
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Invalid request header "content-type"
+        "409":
+          description: Conflict
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Session active already
+  /whip/resource/whip-client:
+    delete:
+      summary: Delete a session
+      description: Delete a session and stop the stream
+      operationId: DeleteSession
+      responses:
+        "200":
+          description: Session deleted
+        "409":
+          description: Conflict
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Session not Ready
