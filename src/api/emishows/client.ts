@@ -3,6 +3,8 @@ import "server-only";
 import createClient from "openapi-fetch";
 import type { paths } from "./types";
 
-export const emishows = createClient<paths>({
-  baseUrl: process.env.EMIWEB__EMISHOWS__HTTP__URL || "http://localhost:35000",
-});
+const host = process.env.EMIWEB__EMISHOWS__HOST || "localhost";
+const port = process.env.EMIWEB__EMISHOWS__PORT || "35000";
+const url = `http://${host}:${port}`;
+
+export const emishows = createClient<paths>({ baseUrl: url });
