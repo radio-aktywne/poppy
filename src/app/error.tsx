@@ -3,7 +3,7 @@
 import { Button, Stack, Title } from "@mantine/core";
 import { IconRefresh } from "@tabler/icons-react";
 import { Metadata } from "next";
-import { labels } from "../config/labels.ts";
+import { labels } from "../config/labels";
 
 export const metadata: Metadata = {
   title: labels.pages.error.title,

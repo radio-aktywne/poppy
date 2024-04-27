@@ -1,6 +1,6 @@
 import { Title } from "@mantine/core";
 import { Metadata } from "next";
-import { labels } from "../config/labels.ts";
+import { labels } from "../config/labels";
 
 export const metadata: Metadata = {
   title: labels.pages.notFound.title,

@@ -1,1 +1,3 @@
-export type DeleteWhipSessionProps = {};
+export type DeleteWhipSessionProps = {
+  [key: string]: never;
+};
