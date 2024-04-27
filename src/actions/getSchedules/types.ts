@@ -1,1 +1,3 @@
-export type GetSchedulesProps = {};
+export type GetSchedulesProps = {
+  [key: string]: never;
+};

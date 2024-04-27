@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { ReactNode } from "react";
 import { PageLayout } from "../components";
 import { colorSchemeStorageKey, defaultColorScheme } from "../config/constants";
-import { labels } from "../config/labels.ts";
+import { labels } from "../config/labels";
 import { ThemeProvider } from "../contexts";
 
 export const metadata: Metadata = {

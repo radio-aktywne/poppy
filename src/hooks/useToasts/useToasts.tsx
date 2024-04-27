@@ -8,7 +8,7 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { useCallback } from "react";
-import { labels } from "../../config/labels.ts";
+import { labels } from "../../config/labels";
 import { Toast } from "./useToasts.types";
 
 export function useToasts() {

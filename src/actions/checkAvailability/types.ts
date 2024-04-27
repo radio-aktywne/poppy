@@ -1,1 +1,3 @@
-export type CheckAvailabilityProps = {};
+export type CheckAvailabilityProps = {
+  [key: string]: never;
+};

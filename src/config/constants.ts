@@ -1,4 +1,3 @@
-export const colorSchemeStorageKey = "ra-color-scheme";
+export const colorSchemeStorageKey = "emiweb-color-scheme";
 export const defaultColorScheme = "auto";
-export const stateStorageKey = "ra-state";
-export const stateSyncChannel = "ra-state";
+export const stateStorageKey = "emiweb-state";

@@ -18,6 +18,25 @@ module.exports = {
     "prettier",
   ],
 
+  overrides: [
+    {
+      // Apply rules to generated types
+      files: ["*.d.ts"],
+      rules: {
+        // Allow empty object types
+        "@typescript-eslint/ban-types": [
+          "error",
+          {
+            extendDefaults: true,
+            types: {
+              "{}": false,
+            },
+          },
+        ],
+      },
+    },
+  ],
+
   // Use typescript-eslint parser
   parser: "@typescript-eslint/parser",
 
@@ -35,24 +54,13 @@ module.exports = {
   root: true,
 
   rules: {
-    // Allow empty destructuring patterns
-    "no-empty-pattern": "off",
-
     // Allow anonymous default exports
     "import/no-anonymous-default-export": "off",
 
-    // Allow empty object types
-    "@typescript-eslint/ban-types": [
-      "error",
-      {
-        extendDefaults: true,
-        types: {
-          "{}": false,
-        },
-      },
-    ],
-
     // Allow empty block statements
     "no-empty": "off",
+
+    // Allow empty destructuring patterns
+    "no-empty-pattern": "off",
   },
 };

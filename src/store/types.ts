@@ -1,5 +1,9 @@
-export type State = {};
+export type State = {
+  [key: string]: never;
+};
 
-export type Actions = {};
+export type Actions = {
+  [key: string]: never;
+};
 
 export type Store = State & Actions;

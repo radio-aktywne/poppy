@@ -1,1 +1,3 @@
-export type GetEventsWindowProps = {};
+export type GetEventsWindowProps = {
+  [key: string]: never;
+};
