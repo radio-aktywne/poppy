@@ -32,8 +32,14 @@ export interface components {
        */
       stun?: null | components["schemas"]["STUNServer"];
       /**
+       * Request.Codec
+       * @description Codec of the media in the stream.
+       * @enum {string}
+       */
+      codec?: "opus";
+      /**
        * Request.Format
-       * @description Format of the output audio.
+       * @description Format of the media in the stream.
        * @enum {string}
        */
       format?: "ogg";

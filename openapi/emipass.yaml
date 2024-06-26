@@ -1,6 +1,6 @@
 info:
   title: emipass app
-  version: 0.3.0
+  version: 0.5.0
   description: WebRTC to SRT passthrough 💨
 openapi: 3.1.0
 servers:
@@ -113,12 +113,18 @@ components:
             - $ref: "#/components/schemas/STUNServer"
           title: Request.STUN
           description: STUN server to use.
+        codec:
+          type: string
+          enum:
+            - opus
+          title: Request.Codec
+          description: Codec of the media in the stream.
         format:
           type: string
           enum:
             - ogg
           title: Request.Format
-          description: Format of the output audio.
+          description: Format of the media in the stream.
         srt:
           $ref: "#/components/schemas/SRTServer"
       type: object
