@@ -1,6 +1,16 @@
 import "client-only";
 
+import { merge } from "lodash";
 import { MediaCreateProps } from "./types";
+
+const DEFAULT_CONSTRAINTS: MediaTrackConstraints = {
+  autoGainControl: false,
+  channelCount: 2,
+  echoCancellation: false,
+  noiseSuppression: false,
+  sampleRate: 48000,
+  sampleSize: 16,
+};
 
 export class Media {
   private media: MediaStream;
@@ -11,7 +21,7 @@ export class Media {
 
   public static async create({ constraints }: MediaCreateProps = {}) {
     const media = await navigator.mediaDevices.getUserMedia({
-      audio: constraints ?? true,
+      audio: merge({}, DEFAULT_CONSTRAINTS, constraints),
     });
 
     return new Media(media);
