@@ -1,9 +1,9 @@
 {
-  "name": "emiweb",
+  "name": "webstream",
   "private": true,
   "scripts": {
-    "dev": "next dev --hostname \"${EMIWEB__SERVER__HOST:-0.0.0.0}\" --port \"${EMIWEB__SERVER__PORT:-13000}\"",
-    "run": "next start --hostname \"${EMIWEB__SERVER__HOST:-0.0.0.0}\" --port \"${EMIWEB__SERVER__PORT:-13000}\"",
+    "dev": "next dev --hostname \"${WEBSTREAM__SERVER__HOST:-0.0.0.0}\" --port \"${WEBSTREAM__SERVER__PORT:-13000}\"",
+    "run": "next start --hostname \"${WEBSTREAM__SERVER__HOST:-0.0.0.0}\" --port \"${WEBSTREAM__SERVER__PORT:-13000}\"",
     "build": "next build",
     "clean": "rm --recursive --force build/",
     "update": "ncu --peer --upgrade && npm i --no-audit --no-fund",

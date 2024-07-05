@@ -9,8 +9,8 @@ export const labels = {
   },
   pages: {
     index: {
-      title: "emiweb",
-      description: "emiweb",
+      title: "webstream",
+      description: "webstream",
       widgets: {
         streaming: {
           widgets: {
@@ -60,13 +60,13 @@ export const labels = {
       },
     },
     notFound: {
-      title: "Not Found • emiweb",
-      description: "emiweb",
+      title: "Not Found • webstream",
+      description: "webstream",
       text: "Page not found",
     },
     error: {
-      title: "Error • emiweb",
-      description: "emiweb",
+      title: "Error • webstream",
+      description: "webstream",
       text: "Something went wrong",
       buttons: {
         retry: {

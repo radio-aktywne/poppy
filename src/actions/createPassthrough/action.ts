@@ -5,11 +5,11 @@ import { CreatePasthroughProps } from "./types";
 
 const errorMessage = "Creating passthrough failed.";
 
-const host = process.env.EMIWEB__EMISTREAM__SRT__HOST || "localhost";
+const host = process.env.WEBSTREAM__EMISTREAM__SRT__HOST || "localhost";
 const port =
-  process.env.EMIWEB__EMISTREAM__SRT__PORT === undefined
+  process.env.WEBSTREAM__EMISTREAM__SRT__PORT === undefined
     ? 10000
-    : parseInt(process.env.EMIWEB__EMISTREAM__SRT__PORT, 10);
+    : parseInt(process.env.WEBSTREAM__EMISTREAM__SRT__PORT, 10);
 
 export async function createPassthrough({ password }: CreatePasthroughProps) {
   try {
