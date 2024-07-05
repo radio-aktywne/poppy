@@ -3,10 +3,10 @@ slug: /
 title: Index
 ---
 
-# emiweb app
+# webstream app
 
-Emission web UI 🎤
+Emission streaming web UI 🎤
 
 ## 💡 About
 
-`emiweb` is a web application for going live.
+`webstream` is a web application for going live.

@@ -2,15 +2,15 @@
 _commit: 0.1.1
 _src_path: gh:radio-aktywne/template-app-next
 accountname: radio-aktywne
-appname: emiweb
-description: Emission web UI 🎤
+appname: webstream
+description: Emission streaming web UI 🎤
 docs: true
-docsurl: https://radio-aktywne.github.io/app-emiweb
-envprefix: EMIWEB
-imagename: apps/emiweb
-keyprefix: emiweb
+docsurl: https://radio-aktywne.github.io/app-webstream
+envprefix: WEBSTREAM
+imagename: apps/webstream
+keyprefix: webstream
 port: 13000
 registry: true
 releases: true
-reponame: app-emiweb
-repourl: https://github.com/radio-aktywne/app-emiweb
+reponame: app-webstream
+repourl: https://github.com/radio-aktywne/app-webstream

@@ -2,10 +2,10 @@ import type * as Preset from "@docusaurus/preset-classic";
 import type { Config } from "@docusaurus/types";
 import { themes } from "prism-react-renderer";
 
-const url = new URL("https://radio-aktywne.github.io/app-emiweb");
+const url = new URL("https://radio-aktywne.github.io/app-webstream");
 
 const config: Config = {
-  title: "emiweb app docs",
+  title: "webstream app docs",
   favicon: "favicon.svg?v=1",
 
   url: `${url.protocol}//${url.host}`,
@@ -41,14 +41,14 @@ const config: Config = {
 
   themeConfig: {
     navbar: {
-      title: "emiweb app docs",
+      title: "webstream app docs",
       logo: {
-        alt: "emiweb app docs logo",
+        alt: "webstream app docs logo",
         src: "logo.svg?v=1",
       },
       items: [
         {
-          href: "https://github.com/radio-aktywne/app-emiweb",
+          href: "https://github.com/radio-aktywne/app-webstream",
           position: "right",
           className: "header-github-link",
           "aria-label": "GitHub repository",
