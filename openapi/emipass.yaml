@@ -1,15 +1,11 @@
 info:
   title: emipass app
-  version: 0.5.0
-  description: WebRTC to SRT passthrough 💨
 openapi: 3.1.0
-servers:
-  - url: /
 paths:
   /ping:
     get:
       summary: Ping
-      description: Do nothing.
+      description: Ping.
       operationId: PingPing
       responses:
         "204":
@@ -18,8 +14,26 @@ paths:
             cache-control:
               schema:
                 type: string
-              name: cache-control
-              in: header
+              required: false
+              deprecated: false
+              allowEmptyValue: false
+              allowReserved: false
+          content:
+            application/json:
+              schema:
+                type: "null"
+      deprecated: false
+    head:
+      summary: Ping headers
+      description: Ping headers.
+      operationId: PingHeadping
+      responses:
+        "204":
+          description: Request fulfilled, nothing follows
+          headers:
+            cache-control:
+              schema:
+                type: string
               required: false
               deprecated: false
               allowEmptyValue: false
@@ -38,7 +52,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Request"
+              $ref: "#/components/schemas/StreamRequestData"
         required: true
       responses:
         "201":
@@ -47,7 +61,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Response"
+                $ref: "#/components/schemas/StreamResponseData"
         "400":
           description: Bad request syntax or unsupported method
           content:
@@ -70,11 +84,9 @@ paths:
                   - status_code
                 description: Validation Exception
                 examples:
-                  ValidationException:
-                    value:
-                      status_code: 400
-                      detail: Bad Request
-                      extra: {}
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
         "409":
           description: Conflict
           content:
@@ -97,93 +109,76 @@ paths:
                   - status_code
                 description: Conflict Exception
                 examples:
-                  ConflictException:
-                    value:
-                      status_code: 409
-                      detail: Conflict
-                      extra: {}
+                  - status_code: 409
+                    detail: Conflict
+                    extra: {}
       deprecated: false
 components:
   schemas:
-    Request:
-      properties:
-        stun:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/STUNServer"
-          title: Request.STUN
-          description: STUN server to use.
-        codec:
-          type: string
-          enum:
-            - opus
-          title: Request.Codec
-          description: Codec of the media in the stream.
-        format:
-          type: string
-          enum:
-            - ogg
-          title: Request.Format
-          description: Format of the media in the stream.
-        srt:
-          $ref: "#/components/schemas/SRTServer"
-      type: object
-      required:
-        - srt
-      title: Request
-    STUNServer:
-      properties:
-        host:
-          type: string
-          title: STUNServer.Host
-          description: Host of the STUN server.
-        port:
-          type: integer
-          maximum: 65535
-          minimum: 1
-          title: STUNServer.Port
-          description: Port of the STUN server.
-      type: object
-      required:
-        - host
-        - port
-      title: STUNServer
     SRTServer:
       properties:
         host:
           type: string
-          title: SRTServer.Host
-          description: Host of the SRT server.
         port:
           type: integer
-          maximum: 65535
-          minimum: 1
-          title: SRTServer.Port
-          description: Port of the SRT server.
         password:
           oneOf:
             - type: "null"
             - type: string
-          title: SRTServer.Password
-          description: Password to use for the SRT stream.
       type: object
       required:
         - host
         - port
       title: SRTServer
-      description: SRT server to send the stream to.
-    Response:
+      description: SRT server configuration.
+    STUNServer:
       properties:
+        host:
+          type: string
+        port:
+          type: integer
+      type: object
+      required:
+        - host
+        - port
+      title: STUNServer
+    StreamRequestData:
+      properties:
+        codec:
+          type: string
+          enum:
+            - opus
+          description: Audio codec.
+          default: opus
+        format:
+          type: string
+          enum:
+            - ogg
+          description: Audio format.
+          default: ogg
+        srt:
+          $ref: "#/components/schemas/SRTServer"
+        stun:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/STUNServer"
+          description: STUN server configuration.
+      type: object
+      required:
+        - srt
+      title: StreamRequestData
+      description: Data for the request.
+    StreamResponseData:
+      properties:
+        stun:
+          $ref: "#/components/schemas/STUNServer"
         port:
           type: integer
           maximum: 65535
           minimum: 1
-          title: Response.Port
-          description: Port to use to connect to the stream.
-        stun:
-          $ref: "#/components/schemas/STUNServer"
+          description: Port to stream to.
       type: object
       required:
         - port
         - stun
-      title: Response
+      title: StreamResponseData

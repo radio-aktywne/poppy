@@ -1,15 +1,11 @@
 info:
   title: emistream app
-  version: 0.13.0
-  description: Emission streaming logic 🔴
 openapi: 3.1.0
-servers:
-  - url: /
 paths:
   /check:
     get:
       summary: Check availability
-      description: Check the current availability of the stream.
+      description: Check the availability of the stream.
       operationId: CheckCheck
       responses:
         "200":
@@ -23,7 +19,7 @@ paths:
   /ping:
     get:
       summary: Ping
-      description: Do nothing.
+      description: Ping.
       operationId: PingPing
       responses:
         "204":
@@ -32,8 +28,26 @@ paths:
             cache-control:
               schema:
                 type: string
-              name: cache-control
-              in: header
+              required: false
+              deprecated: false
+              allowEmptyValue: false
+              allowReserved: false
+          content:
+            application/json:
+              schema:
+                type: "null"
+      deprecated: false
+    head:
+      summary: Ping headers
+      description: Ping headers.
+      operationId: PingHeadping
+      responses:
+        "204":
+          description: Request fulfilled, nothing follows
+          headers:
+            cache-control:
+              schema:
+                type: string
               required: false
               deprecated: false
               allowEmptyValue: false
@@ -46,13 +60,13 @@ paths:
   /reserve:
     post:
       summary: Reserve a stream
-      description: Reserve a stream to be able to go live.
+      description: Reserve a stream.
       operationId: ReserveReserve
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ReserveRequest"
+              $ref: "#/components/schemas/ReserveRequestData"
         required: true
       responses:
         "201":
@@ -61,7 +75,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ReserveResponse"
+                $ref: "#/components/schemas/ReserveResponseData"
         "400":
           description: Bad request syntax or unsupported method
           content:
@@ -84,11 +98,9 @@ paths:
                   - status_code
                 description: Validation Exception
                 examples:
-                  ValidationException:
-                    value:
-                      status_code: 400
-                      detail: Bad Request
-                      extra: {}
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
         "409":
           description: Conflict
           content:
@@ -111,11 +123,9 @@ paths:
                   - status_code
                 description: Conflict Exception
                 examples:
-                  ConflictException:
-                    value:
-                      status_code: 409
-                      detail: Conflict
-                      extra: {}
+                  - status_code: 409
+                    detail: Conflict
+                    extra: {}
         "422":
           description: Unprocessable Content
           content:
@@ -138,11 +148,9 @@ paths:
                   - status_code
                 description: Unprocessable Content Exception
                 examples:
-                  UnprocessableContentException:
-                    value:
-                      status_code: 422
-                      detail: Unprocessable Content
-                      extra: {}
+                  - status_code: 422
+                    detail: Unprocessable Content
+                    extra: {}
       deprecated: false
   /sse:
     get:
@@ -156,8 +164,6 @@ paths:
             content-length:
               schema:
                 type: string
-              name: ""
-              in: header
               description: File size in bytes
               required: false
               deprecated: false
@@ -167,8 +173,6 @@ paths:
               schema:
                 type: string
                 format: date-time
-              name: ""
-              in: header
               description: Last modified data-time in RFC 2822 format
               required: false
               deprecated: false
@@ -177,8 +181,6 @@ paths:
             etag:
               schema:
                 type: string
-              name: ""
-              in: header
               description: Entity tag
               required: false
               deprecated: false
@@ -199,56 +201,23 @@ components:
             - type: "null"
             - type: string
               format: uuid
-          title: Availability.Event
-          description: Identifier of the event that is currently on air.
+          description: Identifier of the event that is currently being streamed.
         checkedAt:
-          title: Availability.CheckedAt
+          type: string
+          format: date-time
           description: Time in UTC at which the availability was checked.
       type: object
       required:
         - checkedAt
       title: Availability
-    ReserveRequest:
-      properties:
-        event:
-          type: string
-          format: uuid
-          title: Request.Event
-          description: Identifier of the event to reserve the stream for.
-        format:
-          type: string
-          const: ogg
-          title: Request.Format
-          description: Format of the audio stream.
-        record:
-          type: boolean
-          title: Request.Record
-          description: Whether to record the stream.
-      type: object
-      required:
-        - event
-      title: ReserveRequest
-    ReserveResponse:
-      properties:
-        credentials:
-          $ref: "#/components/schemas/Credentials"
-        port:
-          type: integer
-          title: Response.Port
-          description: Port to use to connect to the stream.
-      type: object
-      required:
-        - credentials
-        - port
-      title: ReserveResponse
     Credentials:
       properties:
         token:
           type: string
-          title: Credentials.Token
           description: Token to use to connect to the stream.
         expiresAt:
-          title: Credentials.ExpiresAt
+          type: string
+          format: date-time
           description: Time in UTC at which the token expires if not used.
       type: object
       required:
@@ -256,3 +225,38 @@ components:
         - token
       title: Credentials
       description: Credentials to use to connect to the stream.
+    ReserveRequestData:
+      properties:
+        event:
+          type: string
+          format: uuid
+          description: Identifier of the event to reserve the stream for.
+        format:
+          type: string
+          enum:
+            - ogg
+          description: Format of the audio in the stream.
+          default: ogg
+        record:
+          type: boolean
+          description: Whether to record the stream.
+          default: false
+      type: object
+      required:
+        - event
+      title: ReserveRequestData
+      description: Data for the request.
+    ReserveResponseData:
+      properties:
+        credentials:
+          $ref: "#/components/schemas/Credentials"
+        port:
+          type: integer
+          maximum: 65535
+          minimum: 1
+          description: Port to use to connect to the stream.
+      type: object
+      required:
+        - credentials
+        - port
+      title: ReserveResponseData

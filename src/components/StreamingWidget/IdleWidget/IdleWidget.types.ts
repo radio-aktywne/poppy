@@ -35,7 +35,7 @@ export type IdleWidgetLabels = {
 
 export type IdleWidgetProps = {
   availability?: Availability;
-  schedules: components["schemas"]["EventSchedule"][];
+  schedules: components["schemas"]["Schedule"][];
   onStart?: (values: FormValues) => void;
   labels: IdleWidgetLabels;
 };

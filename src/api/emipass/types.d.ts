@@ -7,9 +7,14 @@ export interface paths {
   "/ping": {
     /**
      * Ping
-     * @description Do nothing.
+     * @description Ping.
      */
     get: operations["PingPing"];
+    /**
+     * Ping headers
+     * @description Ping headers.
+     */
+    head: operations["PingHeadping"];
   };
   "/stream": {
     /**
@@ -24,69 +29,46 @@ export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
-    /** Request */
-    Request: {
+    /**
+     * SRTServer
+     * @description SRT server configuration.
+     */
+    SRTServer: {
+      host: string;
+      port: number;
+      password?: null | string;
+    };
+    /** STUNServer */
+    STUNServer: {
+      host: string;
+      port: number;
+    };
+    /**
+     * StreamRequestData
+     * @description Data for the request.
+     */
+    StreamRequestData: {
       /**
-       * Request.STUN
-       * @description STUN server to use.
-       */
-      stun?: null | components["schemas"]["STUNServer"];
-      /**
-       * Request.Codec
-       * @description Codec of the media in the stream.
+       * @description Audio codec.
+       * @default opus
        * @enum {string}
        */
       codec?: "opus";
       /**
-       * Request.Format
-       * @description Format of the media in the stream.
+       * @description Audio format.
+       * @default ogg
        * @enum {string}
        */
       format?: "ogg";
       srt: components["schemas"]["SRTServer"];
+      /** @description STUN server configuration. */
+      stun?: null | components["schemas"]["STUNServer"];
     };
-    /** STUNServer */
-    STUNServer: {
-      /**
-       * STUNServer.Host
-       * @description Host of the STUN server.
-       */
-      host: string;
-      /**
-       * STUNServer.Port
-       * @description Port of the STUN server.
-       */
-      port: number;
-    };
-    /**
-     * SRTServer
-     * @description SRT server to send the stream to.
-     */
-    SRTServer: {
-      /**
-       * SRTServer.Host
-       * @description Host of the SRT server.
-       */
-      host: string;
-      /**
-       * SRTServer.Port
-       * @description Port of the SRT server.
-       */
-      port: number;
-      /**
-       * SRTServer.Password
-       * @description Password to use for the SRT stream.
-       */
-      password?: null | string;
-    };
-    /** Response */
-    Response: {
-      /**
-       * Response.Port
-       * @description Port to use to connect to the stream.
-       */
-      port: number;
+    /** StreamResponseData */
+    StreamResponseData: {
       stun: components["schemas"]["STUNServer"];
+      /** @description Port to stream to. */
+      port: number;
     };
   };
   responses: never;
@@ -103,9 +85,26 @@ export type external = Record<string, never>;
 export interface operations {
   /**
    * Ping
-   * @description Do nothing.
+   * @description Ping.
    */
   PingPing: {
+    responses: {
+      /** @description Request fulfilled, nothing follows */
+      204: {
+        headers: {
+          "cache-control"?: string;
+        };
+        content: {
+          "application/json": null;
+        };
+      };
+    };
+  };
+  /**
+   * Ping headers
+   * @description Ping headers.
+   */
+  PingHeadping: {
     responses: {
       /** @description Request fulfilled, nothing follows */
       204: {
@@ -125,7 +124,7 @@ export interface operations {
   StreamStream: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request"];
+        "application/json": components["schemas"]["StreamRequestData"];
       };
     };
     responses: {
@@ -133,7 +132,7 @@ export interface operations {
       201: {
         headers: {};
         content: {
-          "application/json": components["schemas"]["Response"];
+          "application/json": components["schemas"]["StreamResponseData"];
         };
       };
       /** @description Bad request syntax or unsupported method */

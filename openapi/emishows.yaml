@@ -1,10 +1,6 @@
 info:
   title: emishows app
-  version: 0.7.0
-  description: Emission shows 🎭
 openapi: 3.1.0
-servers:
-  - url: /
 paths:
   /events:
     get:
@@ -18,6 +14,7 @@ paths:
             oneOf:
               - type: "null"
               - type: integer
+                default: 10
             description: Maximum number of events to return.
             default: 10
           description: Maximum number of events to return.
@@ -43,8 +40,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Filter to apply to events.
-          description: Filter to apply to events.
+            description: Filter to apply to find events.
+          description: Filter to apply to find events.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -55,8 +52,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Advanced query to apply to events.
-          description: Advanced query to apply to events.
+            description: Advanced query to apply to find events.
+          description: Advanced query to apply to find events.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -67,8 +64,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Relations to include with events.
-          description: Relations to include with events.
+            description: Relations to include in the response.
+          description: Relations to include in the response.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -79,8 +76,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Order to apply to events.
-          description: Order to apply to events.
+            description: Order to apply to the results.
+          description: Order to apply to the results.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -92,7 +89,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/events_models_ListResponse"
+                $ref: "#/components/schemas/EventList"
         "400":
           description: Bad request syntax or unsupported method
           content:
@@ -115,15 +112,13 @@ paths:
                   - status_code
                 description: Validation Exception
                 examples:
-                  ValidationException:
-                    value:
-                      status_code: 400
-                      detail: Bad Request
-                      extra: {}
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
       deprecated: false
     post:
       summary: Create event
-      description: Create an event.
+      description: Create a new event.
       operationId: EventsCreate
       parameters:
         - name: include
@@ -132,8 +127,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Relations to include with event.
-          description: Relations to include with event.
+            description: Relations to include in the response.
+          description: Relations to include in the response.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -151,7 +146,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/emishows_events_models_Event"
+                $ref: "#/components/schemas/events_models_Event"
         "400":
           description: Bad request syntax or unsupported method
           content:
@@ -174,11 +169,9 @@ paths:
                   - status_code
                 description: Validation Exception
                 examples:
-                  ValidationException:
-                    value:
-                      status_code: 400
-                      detail: Bad Request
-                      extra: {}
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
       deprecated: false
   /events/{id}:
     get:
@@ -191,6 +184,8 @@ paths:
           schema:
             type: string
             format: uuid
+            description: Identifier of the event to get.
+          description: Identifier of the event to get.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -201,8 +196,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Relations to include with event.
-          description: Relations to include with event.
+            description: Relations to include in the response.
+          description: Relations to include in the response.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -214,7 +209,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/emishows_events_models_Event"
+                $ref: "#/components/schemas/events_models_Event"
         "400":
           description: Bad request syntax or unsupported method
           content:
@@ -237,11 +232,9 @@ paths:
                   - status_code
                 description: Validation Exception
                 examples:
-                  ValidationException:
-                    value:
-                      status_code: 400
-                      detail: Bad Request
-                      extra: {}
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
       deprecated: false
     delete:
       summary: Delete event
@@ -253,6 +246,8 @@ paths:
           schema:
             type: string
             format: uuid
+            description: Identifier of the event to delete.
+          description: Identifier of the event to delete.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -287,11 +282,9 @@ paths:
                   - status_code
                 description: Validation Exception
                 examples:
-                  ValidationException:
-                    value:
-                      status_code: 400
-                      detail: Bad Request
-                      extra: {}
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
       deprecated: false
     patch:
       summary: Update event
@@ -303,6 +296,8 @@ paths:
           schema:
             type: string
             format: uuid
+            description: Identifier of the event to update.
+          description: Identifier of the event to update.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -313,8 +308,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Relations to include with event.
-          description: Relations to include with event.
+            description: Relations to include in the response.
+          description: Relations to include in the response.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -332,7 +327,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/emishows_events_models_Event"
+                $ref: "#/components/schemas/events_models_Event"
         "400":
           description: Bad request syntax or unsupported method
           content:
@@ -355,16 +350,14 @@ paths:
                   - status_code
                 description: Validation Exception
                 examples:
-                  ValidationException:
-                    value:
-                      status_code: 400
-                      detail: Bad Request
-                      extra: {}
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
       deprecated: false
   /ping:
     get:
       summary: Ping
-      description: Do nothing.
+      description: Ping.
       operationId: PingPing
       responses:
         "204":
@@ -373,8 +366,26 @@ paths:
             cache-control:
               schema:
                 type: string
-              name: cache-control
-              in: header
+              required: false
+              deprecated: false
+              allowEmptyValue: false
+              allowReserved: false
+          content:
+            application/json:
+              schema:
+                type: "null"
+      deprecated: false
+    head:
+      summary: Ping headers
+      description: Ping headers.
+      operationId: PingHeadping
+      responses:
+        "204":
+          description: Request fulfilled, nothing follows
+          headers:
+            cache-control:
+              schema:
+                type: string
               required: false
               deprecated: false
               allowEmptyValue: false
@@ -396,12 +407,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: >-
-              Start time in UTC of the event instances to return. By default,
-              the current datetime.
-          description: >-
-            Start time in UTC of the event instances to return. By default, the
-            current datetime.
+            description: Start time in UTC to filter events instances.
+          description: Start time in UTC to filter events instances.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -412,12 +419,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: >-
-              End time in UTC of the event instances to return. By default, the
-              current datetime.
-          description: >-
-            End time in UTC of the event instances to return. By default, the
-            current datetime.
+            description: End time in UTC to filter events instances.
+          description: End time in UTC to filter events instances.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -428,9 +431,10 @@ paths:
             oneOf:
               - type: "null"
               - type: integer
-            description: Maximum number of events to return.
+                default: 10
+            description: Maximum number of schedules to return.
             default: 10
-          description: Maximum number of events to return.
+          description: Maximum number of schedules to return.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -441,8 +445,8 @@ paths:
             oneOf:
               - type: "null"
               - type: integer
-            description: Number of events to skip.
-          description: Number of events to skip.
+            description: Number of schedules to skip.
+          description: Number of schedules to skip.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -453,8 +457,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Filter to apply to events.
-          description: Filter to apply to events.
+            description: Filter to apply to find events.
+          description: Filter to apply to find events.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -465,8 +469,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Relations to include with events.
-          description: Relations to include with events.
+            description: Relations to include in the response.
+          description: Relations to include in the response.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -477,8 +481,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Order to apply to events.
-          description: Order to apply to events.
+            description: Order to apply to the results.
+          description: Order to apply to the results.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -490,7 +494,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/schedule_models_ListResponse"
+                $ref: "#/components/schemas/ScheduleList"
         "400":
           description: Bad request syntax or unsupported method
           content:
@@ -513,11 +517,9 @@ paths:
                   - status_code
                 description: Validation Exception
                 examples:
-                  ValidationException:
-                    value:
-                      status_code: 400
-                      detail: Bad Request
-                      extra: {}
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
       deprecated: false
   /shows:
     get:
@@ -531,6 +533,7 @@ paths:
             oneOf:
               - type: "null"
               - type: integer
+                default: 10
             description: Maximum number of shows to return.
             default: 10
           description: Maximum number of shows to return.
@@ -556,8 +559,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Filter to apply to shows.
-          description: Filter to apply to shows.
+            description: Filter to apply to find shows.
+          description: Filter to apply to find shows.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -568,8 +571,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Relations to include with shows.
-          description: Relations to include with shows.
+            description: Relations to include in the response.
+          description: Relations to include in the response.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -580,8 +583,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Order to apply to shows.
-          description: Order to apply to shows.
+            description: Order to apply to the results.
+          description: Order to apply to the results.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -593,7 +596,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/shows_models_ListResponse"
+                $ref: "#/components/schemas/ShowList"
         "400":
           description: Bad request syntax or unsupported method
           content:
@@ -616,15 +619,13 @@ paths:
                   - status_code
                 description: Validation Exception
                 examples:
-                  ValidationException:
-                    value:
-                      status_code: 400
-                      detail: Bad Request
-                      extra: {}
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
       deprecated: false
     post:
       summary: Create show
-      description: Create a show.
+      description: Create a new show.
       operationId: ShowsCreate
       parameters:
         - name: include
@@ -633,8 +634,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Relations to include with show.
-          description: Relations to include with show.
+            description: Relations to include in the response.
+          description: Relations to include in the response.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -652,7 +653,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Show"
+                $ref: "#/components/schemas/shows_models_Show"
         "400":
           description: Bad request syntax or unsupported method
           content:
@@ -675,11 +676,9 @@ paths:
                   - status_code
                 description: Validation Exception
                 examples:
-                  ValidationException:
-                    value:
-                      status_code: 400
-                      detail: Bad Request
-                      extra: {}
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
       deprecated: false
   /shows/{id}:
     get:
@@ -692,6 +691,8 @@ paths:
           schema:
             type: string
             format: uuid
+            description: Identifier of the show to get.
+          description: Identifier of the show to get.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -702,8 +703,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Relations to include with show.
-          description: Relations to include with show.
+            description: Relations to include in the response.
+          description: Relations to include in the response.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -715,7 +716,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Show"
+                $ref: "#/components/schemas/shows_models_Show"
         "400":
           description: Bad request syntax or unsupported method
           content:
@@ -738,11 +739,9 @@ paths:
                   - status_code
                 description: Validation Exception
                 examples:
-                  ValidationException:
-                    value:
-                      status_code: 400
-                      detail: Bad Request
-                      extra: {}
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
       deprecated: false
     delete:
       summary: Delete show
@@ -754,6 +753,8 @@ paths:
           schema:
             type: string
             format: uuid
+            description: Identifier of the show to delete.
+          description: Identifier of the show to delete.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -788,11 +789,9 @@ paths:
                   - status_code
                 description: Validation Exception
                 examples:
-                  ValidationException:
-                    value:
-                      status_code: 400
-                      detail: Bad Request
-                      extra: {}
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
       deprecated: false
     patch:
       summary: Update show
@@ -804,6 +803,8 @@ paths:
           schema:
             type: string
             format: uuid
+            description: Identifier of the show to update.
+          description: Identifier of the show to update.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -814,8 +815,8 @@ paths:
             oneOf:
               - type: "null"
               - type: string
-            description: Relations to include with show.
-          description: Relations to include with show.
+            description: Relations to include in the response.
+          description: Relations to include in the response.
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -833,7 +834,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Show"
+                $ref: "#/components/schemas/shows_models_Show"
         "400":
           description: Bad request syntax or unsupported method
           content:
@@ -856,11 +857,9 @@ paths:
                   - status_code
                 description: Validation Exception
                 examples:
-                  ValidationException:
-                    value:
-                      status_code: 400
-                      detail: Bad Request
-                      extra: {}
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
       deprecated: false
   /sse:
     get:
@@ -874,8 +873,6 @@ paths:
             content-length:
               schema:
                 type: string
-              name: ""
-              in: header
               description: File size in bytes
               required: false
               deprecated: false
@@ -885,8 +882,6 @@ paths:
               schema:
                 type: string
                 format: date-time
-              name: ""
-              in: header
               description: Last modified data-time in RFC 2822 format
               required: false
               deprecated: false
@@ -895,8 +890,6 @@ paths:
             etag:
               schema:
                 type: string
-              name: ""
-              in: header
               description: Entity tag
               required: false
               deprecated: false
@@ -910,157 +903,182 @@ paths:
       deprecated: false
 components:
   schemas:
-    events_models_ListResponse:
+    EventCreateInput:
+      properties:
+        id:
+          type: string
+        showId:
+          type: string
+        type:
+          type: string
+          enum:
+            - live
+            - replay
+            - prerecorded
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        timezone:
+          type: string
+        recurrence:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/events_models_Recurrence"
+      type: object
+      required:
+        - end
+        - start
+        - timezone
+        - type
+      title: EventCreateInput
+      description: Data to create an event.
+    EventInstance:
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+      type: object
+      required:
+        - end
+        - start
+      title: EventInstance
+    EventList:
       properties:
         count:
           type: integer
-          title: ListResponse.Count
-          description: Number of events that matched the request.
+          description: Total number of events that matched the query.
         limit:
           oneOf:
             - type: "null"
             - type: integer
-          title: ListResponse.Limit
           description: Maximum number of returned events.
         offset:
           oneOf:
             - type: "null"
             - type: integer
-          title: ListResponse.Offset
           description: Number of events skipped.
         events:
           items:
-            $ref: "#/components/schemas/emishows_events_models_Event"
+            $ref: "#/components/schemas/events_models_Event"
           type: array
-          title: ListResponse.Events
           description: Events that matched the request.
       type: object
       required:
         - count
         - events
-      title: ListResponse
-    schedule_models_ListResponse:
+      title: EventList
+    EventUpdateInput:
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+            - live
+            - replay
+            - prerecorded
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        timezone:
+          type: string
+        recurrence:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/events_models_Recurrence"
+      type: object
+      required: []
+      title: EventUpdateInput
+      description: Data to update an event.
+    Schedule:
+      properties:
+        event:
+          $ref: "#/components/schemas/schedule_models_Event"
+        instances:
+          items:
+            $ref: "#/components/schemas/EventInstance"
+          type: array
+          description: Event instances.
+      type: object
+      required:
+        - event
+        - instances
+      title: Schedule
+    ScheduleList:
       properties:
         count:
           type: integer
-          title: ListResponse.Count
-          description: Number of event schedules that matched the request.
+          description: Total number of schedules that matched the query.
         limit:
           oneOf:
             - type: "null"
             - type: integer
-          title: ListResponse.Limit
-          description: Maximum number of returned event schedules.
+          description: Maximum number of returned schedules.
         offset:
           oneOf:
             - type: "null"
             - type: integer
-          title: ListResponse.Offset
-          description: Number of event schedules skipped.
+          description: Number of schedules skipped.
         schedules:
           items:
-            $ref: "#/components/schemas/EventSchedule"
+            $ref: "#/components/schemas/Schedule"
           type: array
-          title: ListResponse.Schedules
-          description: Event schedules that matched the request.
+          description: Schedules that matched the request.
       type: object
       required:
         - count
         - schedules
-      title: ListResponse
-    shows_models_ListResponse:
+      title: ScheduleList
+    ShowCreateInput:
+      properties:
+        id:
+          type: string
+        description:
+          oneOf:
+            - type: "null"
+            - type: string
+        title:
+          type: string
+      type: object
+      required:
+        - title
+      title: ShowCreateInput
+      description: Data to create a show.
+    ShowList:
       properties:
         count:
           type: integer
-          title: ListResponse.Count
-          description: Number of shows that matched the request.
+          description: Total number of shows that matched the query.
         limit:
           oneOf:
             - type: "null"
             - type: integer
-          title: ListResponse.Limit
           description: Maximum number of returned shows.
         offset:
           oneOf:
             - type: "null"
             - type: integer
-          title: ListResponse.Offset
           description: Number of shows skipped.
         shows:
           items:
-            $ref: "#/components/schemas/Show"
+            $ref: "#/components/schemas/shows_models_Show"
           type: array
-          title: ListResponse.Shows
           description: Shows that matched the request.
       type: object
       required:
         - count
         - shows
-      title: ListResponse
-    emishows_events_models_Event:
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-            - live
-            - replay
-            - prerecorded
-        showId:
-          type: string
-        show:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/Show"
-        start:
-          title: Event.Start
-          description: Start time of the event in event timezone.
-        end:
-          title: Event.End
-          description: End time of the event in event timezone.
-        timezone:
-          type: string
-          title: Event.Timezone
-          description: Timezone of the event.
-        recurrence:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/Recurrence"
-          title: Event.Recurrence
-          description: Recurrence of the event.
-      type: object
-      required:
-        - end
-        - id
-        - showId
-        - start
-        - timezone
-        - type
-      title: Event
-    prisma_models_Event:
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-            - live
-            - replay
-            - prerecorded
-        showId:
-          type: string
-        show:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/Show"
-      type: object
-      required:
-        - id
-        - showId
-        - type
-      title: Event
-    Show:
+      title: ShowList
+    ShowUpdateInput:
       properties:
         id:
           type: string
@@ -1070,43 +1088,84 @@ components:
           oneOf:
             - type: "null"
             - type: string
-        events:
+      type: object
+      required: []
+      title: ShowUpdateInput
+      description: Data to update a show.
+    events_models_Event:
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the event.
+        type:
+          type: string
+          enum:
+            - live
+            - replay
+            - prerecorded
+          description: Type of the event.
+        showId:
+          type: string
+          format: uuid
+          description: Identifier of the show that the event belongs to.
+        show:
           oneOf:
             - type: "null"
-            - items:
-                $ref: "#/components/schemas/prisma_models_Event"
-              type: array
+            - $ref: "#/components/schemas/events_models_Show"
+          description: Show that the event belongs to.
+        start:
+          type: string
+          format: date-time
+          description: Start time of the event in event timezone.
+        end:
+          type: string
+          format: date-time
+          description: End time of the event in event timezone.
+        timezone:
+          type: string
+          description: Timezone of the event.
+        recurrence:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/events_models_Recurrence"
+          description: Recurrence rule of the event.
       type: object
       required:
+        - end
         - id
-        - title
-      title: Show
-    Recurrence:
+        - showId
+        - start
+        - timezone
+        - type
+      title: Event
+    events_models_Recurrence:
       properties:
         rule:
           oneOf:
             - type: "null"
-            - $ref: "#/components/schemas/RecurrenceRule"
-          title: Recurrence.Rule
+            - $ref: "#/components/schemas/events_models_RecurrenceRule"
           description: Rule of the recurrence.
         include:
           oneOf:
             - type: "null"
-            - items: {}
+            - items:
+                type: string
+                format: date-time
               type: array
-          title: Recurrence.Include
           description: Included dates of the recurrence in event timezone.
         exclude:
           oneOf:
             - type: "null"
-            - items: {}
+            - items:
+                type: string
+                format: date-time
               type: array
-          title: Recurrence.Exclude
           description: Excluded dates of the recurrence in event timezone.
       type: object
       required: []
       title: Recurrence
-    RecurrenceRule:
+    events_models_RecurrenceRule:
       properties:
         frequency:
           type: string
@@ -1118,25 +1177,22 @@ components:
             - weekly
             - monthly
             - yearly
-          title: RecurrenceRule.Frequency
           description: Frequency of the recurrence.
         until:
           oneOf:
             - type: "null"
-            - {}
-          title: RecurrenceRule.Until
+            - type: string
+              format: date-time
           description: End date of the recurrence in UTC.
         count:
           oneOf:
             - type: "null"
             - type: integer
-          title: RecurrenceRule.Count
           description: Number of occurrences of the recurrence.
         interval:
           oneOf:
             - type: "null"
             - type: integer
-          title: RecurrenceRule.Interval
           description: Interval of the recurrence.
         bySeconds:
           oneOf:
@@ -1144,7 +1200,6 @@ components:
             - items:
                 type: integer
               type: array
-          title: RecurrenceRule.BySeconds
           description: Seconds of the recurrence.
         byMinutes:
           oneOf:
@@ -1152,7 +1207,6 @@ components:
             - items:
                 type: integer
               type: array
-          title: RecurrenceRule.ByMinutes
           description: Minutes of the recurrence.
         byHours:
           oneOf:
@@ -1160,15 +1214,13 @@ components:
             - items:
                 type: integer
               type: array
-          title: RecurrenceRule.ByHours
           description: Hours of the recurrence.
         byWeekdays:
           oneOf:
             - type: "null"
             - items:
-                $ref: "#/components/schemas/WeekdayRule"
+                $ref: "#/components/schemas/events_models_WeekdayRule"
               type: array
-          title: RecurrenceRule.ByWeekdays
           description: Weekdays of the recurrence.
         byMonthdays:
           oneOf:
@@ -1178,7 +1230,6 @@ components:
                   - type: integer
                   - type: integer
               type: array
-          title: RecurrenceRule.ByMonthdays
           description: Monthdays of the recurrence.
         byYeardays:
           oneOf:
@@ -1188,7 +1239,6 @@ components:
                   - type: integer
                   - type: integer
               type: array
-          title: RecurrenceRule.ByYeardays
           description: Yeardays of the recurrence.
         byWeeks:
           oneOf:
@@ -1198,7 +1248,6 @@ components:
                   - type: integer
                   - type: integer
               type: array
-          title: RecurrenceRule.ByWeeks
           description: Weeks of the recurrence.
         byMonths:
           oneOf:
@@ -1206,7 +1255,6 @@ components:
             - items:
                 type: integer
               type: array
-          title: RecurrenceRule.ByMonths
           description: Months of the recurrence.
         bySetPositions:
           oneOf:
@@ -1214,7 +1262,6 @@ components:
             - items:
                 type: integer
               type: array
-          title: RecurrenceRule.BySetPositions
           description: Set positions of the recurrence.
         weekStart:
           type:
@@ -1229,13 +1276,37 @@ components:
             - saturday
             - sunday
             - null
-          title: RecurrenceRule.WeekStart
           description: Start day of the week.
       type: object
       required:
         - frequency
       title: RecurrenceRule
-    WeekdayRule:
+    events_models_Show:
+      properties:
+        id:
+          type: string
+          description: Identifier of the show.
+        title:
+          type: string
+          description: Title of the show.
+        description:
+          oneOf:
+            - type: "null"
+            - type: string
+          description: Description of the show.
+        events:
+          oneOf:
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/events_models_Event"
+              type: array
+          description: Events that the show belongs to.
+      type: object
+      required:
+        - id
+        - title
+      title: Show
+    events_models_WeekdayRule:
       properties:
         day:
           type: string
@@ -1247,241 +1318,489 @@ components:
             - friday
             - saturday
             - sunday
-          title: DayRule.Day
           description: Day of the week.
         occurrence:
           oneOf:
             - type: "null"
             - type: integer
             - type: integer
-          title: DayRule.Occurrence
           description: Occurrence of the day in the year.
       type: object
       required:
         - day
       title: WeekdayRule
-    EventCreateInput:
+    schedule_models_Event:
       properties:
         id:
           type: string
-        showId:
-          type: string
-        show:
-          $ref: "#/components/schemas/ShowCreateNestedWithoutRelationsInput"
+          format: uuid
+          description: Identifier of the event.
         type:
           type: string
           enum:
             - live
             - replay
             - prerecorded
+          description: Type of the event.
+        showId:
+          type: string
+          format: uuid
+          description: Identifier of the show that the event belongs to.
+        show:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/schedule_models_Show"
+          description: Show that the event belongs to.
         start:
           type: string
+          format: date-time
+          description: Start time of the event in event timezone.
         end:
           type: string
+          format: date-time
+          description: End time of the event in event timezone.
         timezone:
           type: string
+          description: Timezone of the event.
         recurrence:
           oneOf:
             - type: "null"
-            - $ref: "#/components/schemas/Recurrence"
+            - $ref: "#/components/schemas/schedule_models_Recurrence"
+          description: Recurrence rule of the event.
       type: object
       required:
         - end
+        - id
+        - showId
         - start
         - timezone
         - type
-      title: EventCreateInput
-    ShowCreateNestedWithoutRelationsInput:
+      title: Event
+      description: Event data.
+    schedule_models_Recurrence:
       properties:
-        create:
-          $ref: "#/components/schemas/ShowCreateWithoutRelationsInput"
-        connect:
-          $ref: "#/components/schemas/_ShowWhereUnique_id_Input"
+        rule:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/schedule_models_RecurrenceRule"
+          description: Rule of the recurrence.
+        include:
+          oneOf:
+            - type: "null"
+            - items:
+                type: string
+                format: date-time
+              type: array
+          description: Included dates of the recurrence in event timezone.
+        exclude:
+          oneOf:
+            - type: "null"
+            - items:
+                type: string
+                format: date-time
+              type: array
+          description: Excluded dates of the recurrence in event timezone.
       type: object
       required: []
-      title: ShowCreateNestedWithoutRelationsInput
-    ShowCreateWithoutRelationsInput:
+      title: Recurrence
+    schedule_models_RecurrenceRule:
+      properties:
+        frequency:
+          type: string
+          enum:
+            - secondly
+            - minutely
+            - hourly
+            - daily
+            - weekly
+            - monthly
+            - yearly
+          description: Frequency of the recurrence.
+        until:
+          oneOf:
+            - type: "null"
+            - type: string
+              format: date-time
+          description: End date of the recurrence in UTC.
+        count:
+          oneOf:
+            - type: "null"
+            - type: integer
+          description: Number of occurrences of the recurrence.
+        interval:
+          oneOf:
+            - type: "null"
+            - type: integer
+          description: Interval of the recurrence.
+        bySeconds:
+          oneOf:
+            - type: "null"
+            - items:
+                type: integer
+              type: array
+          description: Seconds of the recurrence.
+        byMinutes:
+          oneOf:
+            - type: "null"
+            - items:
+                type: integer
+              type: array
+          description: Minutes of the recurrence.
+        byHours:
+          oneOf:
+            - type: "null"
+            - items:
+                type: integer
+              type: array
+          description: Hours of the recurrence.
+        byWeekdays:
+          oneOf:
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/schedule_models_WeekdayRule"
+              type: array
+          description: Weekdays of the recurrence.
+        byMonthdays:
+          oneOf:
+            - type: "null"
+            - items:
+                oneOf:
+                  - type: integer
+                  - type: integer
+              type: array
+          description: Monthdays of the recurrence.
+        byYeardays:
+          oneOf:
+            - type: "null"
+            - items:
+                oneOf:
+                  - type: integer
+                  - type: integer
+              type: array
+          description: Yeardays of the recurrence.
+        byWeeks:
+          oneOf:
+            - type: "null"
+            - items:
+                oneOf:
+                  - type: integer
+                  - type: integer
+              type: array
+          description: Weeks of the recurrence.
+        byMonths:
+          oneOf:
+            - type: "null"
+            - items:
+                type: integer
+              type: array
+          description: Months of the recurrence.
+        bySetPositions:
+          oneOf:
+            - type: "null"
+            - items:
+                type: integer
+              type: array
+          description: Set positions of the recurrence.
+        weekStart:
+          type:
+            - "null"
+            - string
+          enum:
+            - monday
+            - tuesday
+            - wednesday
+            - thursday
+            - friday
+            - saturday
+            - sunday
+            - null
+          description: Start day of the week.
+      type: object
+      required:
+        - frequency
+      title: RecurrenceRule
+    schedule_models_Show:
       properties:
         id:
           type: string
+          description: Identifier of the show.
+        title:
+          type: string
+          description: Title of the show.
         description:
           oneOf:
             - type: "null"
             - type: string
-        title:
-          type: string
-      type: object
-      required:
-        - title
-      title: ShowCreateWithoutRelationsInput
-    _ShowWhereUnique_id_Input:
-      properties:
-        id:
-          type: string
+          description: Description of the show.
+        events:
+          oneOf:
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/schedule_models_Event"
+              type: array
+          description: Events that the show belongs to.
       type: object
       required:
         - id
-      title: _ShowWhereUnique_id_Input
-    EventUpdateInput:
+        - title
+      title: Show
+    schedule_models_WeekdayRule:
+      properties:
+        day:
+          type: string
+          enum:
+            - monday
+            - tuesday
+            - wednesday
+            - thursday
+            - friday
+            - saturday
+            - sunday
+          description: Day of the week.
+        occurrence:
+          oneOf:
+            - type: "null"
+            - type: integer
+            - type: integer
+          description: Occurrence of the day in the year.
+      type: object
+      required:
+        - day
+      title: WeekdayRule
+    shows_models_Event:
       properties:
         id:
           type: string
+          format: uuid
+          description: Identifier of the event.
         type:
           type: string
           enum:
             - live
             - replay
             - prerecorded
+          description: Type of the event.
+        showId:
+          type: string
+          format: uuid
+          description: Identifier of the show that the event belongs to.
         show:
-          $ref: "#/components/schemas/ShowUpdateOneWithoutRelationsInput"
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/shows_models_Show"
+          description: Show that the event belongs to.
         start:
           type: string
+          format: date-time
+          description: Start time of the event in event timezone.
         end:
           type: string
+          format: date-time
+          description: End time of the event in event timezone.
         timezone:
           type: string
+          description: Timezone of the event.
         recurrence:
           oneOf:
             - type: "null"
-            - $ref: "#/components/schemas/Recurrence"
-      type: object
-      required: []
-      title: EventUpdateInput
-    ShowUpdateOneWithoutRelationsInput:
-      properties:
-        create:
-          $ref: "#/components/schemas/ShowCreateWithoutRelationsInput"
-        connect:
-          $ref: "#/components/schemas/_ShowWhereUnique_id_Input"
-        disconnect:
-          type: boolean
-        delete:
-          type: boolean
-      type: object
-      required: []
-      title: ShowUpdateOneWithoutRelationsInput
-    EventSchedule:
-      properties:
-        event:
-          $ref: "#/components/schemas/emishows_events_models_Event"
-        instances:
-          items:
-            $ref: "#/components/schemas/EventInstance"
-          type: array
-          title: EventSchedule.Instances
-          description: Event instances.
-      type: object
-      required:
-        - event
-        - instances
-      title: EventSchedule
-    EventInstance:
-      properties:
-        start:
-          title: EventInstance.Start
-          description: Start time of the event instance in event timezone.
-        end:
-          title: EventInstance.End
-          description: End time of the event instance in event timezone.
+            - $ref: "#/components/schemas/shows_models_Recurrence"
+          description: Recurrence rule of the event.
       type: object
       required:
         - end
+        - id
+        - showId
         - start
-      title: EventInstance
-    ShowCreateInput:
+        - timezone
+        - type
+      title: Event
+    shows_models_Recurrence:
+      properties:
+        rule:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/shows_models_RecurrenceRule"
+          description: Rule of the recurrence.
+        include:
+          oneOf:
+            - type: "null"
+            - items:
+                type: string
+                format: date-time
+              type: array
+          description: Included dates of the recurrence in event timezone.
+        exclude:
+          oneOf:
+            - type: "null"
+            - items:
+                type: string
+                format: date-time
+              type: array
+          description: Excluded dates of the recurrence in event timezone.
+      type: object
+      required: []
+      title: Recurrence
+    shows_models_RecurrenceRule:
+      properties:
+        frequency:
+          type: string
+          enum:
+            - secondly
+            - minutely
+            - hourly
+            - daily
+            - weekly
+            - monthly
+            - yearly
+          description: Frequency of the recurrence.
+        until:
+          oneOf:
+            - type: "null"
+            - type: string
+              format: date-time
+          description: End date of the recurrence in UTC.
+        count:
+          oneOf:
+            - type: "null"
+            - type: integer
+          description: Number of occurrences of the recurrence.
+        interval:
+          oneOf:
+            - type: "null"
+            - type: integer
+          description: Interval of the recurrence.
+        bySeconds:
+          oneOf:
+            - type: "null"
+            - items:
+                type: integer
+              type: array
+          description: Seconds of the recurrence.
+        byMinutes:
+          oneOf:
+            - type: "null"
+            - items:
+                type: integer
+              type: array
+          description: Minutes of the recurrence.
+        byHours:
+          oneOf:
+            - type: "null"
+            - items:
+                type: integer
+              type: array
+          description: Hours of the recurrence.
+        byWeekdays:
+          oneOf:
+            - type: "null"
+            - items:
+                $ref: "#/components/schemas/shows_models_WeekdayRule"
+              type: array
+          description: Weekdays of the recurrence.
+        byMonthdays:
+          oneOf:
+            - type: "null"
+            - items:
+                oneOf:
+                  - type: integer
+                  - type: integer
+              type: array
+          description: Monthdays of the recurrence.
+        byYeardays:
+          oneOf:
+            - type: "null"
+            - items:
+                oneOf:
+                  - type: integer
+                  - type: integer
+              type: array
+          description: Yeardays of the recurrence.
+        byWeeks:
+          oneOf:
+            - type: "null"
+            - items:
+                oneOf:
+                  - type: integer
+                  - type: integer
+              type: array
+          description: Weeks of the recurrence.
+        byMonths:
+          oneOf:
+            - type: "null"
+            - items:
+                type: integer
+              type: array
+          description: Months of the recurrence.
+        bySetPositions:
+          oneOf:
+            - type: "null"
+            - items:
+                type: integer
+              type: array
+          description: Set positions of the recurrence.
+        weekStart:
+          type:
+            - "null"
+            - string
+          enum:
+            - monday
+            - tuesday
+            - wednesday
+            - thursday
+            - friday
+            - saturday
+            - sunday
+            - null
+          description: Start day of the week.
+      type: object
+      required:
+        - frequency
+      title: RecurrenceRule
+    shows_models_Show:
       properties:
         id:
           type: string
+          description: Identifier of the show.
+        title:
+          type: string
+          description: Title of the show.
         description:
           oneOf:
             - type: "null"
             - type: string
+          description: Description of the show.
         events:
-          $ref: "#/components/schemas/EventCreateManyNestedWithoutRelationsInput"
-        title:
-          type: string
-      type: object
-      required:
-        - title
-      title: ShowCreateInput
-    EventCreateManyNestedWithoutRelationsInput:
-      properties:
-        create:
           oneOf:
-            - $ref: "#/components/schemas/EventCreateWithoutRelationsInput"
+            - type: "null"
             - items:
-                $ref: "#/components/schemas/EventCreateWithoutRelationsInput"
+                $ref: "#/components/schemas/shows_models_Event"
               type: array
-        connect:
-          oneOf:
-            - $ref: "#/components/schemas/_EventWhereUnique_id_Input"
-            - items:
-                $ref: "#/components/schemas/_EventWhereUnique_id_Input"
-              type: array
-      type: object
-      required: []
-      title: EventCreateManyNestedWithoutRelationsInput
-    EventCreateWithoutRelationsInput:
-      properties:
-        id:
-          type: string
-        showId:
-          type: string
-        type:
-          type: string
-          enum:
-            - live
-            - replay
-            - prerecorded
-      type: object
-      required:
-        - type
-      title: EventCreateWithoutRelationsInput
-    _EventWhereUnique_id_Input:
-      properties:
-        id:
-          type: string
+          description: Events that the show belongs to.
       type: object
       required:
         - id
-      title: _EventWhereUnique_id_Input
-    ShowUpdateInput:
+        - title
+      title: Show
+    shows_models_WeekdayRule:
       properties:
-        id:
+        day:
           type: string
-        title:
-          type: string
-        description:
+          enum:
+            - monday
+            - tuesday
+            - wednesday
+            - thursday
+            - friday
+            - saturday
+            - sunday
+          description: Day of the week.
+        occurrence:
           oneOf:
             - type: "null"
-            - type: string
-        events:
-          $ref: "#/components/schemas/EventUpdateManyWithoutRelationsInput"
+            - type: integer
+            - type: integer
+          description: Occurrence of the day in the year.
       type: object
-      required: []
-      title: ShowUpdateInput
-    EventUpdateManyWithoutRelationsInput:
-      properties:
-        create:
-          items:
-            $ref: "#/components/schemas/EventCreateWithoutRelationsInput"
-          type: array
-        connect:
-          items:
-            $ref: "#/components/schemas/_EventWhereUnique_id_Input"
-          type: array
-        set:
-          items:
-            $ref: "#/components/schemas/_EventWhereUnique_id_Input"
-          type: array
-        disconnect:
-          items:
-            $ref: "#/components/schemas/_EventWhereUnique_id_Input"
-          type: array
-        delete:
-          items:
-            $ref: "#/components/schemas/_EventWhereUnique_id_Input"
-          type: array
-      type: object
-      required: []
-      title: EventUpdateManyWithoutRelationsInput
+      required:
+        - day
+      title: WeekdayRule
