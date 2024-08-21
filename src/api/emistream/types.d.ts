@@ -7,21 +7,26 @@ export interface paths {
   "/check": {
     /**
      * Check availability
-     * @description Check the current availability of the stream.
+     * @description Check the availability of the stream.
      */
     get: operations["CheckCheck"];
   };
   "/ping": {
     /**
      * Ping
-     * @description Do nothing.
+     * @description Ping.
      */
     get: operations["PingPing"];
+    /**
+     * Ping headers
+     * @description Ping headers.
+     */
+    head: operations["PingHeadping"];
   };
   "/reserve": {
     /**
      * Reserve a stream
-     * @description Reserve a stream to be able to go live.
+     * @description Reserve a stream.
      */
     post: operations["ReserveReserve"];
   };
@@ -40,61 +45,54 @@ export interface components {
   schemas: {
     /** Availability */
     Availability: {
-      /**
-       * Availability.Event
-       * @description Identifier of the event that is currently on air.
-       */
+      /** @description Identifier of the event that is currently being streamed. */
       event?: null | string;
       /**
-       * Availability.CheckedAt
+       * Format: date-time
        * @description Time in UTC at which the availability was checked.
        */
-      checkedAt: unknown;
-    };
-    /** ReserveRequest */
-    ReserveRequest: {
-      /**
-       * Request.Event
-       * Format: uuid
-       * @description Identifier of the event to reserve the stream for.
-       */
-      event: string;
-      /**
-       * Request.Format
-       * @description Format of the audio stream.
-       * @constant
-       */
-      format?: "ogg";
-      /**
-       * Request.Record
-       * @description Whether to record the stream.
-       */
-      record?: boolean;
-    };
-    /** ReserveResponse */
-    ReserveResponse: {
-      credentials: components["schemas"]["Credentials"];
-      /**
-       * Response.Port
-       * @description Port to use to connect to the stream.
-       */
-      port: number;
+      checkedAt: string;
     };
     /**
      * Credentials
      * @description Credentials to use to connect to the stream.
      */
     Credentials: {
-      /**
-       * Credentials.Token
-       * @description Token to use to connect to the stream.
-       */
+      /** @description Token to use to connect to the stream. */
       token: string;
       /**
-       * Credentials.ExpiresAt
+       * Format: date-time
        * @description Time in UTC at which the token expires if not used.
        */
-      expiresAt: unknown;
+      expiresAt: string;
+    };
+    /**
+     * ReserveRequestData
+     * @description Data for the request.
+     */
+    ReserveRequestData: {
+      /**
+       * Format: uuid
+       * @description Identifier of the event to reserve the stream for.
+       */
+      event: string;
+      /**
+       * @description Format of the audio in the stream.
+       * @default ogg
+       * @enum {string}
+       */
+      format?: "ogg";
+      /**
+       * @description Whether to record the stream.
+       * @default false
+       */
+      record?: boolean;
+    };
+    /** ReserveResponseData */
+    ReserveResponseData: {
+      credentials: components["schemas"]["Credentials"];
+      /** @description Port to use to connect to the stream. */
+      port: number;
     };
   };
   responses: never;
@@ -111,7 +109,7 @@ export type external = Record<string, never>;
 export interface operations {
   /**
    * Check availability
-   * @description Check the current availability of the stream.
+   * @description Check the availability of the stream.
    */
   CheckCheck: {
     responses: {
@@ -126,7 +124,7 @@ export interface operations {
   };
   /**
    * Ping
-   * @description Do nothing.
+   * @description Ping.
    */
   PingPing: {
     responses: {
@@ -142,13 +140,30 @@ export interface operations {
     };
   };
   /**
+   * Ping headers
+   * @description Ping headers.
+   */
+  PingHeadping: {
+    responses: {
+      /** @description Request fulfilled, nothing follows */
+      204: {
+        headers: {
+          "cache-control"?: string;
+        };
+        content: {
+          "application/json": null;
+        };
+      };
+    };
+  };
+  /**
    * Reserve a stream
-   * @description Reserve a stream to be able to go live.
+   * @description Reserve a stream.
    */
   ReserveReserve: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["ReserveRequest"];
+        "application/json": components["schemas"]["ReserveRequestData"];
       };
     };
     responses: {
@@ -156,7 +171,7 @@ export interface operations {
       201: {
         headers: {};
         content: {
-          "application/json": components["schemas"]["ReserveResponse"];
+          "application/json": components["schemas"]["ReserveResponseData"];
         };
       };
       /** @description Bad request syntax or unsupported method */

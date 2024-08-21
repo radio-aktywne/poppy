@@ -12,7 +12,7 @@ export interface paths {
     get: operations["EventsList"];
     /**
      * Create event
-     * @description Create an event.
+     * @description Create a new event.
      */
     post: operations["EventsCreate"];
   };
@@ -36,9 +36,14 @@ export interface paths {
   "/ping": {
     /**
      * Ping
-     * @description Do nothing.
+     * @description Ping.
      */
     get: operations["PingPing"];
+    /**
+     * Ping headers
+     * @description Ping headers.
+     */
+    head: operations["PingHeadping"];
   };
   "/schedule": {
     /**
@@ -55,7 +60,7 @@ export interface paths {
     get: operations["ShowsList"];
     /**
      * Create show
-     * @description Create a show.
+     * @description Create a new show.
      */
     post: operations["ShowsCreate"];
   };
@@ -89,140 +94,147 @@ export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
-    /** ListResponse */
-    events_models_ListResponse: {
-      /**
-       * ListResponse.Count
-       * @description Number of events that matched the request.
-       */
-      count: number;
-      /**
-       * ListResponse.Limit
-       * @description Maximum number of returned events.
-       */
-      limit?: null | number;
-      /**
-       * ListResponse.Offset
-       * @description Number of events skipped.
-       */
-      offset?: null | number;
-      /**
-       * ListResponse.Events
-       * @description Events that matched the request.
-       */
-      events: components["schemas"]["emishows_events_models_Event"][];
-    };
-    /** ListResponse */
-    schedule_models_ListResponse: {
-      /**
-       * ListResponse.Count
-       * @description Number of event schedules that matched the request.
-       */
-      count: number;
-      /**
-       * ListResponse.Limit
-       * @description Maximum number of returned event schedules.
-       */
-      limit?: null | number;
-      /**
-       * ListResponse.Offset
-       * @description Number of event schedules skipped.
-       */
-      offset?: null | number;
-      /**
-       * ListResponse.Schedules
-       * @description Event schedules that matched the request.
-       */
-      schedules: components["schemas"]["EventSchedule"][];
-    };
-    /** ListResponse */
-    shows_models_ListResponse: {
-      /**
-       * ListResponse.Count
-       * @description Number of shows that matched the request.
-       */
-      count: number;
-      /**
-       * ListResponse.Limit
-       * @description Maximum number of returned shows.
-       */
-      limit?: null | number;
-      /**
-       * ListResponse.Offset
-       * @description Number of shows skipped.
-       */
-      offset?: null | number;
-      /**
-       * ListResponse.Shows
-       * @description Shows that matched the request.
-       */
-      shows: components["schemas"]["Show"][];
-    };
-    /** Event */
-    emishows_events_models_Event: {
-      id: string;
+    /**
+     * EventCreateInput
+     * @description Data to create an event.
+     */
+    EventCreateInput: {
+      id?: string;
+      showId?: string;
       /** @enum {string} */
       type: "live" | "replay" | "prerecorded";
-      showId: string;
-      show?: null | components["schemas"]["Show"];
+      /** Format: date-time */
+      start: string;
+      /** Format: date-time */
+      end: string;
+      timezone: string;
+      recurrence?: null | components["schemas"]["events_models_Recurrence"];
+    };
+    /** EventInstance */
+    EventInstance: {
+      /** Format: date-time */
+      start: string;
+      /** Format: date-time */
+      end: string;
+    };
+    /** EventList */
+    EventList: {
+      /** @description Total number of events that matched the query. */
+      count: number;
+      /** @description Maximum number of returned events. */
+      limit?: null | number;
+      /** @description Number of events skipped. */
+      offset?: null | number;
+      /** @description Events that matched the request. */
+      events: components["schemas"]["events_models_Event"][];
+    };
+    /**
+     * EventUpdateInput
+     * @description Data to update an event.
+     */
+    EventUpdateInput: {
+      id?: string;
+      /** @enum {string} */
+      type?: "live" | "replay" | "prerecorded";
+      /** Format: date-time */
+      start?: string;
+      /** Format: date-time */
+      end?: string;
+      timezone?: string;
+      recurrence?: null | components["schemas"]["events_models_Recurrence"];
+    };
+    /** Schedule */
+    Schedule: {
+      event: components["schemas"]["schedule_models_Event"];
+      /** @description Event instances. */
+      instances: components["schemas"]["EventInstance"][];
+    };
+    /** ScheduleList */
+    ScheduleList: {
+      /** @description Total number of schedules that matched the query. */
+      count: number;
+      /** @description Maximum number of returned schedules. */
+      limit?: null | number;
+      /** @description Number of schedules skipped. */
+      offset?: null | number;
+      /** @description Schedules that matched the request. */
+      schedules: components["schemas"]["Schedule"][];
+    };
+    /**
+     * ShowCreateInput
+     * @description Data to create a show.
+     */
+    ShowCreateInput: {
+      id?: string;
+      description?: null | string;
+      title: string;
+    };
+    /** ShowList */
+    ShowList: {
+      /** @description Total number of shows that matched the query. */
+      count: number;
+      /** @description Maximum number of returned shows. */
+      limit?: null | number;
+      /** @description Number of shows skipped. */
+      offset?: null | number;
+      /** @description Shows that matched the request. */
+      shows: components["schemas"]["shows_models_Show"][];
+    };
+    /**
+     * ShowUpdateInput
+     * @description Data to update a show.
+     */
+    ShowUpdateInput: {
+      id?: string;
+      title?: string;
+      description?: null | string;
+    };
+    /** Event */
+    events_models_Event: {
       /**
-       * Event.Start
+       * Format: uuid
+       * @description Identifier of the event.
+       */
+      id: string;
+      /**
+       * @description Type of the event.
+       * @enum {string}
+       */
+      type: "live" | "replay" | "prerecorded";
+      /**
+       * Format: uuid
+       * @description Identifier of the show that the event belongs to.
+       */
+      showId: string;
+      /** @description Show that the event belongs to. */
+      show?: null | components["schemas"]["events_models_Show"];
+      /**
+       * Format: date-time
        * @description Start time of the event in event timezone.
        */
-      start: unknown;
+      start: string;
       /**
-       * Event.End
+       * Format: date-time
        * @description End time of the event in event timezone.
        */
-      end: unknown;
-      /**
-       * Event.Timezone
-       * @description Timezone of the event.
-       */
+      end: string;
+      /** @description Timezone of the event. */
       timezone: string;
-      /**
-       * Event.Recurrence
-       * @description Recurrence of the event.
-       */
-      recurrence?: null | components["schemas"]["Recurrence"];
-    };
-    /** Event */
-    prisma_models_Event: {
-      id: string;
-      /** @enum {string} */
-      type: "live" | "replay" | "prerecorded";
-      showId: string;
-      show?: null | components["schemas"]["Show"];
-    };
-    /** Show */
-    Show: {
-      id: string;
-      title: string;
-      description?: null | string;
-      events?: null | components["schemas"]["prisma_models_Event"][];
+      /** @description Recurrence rule of the event. */
+      recurrence?: null | components["schemas"]["events_models_Recurrence"];
     };
     /** Recurrence */
-    Recurrence: {
-      /**
-       * Recurrence.Rule
-       * @description Rule of the recurrence.
-       */
-      rule?: null | components["schemas"]["RecurrenceRule"];
-      /**
-       * Recurrence.Include
-       * @description Included dates of the recurrence in event timezone.
-       */
-      include?: null | unknown[];
-      /**
-       * Recurrence.Exclude
-       * @description Excluded dates of the recurrence in event timezone.
-       */
-      exclude?: null | unknown[];
+    events_models_Recurrence: {
+      /** @description Rule of the recurrence. */
+      rule?: null | components["schemas"]["events_models_RecurrenceRule"];
+      /** @description Included dates of the recurrence in event timezone. */
+      include?: null | string[];
+      /** @description Excluded dates of the recurrence in event timezone. */
+      exclude?: null | string[];
     };
     /** RecurrenceRule */
-    RecurrenceRule: {
+    events_models_RecurrenceRule: {
       /**
-       * RecurrenceRule.Frequency
        * @description Frequency of the recurrence.
        * @enum {string}
        */
@@ -234,68 +246,31 @@ export interface components {
         | "weekly"
         | "monthly"
         | "yearly";
-      /**
-       * RecurrenceRule.Until
-       * @description End date of the recurrence in UTC.
-       */
-      until?: unknown;
-      /**
-       * RecurrenceRule.Count
-       * @description Number of occurrences of the recurrence.
-       */
+      /** @description End date of the recurrence in UTC. */
+      until?: null | string;
+      /** @description Number of occurrences of the recurrence. */
       count?: null | number;
-      /**
-       * RecurrenceRule.Interval
-       * @description Interval of the recurrence.
-       */
+      /** @description Interval of the recurrence. */
       interval?: null | number;
-      /**
-       * RecurrenceRule.BySeconds
-       * @description Seconds of the recurrence.
-       */
+      /** @description Seconds of the recurrence. */
       bySeconds?: null | number[];
-      /**
-       * RecurrenceRule.ByMinutes
-       * @description Minutes of the recurrence.
-       */
+      /** @description Minutes of the recurrence. */
       byMinutes?: null | number[];
-      /**
-       * RecurrenceRule.ByHours
-       * @description Hours of the recurrence.
-       */
+      /** @description Hours of the recurrence. */
       byHours?: null | number[];
-      /**
-       * RecurrenceRule.ByWeekdays
-       * @description Weekdays of the recurrence.
-       */
-      byWeekdays?: null | components["schemas"]["WeekdayRule"][];
-      /**
-       * RecurrenceRule.ByMonthdays
-       * @description Monthdays of the recurrence.
-       */
+      /** @description Weekdays of the recurrence. */
+      byWeekdays?: null | components["schemas"]["events_models_WeekdayRule"][];
+      /** @description Monthdays of the recurrence. */
       byMonthdays?: null | number[];
-      /**
-       * RecurrenceRule.ByYeardays
-       * @description Yeardays of the recurrence.
-       */
+      /** @description Yeardays of the recurrence. */
       byYeardays?: null | number[];
-      /**
-       * RecurrenceRule.ByWeeks
-       * @description Weeks of the recurrence.
-       */
+      /** @description Weeks of the recurrence. */
       byWeeks?: null | number[];
-      /**
-       * RecurrenceRule.ByMonths
-       * @description Months of the recurrence.
-       */
+      /** @description Months of the recurrence. */
       byMonths?: null | number[];
-      /**
-       * RecurrenceRule.BySetPositions
-       * @description Set positions of the recurrence.
-       */
+      /** @description Set positions of the recurrence. */
       bySetPositions?: null | number[];
       /**
-       * RecurrenceRule.WeekStart
        * @description Start day of the week.
        * @enum {null|string}
        */
@@ -309,10 +284,20 @@ export interface components {
         | "sunday"
         | null;
     };
+    /** Show */
+    events_models_Show: {
+      /** @description Identifier of the show. */
+      id: string;
+      /** @description Title of the show. */
+      title: string;
+      /** @description Description of the show. */
+      description?: null | string;
+      /** @description Events that the show belongs to. */
+      events?: null | components["schemas"]["events_models_Event"][];
+    };
     /** WeekdayRule */
-    WeekdayRule: {
+    events_models_WeekdayRule: {
       /**
-       * DayRule.Day
        * @description Day of the week.
        * @enum {string}
        */
@@ -324,120 +309,259 @@ export interface components {
         | "friday"
         | "saturday"
         | "sunday";
-      /**
-       * DayRule.Occurrence
-       * @description Occurrence of the day in the year.
-       */
+      /** @description Occurrence of the day in the year. */
       occurrence?: null | number;
     };
-    /** EventCreateInput */
-    EventCreateInput: {
-      id?: string;
-      showId?: string;
-      show?: components["schemas"]["ShowCreateNestedWithoutRelationsInput"];
-      /** @enum {string} */
+    /**
+     * Event
+     * @description Event data.
+     */
+    schedule_models_Event: {
+      /**
+       * Format: uuid
+       * @description Identifier of the event.
+       */
+      id: string;
+      /**
+       * @description Type of the event.
+       * @enum {string}
+       */
       type: "live" | "replay" | "prerecorded";
+      /**
+       * Format: uuid
+       * @description Identifier of the show that the event belongs to.
+       */
+      showId: string;
+      /** @description Show that the event belongs to. */
+      show?: null | components["schemas"]["schedule_models_Show"];
+      /**
+       * Format: date-time
+       * @description Start time of the event in event timezone.
+       */
       start: string;
+      /**
+       * Format: date-time
+       * @description End time of the event in event timezone.
+       */
       end: string;
+      /** @description Timezone of the event. */
       timezone: string;
-      recurrence?: null | components["schemas"]["Recurrence"];
+      /** @description Recurrence rule of the event. */
+      recurrence?: null | components["schemas"]["schedule_models_Recurrence"];
     };
-    /** ShowCreateNestedWithoutRelationsInput */
-    ShowCreateNestedWithoutRelationsInput: {
-      create?: components["schemas"]["ShowCreateWithoutRelationsInput"];
-      connect?: components["schemas"]["_ShowWhereUnique_id_Input"];
+    /** Recurrence */
+    schedule_models_Recurrence: {
+      /** @description Rule of the recurrence. */
+      rule?: null | components["schemas"]["schedule_models_RecurrenceRule"];
+      /** @description Included dates of the recurrence in event timezone. */
+      include?: null | string[];
+      /** @description Excluded dates of the recurrence in event timezone. */
+      exclude?: null | string[];
     };
-    /** ShowCreateWithoutRelationsInput */
-    ShowCreateWithoutRelationsInput: {
-      id?: string;
-      description?: null | string;
-      title: string;
+    /** RecurrenceRule */
+    schedule_models_RecurrenceRule: {
+      /**
+       * @description Frequency of the recurrence.
+       * @enum {string}
+       */
+      frequency:
+        | "secondly"
+        | "minutely"
+        | "hourly"
+        | "daily"
+        | "weekly"
+        | "monthly"
+        | "yearly";
+      /** @description End date of the recurrence in UTC. */
+      until?: null | string;
+      /** @description Number of occurrences of the recurrence. */
+      count?: null | number;
+      /** @description Interval of the recurrence. */
+      interval?: null | number;
+      /** @description Seconds of the recurrence. */
+      bySeconds?: null | number[];
+      /** @description Minutes of the recurrence. */
+      byMinutes?: null | number[];
+      /** @description Hours of the recurrence. */
+      byHours?: null | number[];
+      /** @description Weekdays of the recurrence. */
+      byWeekdays?:
+        | null
+        | components["schemas"]["schedule_models_WeekdayRule"][];
+      /** @description Monthdays of the recurrence. */
+      byMonthdays?: null | number[];
+      /** @description Yeardays of the recurrence. */
+      byYeardays?: null | number[];
+      /** @description Weeks of the recurrence. */
+      byWeeks?: null | number[];
+      /** @description Months of the recurrence. */
+      byMonths?: null | number[];
+      /** @description Set positions of the recurrence. */
+      bySetPositions?: null | number[];
+      /**
+       * @description Start day of the week.
+       * @enum {null|string}
+       */
+      weekStart?:
+        | "monday"
+        | "tuesday"
+        | "wednesday"
+        | "thursday"
+        | "friday"
+        | "saturday"
+        | "sunday"
+        | null;
     };
-    /** _ShowWhereUnique_id_Input */
-    _ShowWhereUnique_id_Input: {
+    /** Show */
+    schedule_models_Show: {
+      /** @description Identifier of the show. */
       id: string;
-    };
-    /** EventUpdateInput */
-    EventUpdateInput: {
-      id?: string;
-      /** @enum {string} */
-      type?: "live" | "replay" | "prerecorded";
-      show?: components["schemas"]["ShowUpdateOneWithoutRelationsInput"];
-      start?: string;
-      end?: string;
-      timezone?: string;
-      recurrence?: null | components["schemas"]["Recurrence"];
-    };
-    /** ShowUpdateOneWithoutRelationsInput */
-    ShowUpdateOneWithoutRelationsInput: {
-      create?: components["schemas"]["ShowCreateWithoutRelationsInput"];
-      connect?: components["schemas"]["_ShowWhereUnique_id_Input"];
-      disconnect?: boolean;
-      delete?: boolean;
-    };
-    /** EventSchedule */
-    EventSchedule: {
-      event: components["schemas"]["emishows_events_models_Event"];
-      /**
-       * EventSchedule.Instances
-       * @description Event instances.
-       */
-      instances: components["schemas"]["EventInstance"][];
-    };
-    /** EventInstance */
-    EventInstance: {
-      /**
-       * EventInstance.Start
-       * @description Start time of the event instance in event timezone.
-       */
-      start: unknown;
-      /**
-       * EventInstance.End
-       * @description End time of the event instance in event timezone.
-       */
-      end: unknown;
-    };
-    /** ShowCreateInput */
-    ShowCreateInput: {
-      id?: string;
-      description?: null | string;
-      events?: components["schemas"]["EventCreateManyNestedWithoutRelationsInput"];
+      /** @description Title of the show. */
       title: string;
+      /** @description Description of the show. */
+      description?: null | string;
+      /** @description Events that the show belongs to. */
+      events?: null | components["schemas"]["schedule_models_Event"][];
     };
-    /** EventCreateManyNestedWithoutRelationsInput */
-    EventCreateManyNestedWithoutRelationsInput: {
-      create?:
-        | components["schemas"]["EventCreateWithoutRelationsInput"]
-        | components["schemas"]["EventCreateWithoutRelationsInput"][];
-      connect?:
-        | components["schemas"]["_EventWhereUnique_id_Input"]
-        | components["schemas"]["_EventWhereUnique_id_Input"][];
+    /** WeekdayRule */
+    schedule_models_WeekdayRule: {
+      /**
+       * @description Day of the week.
+       * @enum {string}
+       */
+      day:
+        | "monday"
+        | "tuesday"
+        | "wednesday"
+        | "thursday"
+        | "friday"
+        | "saturday"
+        | "sunday";
+      /** @description Occurrence of the day in the year. */
+      occurrence?: null | number;
     };
-    /** EventCreateWithoutRelationsInput */
-    EventCreateWithoutRelationsInput: {
-      id?: string;
-      showId?: string;
-      /** @enum {string} */
+    /** Event */
+    shows_models_Event: {
+      /**
+       * Format: uuid
+       * @description Identifier of the event.
+       */
+      id: string;
+      /**
+       * @description Type of the event.
+       * @enum {string}
+       */
       type: "live" | "replay" | "prerecorded";
+      /**
+       * Format: uuid
+       * @description Identifier of the show that the event belongs to.
+       */
+      showId: string;
+      /** @description Show that the event belongs to. */
+      show?: null | components["schemas"]["shows_models_Show"];
+      /**
+       * Format: date-time
+       * @description Start time of the event in event timezone.
+       */
+      start: string;
+      /**
+       * Format: date-time
+       * @description End time of the event in event timezone.
+       */
+      end: string;
+      /** @description Timezone of the event. */
+      timezone: string;
+      /** @description Recurrence rule of the event. */
+      recurrence?: null | components["schemas"]["shows_models_Recurrence"];
     };
-    /** _EventWhereUnique_id_Input */
-    _EventWhereUnique_id_Input: {
+    /** Recurrence */
+    shows_models_Recurrence: {
+      /** @description Rule of the recurrence. */
+      rule?: null | components["schemas"]["shows_models_RecurrenceRule"];
+      /** @description Included dates of the recurrence in event timezone. */
+      include?: null | string[];
+      /** @description Excluded dates of the recurrence in event timezone. */
+      exclude?: null | string[];
+    };
+    /** RecurrenceRule */
+    shows_models_RecurrenceRule: {
+      /**
+       * @description Frequency of the recurrence.
+       * @enum {string}
+       */
+      frequency:
+        | "secondly"
+        | "minutely"
+        | "hourly"
+        | "daily"
+        | "weekly"
+        | "monthly"
+        | "yearly";
+      /** @description End date of the recurrence in UTC. */
+      until?: null | string;
+      /** @description Number of occurrences of the recurrence. */
+      count?: null | number;
+      /** @description Interval of the recurrence. */
+      interval?: null | number;
+      /** @description Seconds of the recurrence. */
+      bySeconds?: null | number[];
+      /** @description Minutes of the recurrence. */
+      byMinutes?: null | number[];
+      /** @description Hours of the recurrence. */
+      byHours?: null | number[];
+      /** @description Weekdays of the recurrence. */
+      byWeekdays?: null | components["schemas"]["shows_models_WeekdayRule"][];
+      /** @description Monthdays of the recurrence. */
+      byMonthdays?: null | number[];
+      /** @description Yeardays of the recurrence. */
+      byYeardays?: null | number[];
+      /** @description Weeks of the recurrence. */
+      byWeeks?: null | number[];
+      /** @description Months of the recurrence. */
+      byMonths?: null | number[];
+      /** @description Set positions of the recurrence. */
+      bySetPositions?: null | number[];
+      /**
+       * @description Start day of the week.
+       * @enum {null|string}
+       */
+      weekStart?:
+        | "monday"
+        | "tuesday"
+        | "wednesday"
+        | "thursday"
+        | "friday"
+        | "saturday"
+        | "sunday"
+        | null;
+    };
+    /** Show */
+    shows_models_Show: {
+      /** @description Identifier of the show. */
       id: string;
-    };
-    /** ShowUpdateInput */
-    ShowUpdateInput: {
-      id?: string;
-      title?: string;
+      /** @description Title of the show. */
+      title: string;
+      /** @description Description of the show. */
       description?: null | string;
-      events?: components["schemas"]["EventUpdateManyWithoutRelationsInput"];
+      /** @description Events that the show belongs to. */
+      events?: null | components["schemas"]["shows_models_Event"][];
     };
-    /** EventUpdateManyWithoutRelationsInput */
-    EventUpdateManyWithoutRelationsInput: {
-      create?: components["schemas"]["EventCreateWithoutRelationsInput"][];
-      connect?: components["schemas"]["_EventWhereUnique_id_Input"][];
-      set?: components["schemas"]["_EventWhereUnique_id_Input"][];
-      disconnect?: components["schemas"]["_EventWhereUnique_id_Input"][];
-      delete?: components["schemas"]["_EventWhereUnique_id_Input"][];
+    /** WeekdayRule */
+    shows_models_WeekdayRule: {
+      /**
+       * @description Day of the week.
+       * @enum {string}
+       */
+      day:
+        | "monday"
+        | "tuesday"
+        | "wednesday"
+        | "thursday"
+        | "friday"
+        | "saturday"
+        | "sunday";
+      /** @description Occurrence of the day in the year. */
+      occurrence?: null | number;
     };
   };
   responses: never;
@@ -463,13 +587,13 @@ export interface operations {
         limit?: null | number;
         /** @description Number of events to skip. */
         offset?: null | number;
-        /** @description Filter to apply to events. */
+        /** @description Filter to apply to find events. */
         where?: null | string;
-        /** @description Advanced query to apply to events. */
+        /** @description Advanced query to apply to find events. */
         query?: null | string;
-        /** @description Relations to include with events. */
+        /** @description Relations to include in the response. */
         include?: null | string;
-        /** @description Order to apply to events. */
+        /** @description Order to apply to the results. */
         order?: null | string;
       };
     };
@@ -478,7 +602,7 @@ export interface operations {
       200: {
         headers: {};
         content: {
-          "application/json": components["schemas"]["events_models_ListResponse"];
+          "application/json": components["schemas"]["EventList"];
         };
       };
       /** @description Bad request syntax or unsupported method */
@@ -500,12 +624,12 @@ export interface operations {
   };
   /**
    * Create event
-   * @description Create an event.
+   * @description Create a new event.
    */
   EventsCreate: {
     parameters: {
       query?: {
-        /** @description Relations to include with event. */
+        /** @description Relations to include in the response. */
         include?: null | string;
       };
     };
@@ -519,7 +643,7 @@ export interface operations {
       201: {
         headers: {};
         content: {
-          "application/json": components["schemas"]["emishows_events_models_Event"];
+          "application/json": components["schemas"]["events_models_Event"];
         };
       };
       /** @description Bad request syntax or unsupported method */
@@ -546,10 +670,11 @@ export interface operations {
   EventsIdGet: {
     parameters: {
       query?: {
-        /** @description Relations to include with event. */
+        /** @description Relations to include in the response. */
         include?: null | string;
       };
       path: {
+        /** @description Identifier of the event to get. */
         id: string;
       };
     };
@@ -558,7 +683,7 @@ export interface operations {
       200: {
         headers: {};
         content: {
-          "application/json": components["schemas"]["emishows_events_models_Event"];
+          "application/json": components["schemas"]["events_models_Event"];
         };
       };
       /** @description Bad request syntax or unsupported method */
@@ -585,6 +710,7 @@ export interface operations {
   EventsIdDelete: {
     parameters: {
       path: {
+        /** @description Identifier of the event to delete. */
         id: string;
       };
     };
@@ -620,10 +746,11 @@ export interface operations {
   EventsIdUpdate: {
     parameters: {
       query?: {
-        /** @description Relations to include with event. */
+        /** @description Relations to include in the response. */
         include?: null | string;
       };
       path: {
+        /** @description Identifier of the event to update. */
         id: string;
       };
     };
@@ -637,7 +764,7 @@ export interface operations {
       200: {
         headers: {};
         content: {
-          "application/json": components["schemas"]["emishows_events_models_Event"];
+          "application/json": components["schemas"]["events_models_Event"];
         };
       };
       /** @description Bad request syntax or unsupported method */
@@ -659,9 +786,26 @@ export interface operations {
   };
   /**
    * Ping
-   * @description Do nothing.
+   * @description Ping.
    */
   PingPing: {
+    responses: {
+      /** @description Request fulfilled, nothing follows */
+      204: {
+        headers: {
+          "cache-control"?: string;
+        };
+        content: {
+          "application/json": null;
+        };
+      };
+    };
+  };
+  /**
+   * Ping headers
+   * @description Ping headers.
+   */
+  PingHeadping: {
     responses: {
       /** @description Request fulfilled, nothing follows */
       204: {
@@ -681,19 +825,19 @@ export interface operations {
   ScheduleList: {
     parameters: {
       query?: {
-        /** @description Start time in UTC of the event instances to return. By default, the current datetime. */
+        /** @description Start time in UTC to filter events instances. */
         start?: null | string;
-        /** @description End time in UTC of the event instances to return. By default, the current datetime. */
+        /** @description End time in UTC to filter events instances. */
         end?: null | string;
-        /** @description Maximum number of events to return. */
+        /** @description Maximum number of schedules to return. */
         limit?: null | number;
-        /** @description Number of events to skip. */
+        /** @description Number of schedules to skip. */
         offset?: null | number;
-        /** @description Filter to apply to events. */
+        /** @description Filter to apply to find events. */
         where?: null | string;
-        /** @description Relations to include with events. */
+        /** @description Relations to include in the response. */
         include?: null | string;
-        /** @description Order to apply to events. */
+        /** @description Order to apply to the results. */
         order?: null | string;
       };
     };
@@ -702,7 +846,7 @@ export interface operations {
       200: {
         headers: {};
         content: {
-          "application/json": components["schemas"]["schedule_models_ListResponse"];
+          "application/json": components["schemas"]["ScheduleList"];
         };
       };
       /** @description Bad request syntax or unsupported method */
@@ -733,11 +877,11 @@ export interface operations {
         limit?: null | number;
         /** @description Number of shows to skip. */
         offset?: null | number;
-        /** @description Filter to apply to shows. */
+        /** @description Filter to apply to find shows. */
         where?: null | string;
-        /** @description Relations to include with shows. */
+        /** @description Relations to include in the response. */
         include?: null | string;
-        /** @description Order to apply to shows. */
+        /** @description Order to apply to the results. */
         order?: null | string;
       };
     };
@@ -746,7 +890,7 @@ export interface operations {
       200: {
         headers: {};
         content: {
-          "application/json": components["schemas"]["shows_models_ListResponse"];
+          "application/json": components["schemas"]["ShowList"];
         };
       };
       /** @description Bad request syntax or unsupported method */
@@ -768,12 +912,12 @@ export interface operations {
   };
   /**
    * Create show
-   * @description Create a show.
+   * @description Create a new show.
    */
   ShowsCreate: {
     parameters: {
       query?: {
-        /** @description Relations to include with show. */
+        /** @description Relations to include in the response. */
         include?: null | string;
       };
     };
@@ -787,7 +931,7 @@ export interface operations {
       201: {
         headers: {};
         content: {
-          "application/json": components["schemas"]["Show"];
+          "application/json": components["schemas"]["shows_models_Show"];
         };
       };
       /** @description Bad request syntax or unsupported method */
@@ -814,10 +958,11 @@ export interface operations {
   ShowsIdGet: {
     parameters: {
       query?: {
-        /** @description Relations to include with show. */
+        /** @description Relations to include in the response. */
         include?: null | string;
       };
       path: {
+        /** @description Identifier of the show to get. */
         id: string;
       };
     };
@@ -826,7 +971,7 @@ export interface operations {
       200: {
         headers: {};
         content: {
-          "application/json": components["schemas"]["Show"];
+          "application/json": components["schemas"]["shows_models_Show"];
         };
       };
       /** @description Bad request syntax or unsupported method */
@@ -853,6 +998,7 @@ export interface operations {
   ShowsIdDelete: {
     parameters: {
       path: {
+        /** @description Identifier of the show to delete. */
         id: string;
       };
     };
@@ -888,10 +1034,11 @@ export interface operations {
   ShowsIdUpdate: {
     parameters: {
       query?: {
-        /** @description Relations to include with show. */
+        /** @description Relations to include in the response. */
         include?: null | string;
       };
       path: {
+        /** @description Identifier of the show to update. */
         id: string;
       };
     };
@@ -905,7 +1052,7 @@ export interface operations {
       200: {
         headers: {};
         content: {
-          "application/json": components["schemas"]["Show"];
+          "application/json": components["schemas"]["shows_models_Show"];
         };
       };
       /** @description Bad request syntax or unsupported method */

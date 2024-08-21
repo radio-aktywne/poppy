@@ -15,6 +15,6 @@ export type Labels = {
 };
 
 export type StreamingWidgetProps = {
-  schedules: components["schemas"]["EventSchedule"][];
+  schedules: components["schemas"]["Schedule"][];
   labels: Labels;
 };
