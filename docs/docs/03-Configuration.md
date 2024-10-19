@@ -12,7 +12,7 @@ You can configure the app at runtime using various environment variables:
   (default: `0.0.0.0`)
 - `POPPY__SERVER__PORT` -
   port to run the server on
-  (default: `13000`)
+  (default: `10410`)
 - `POPPY__EVENTS__WINDOW` -
   time window to search for event instances around the current time
   (default: `PT1H`)
@@ -24,7 +24,7 @@ You can configure the app at runtime using various environment variables:
   (default: `localhost`)
 - `POPPY__BEAVER__HTTP__PORT`
   port of the HTTP API of the beaver service
-  (default: `35000`)
+  (default: `10500`)
 - `POPPY__BEAVER__HTTP__PATH`
   path of the HTTP API of the beaver service
   (default: ``)
@@ -36,7 +36,7 @@ You can configure the app at runtime using various environment variables:
   (default: `localhost`)
 - `POPPY__LORIS__HTTP__PORT`
   port of the HTTP API of the loris service
-  (default: `11000`)
+  (default: `10400`)
 - `POPPY__LORIS__HTTP__PATH`
   path of the HTTP API of the loris service
   (default: ``)
@@ -48,7 +48,7 @@ You can configure the app at runtime using various environment variables:
   (default: `localhost`)
 - `POPPY__LORIS__WHIP__PORT`
   port of the WHIP API of the loris service
-  (default: `11001`)
+  (default: `10401`)
 - `POPPY__LORIS__WHIP__PATH`
   path of the WHIP API of the loris service
   (default: ``)
@@ -60,7 +60,7 @@ You can configure the app at runtime using various environment variables:
   (default: `localhost`)
 - `POPPY__OCTOPUS__HTTP__PORT`
   port of the HTTP API of the octopus service
-  (default: `10000`)
+  (default: `10300`)
 - `POPPY__OCTOPUS__HTTP__PATH`
   path of the HTTP API of the octopus service
   (default: ``)
@@ -69,4 +69,4 @@ You can configure the app at runtime using various environment variables:
   (default: `localhost`)
 - `POPPY__OCTOPUS__SRT__PORT`
   port of the SRT stream of the octopus service
-  (default: `10000`)
+  (default: `10300`)

@@ -7,7 +7,7 @@ const scheme = process.env.POPPY__LORIS__HTTP__SCHEME || "http";
 const host = process.env.POPPY__LORIS__HTTP__HOST || "localhost";
 const port =
   process.env.POPPY__LORIS__HTTP__PORT === undefined
-    ? 11000
+    ? 10400
     : process.env.POPPY__LORIS__HTTP__PORT;
 const path = (process.env.POPPY__LORIS__HTTP__PATH || "")
   // Ensure path starts with a slash

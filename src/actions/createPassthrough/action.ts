@@ -8,7 +8,7 @@ const errorMessage = "Creating passthrough failed.";
 const host = process.env.POPPY__OCTOPUS__SRT__HOST || "localhost";
 const port =
   process.env.POPPY__OCTOPUS__SRT__PORT === undefined
-    ? 10000
+    ? 10300
     : parseInt(process.env.POPPY__OCTOPUS__SRT__PORT, 10);
 
 export async function createPassthrough({ password }: CreatePasthroughProps) {
