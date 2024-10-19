@@ -1,4 +1,4 @@
-import { components } from "../../api/emistream";
+import { components } from "../../api/octopus";
 
 export type Availability = components["schemas"]["Availability"];
 

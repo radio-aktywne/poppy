@@ -1,6 +1,6 @@
 "use server";
 
-import { emishows } from "../../api";
+import { beaver } from "../../api";
 import dayjs from "../../utils/dayjs";
 import { getEventsWindow } from "../getEventsWindow";
 import { GetSchedulesProps } from "./types";
@@ -24,7 +24,7 @@ export async function getSchedules({}: GetSchedulesProps = {}) {
 
     const format = "YYYY-MM-DDTHH:mm:ss";
 
-    const { data, error } = await emishows.GET("/schedule", {
+    const { data, error } = await beaver.GET("/schedule", {
       params: {
         query: {
           start: start.format(format),

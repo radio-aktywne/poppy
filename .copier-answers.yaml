@@ -2,15 +2,15 @@
 _commit: 0.2.0
 _src_path: gh:radio-aktywne/template-app-next
 accountname: radio-aktywne
-appname: webstream
+appname: poppy
 description: Broadcast streaming app 🎤
 docs: true
-docsurl: https://radio-aktywne.github.io/webstream
-envprefix: WEBSTREAM
-imagename: apps/webstream
-keyprefix: webstream
+docsurl: https://radio-aktywne.github.io/poppy
+envprefix: POPPY
+imagename: apps/poppy
+keyprefix: poppy
 port: 13000
 registry: true
 releases: true
-reponame: webstream
-repourl: https://github.com/radio-aktywne/webstream
+reponame: poppy
+repourl: https://github.com/radio-aktywne/poppy

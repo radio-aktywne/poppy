@@ -1,5 +1,5 @@
 info:
-  title: emipass app
+  title: loris
 openapi: 3.1.0
 paths:
   /ping:

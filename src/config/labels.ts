@@ -9,8 +9,8 @@ export const labels = {
   },
   pages: {
     index: {
-      title: "webstream",
-      description: "webstream",
+      title: "poppy",
+      description: "poppy",
       widgets: {
         streaming: {
           widgets: {
@@ -60,13 +60,13 @@ export const labels = {
       },
     },
     notFound: {
-      title: "Not Found • webstream",
-      description: "webstream",
+      title: "Not Found • poppy",
+      description: "poppy",
       text: "Page not found",
     },
     error: {
-      title: "Error • webstream",
-      description: "webstream",
+      title: "Error • poppy",
+      description: "poppy",
       text: "Something went wrong",
       buttons: {
         retry: {

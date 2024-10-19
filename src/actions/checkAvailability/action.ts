@@ -1,13 +1,13 @@
 "use server";
 
-import { emistream } from "../../api";
+import { octopus } from "../../api";
 import { CheckAvailabilityProps } from "./types";
 
 const errorMessage = "Checking availability failed.";
 
 export async function checkAvailability({}: CheckAvailabilityProps = {}) {
   try {
-    const { data, error } = await emistream.GET("/check");
+    const { data, error } = await octopus.GET("/check");
 
     if (error) return { data: undefined, error: errorMessage };
     return { data, error: undefined };

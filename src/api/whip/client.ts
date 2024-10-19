@@ -3,13 +3,13 @@ import "server-only";
 import createClient from "openapi-fetch";
 import type { paths } from "./types";
 
-const scheme = process.env.WEBSTREAM__EMIPASS__WHIP__SCHEME || "http";
-const host = process.env.WEBSTREAM__EMIPASS__WHIP__HOST || "localhost";
+const scheme = process.env.POPPY__LORIS__WHIP__SCHEME || "http";
+const host = process.env.POPPY__LORIS__WHIP__HOST || "localhost";
 const port =
-  process.env.WEBSTREAM__EMIPASS__WHIP__PORT === undefined
+  process.env.POPPY__LORIS__WHIP__PORT === undefined
     ? 11001
-    : process.env.WEBSTREAM__EMIPASS__WHIP__PORT;
-const path = (process.env.WEBSTREAM__EMIPASS__WHIP__PATH || "")
+    : process.env.POPPY__LORIS__WHIP__PORT;
+const path = (process.env.POPPY__LORIS__WHIP__PATH || "")
   // Ensure path starts with a slash
   .replace(/^(?!\/)(.*)$/, "/$1")
   // Remove trailing slashes
