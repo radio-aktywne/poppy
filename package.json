@@ -2,8 +2,8 @@
   "name": "poppy",
   "private": true,
   "scripts": {
-    "dev": "next dev --hostname \"${POPPY__SERVER__HOST:-0.0.0.0}\" --port \"${POPPY__SERVER__PORT:-13000}\"",
-    "run": "next start --hostname \"${POPPY__SERVER__HOST:-0.0.0.0}\" --port \"${POPPY__SERVER__PORT:-13000}\"",
+    "dev": "next dev --hostname \"${POPPY__SERVER__HOST:-0.0.0.0}\" --port \"${POPPY__SERVER__PORT:-10410}\"",
+    "run": "next start --hostname \"${POPPY__SERVER__HOST:-0.0.0.0}\" --port \"${POPPY__SERVER__PORT:-10410}\"",
     "build": "next build",
     "clean": "rm --recursive --force build/",
     "update": "ncu --peer --upgrade && npm i --no-audit --no-fund",

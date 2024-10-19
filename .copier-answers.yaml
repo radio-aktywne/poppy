@@ -9,7 +9,7 @@ docsurl: https://radio-aktywne.github.io/poppy
 envprefix: POPPY
 imagename: apps/poppy
 keyprefix: poppy
-port: 13000
+port: 10410
 registry: true
 releases: true
 reponame: poppy
