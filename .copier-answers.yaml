@@ -1,16 +1,16 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: 0.1.1
+_commit: 0.2.0
 _src_path: gh:radio-aktywne/template-app-next
 accountname: radio-aktywne
 appname: webstream
-description: Emission streaming web UI 🎤
+description: Broadcast streaming app 🎤
 docs: true
-docsurl: https://radio-aktywne.github.io/app-webstream
+docsurl: https://radio-aktywne.github.io/webstream
 envprefix: WEBSTREAM
 imagename: apps/webstream
 keyprefix: webstream
 port: 13000
 registry: true
 releases: true
-reponame: app-webstream
-repourl: https://github.com/radio-aktywne/app-webstream
+reponame: webstream
+repourl: https://github.com/radio-aktywne/webstream
