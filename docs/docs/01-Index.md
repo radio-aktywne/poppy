@@ -3,10 +3,10 @@ slug: /
 title: Index
 ---
 
-# webstream
+# poppy
 
 Broadcast streaming app 🎤
 
 ## 💡 About
 
-`webstream` is a web app for going live.
+`poppy` is a web app for going live.

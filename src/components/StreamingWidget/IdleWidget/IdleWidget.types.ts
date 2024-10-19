@@ -1,4 +1,4 @@
-import { components } from "../../../api/emishows";
+import { components } from "../../../api/beaver";
 import { Availability } from "../../../hooks";
 
 export type FormValues = {

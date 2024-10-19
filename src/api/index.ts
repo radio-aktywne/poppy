@@ -1,4 +1,4 @@
-export { emipass } from "./emipass";
-export { emishows } from "./emishows";
-export { emistream } from "./emistream";
+export { beaver } from "./beaver";
+export { loris } from "./loris";
+export { octopus } from "./octopus";
 export { whip } from "./whip";

@@ -2,10 +2,10 @@ import type * as Preset from "@docusaurus/preset-classic";
 import type { Config } from "@docusaurus/types";
 import { themes } from "prism-react-renderer";
 
-const url = new URL("https://radio-aktywne.github.io/webstream");
+const url = new URL("https://radio-aktywne.github.io/poppy");
 
 const config: Config = {
-  title: "webstream docs",
+  title: "poppy docs",
   favicon: "favicon.svg?v=1",
 
   url: `${url.protocol}//${url.host}`,
@@ -41,14 +41,14 @@ const config: Config = {
 
   themeConfig: {
     navbar: {
-      title: "webstream docs",
+      title: "poppy docs",
       logo: {
-        alt: "webstream docs logo",
+        alt: "poppy docs logo",
         src: "logo.svg?v=1",
       },
       items: [
         {
-          href: "https://github.com/radio-aktywne/webstream",
+          href: "https://github.com/radio-aktywne/poppy",
           position: "right",
           className: "header-github-link",
           "aria-label": "GitHub repository",

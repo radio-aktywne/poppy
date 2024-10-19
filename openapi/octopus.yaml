@@ -1,5 +1,5 @@
 info:
-  title: emistream app
+  title: octopus
 openapi: 3.1.0
 paths:
   /check:
