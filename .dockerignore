@@ -28,6 +28,7 @@ next-env.d.ts
 /.trunk/
 /.vscode/
 /docs/
+/openapi/
 /.copier-answers.yaml
 /.dockerignore
 /.envrc

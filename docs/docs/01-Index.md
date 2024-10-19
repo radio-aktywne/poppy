@@ -3,10 +3,10 @@ slug: /
 title: Index
 ---
 
-# webstream app
+# webstream
 
-Emission streaming web UI 🎤
+Broadcast streaming app 🎤
 
 ## 💡 About
 
-`webstream` is a web application for going live.
+`webstream` is a web app for going live.
