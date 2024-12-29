@@ -1,0 +1,168 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2024-11-09 16:23+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/actions/octopus/check-stream-availability/constants.ts:4
+msgid "An error occurred while checking stream availability."
+msgstr "An error occurred while checking stream availability."
+
+#: src/actions/whip/create-whip-session/constants.ts:4
+msgid "An error occurred while creating WHIP session."
+msgstr "An error occurred while creating WHIP session."
+
+#: src/actions/whip/delete-whip-session/constants.ts:4
+msgid "An error occurred while deleting WHIP session."
+msgstr "An error occurred while deleting WHIP session."
+
+#: src/actions/beaver/list-schedules/constants.ts:4
+msgid "An error occurred while listing schedules."
+msgstr "An error occurred while listing schedules."
+
+#: src/actions/loris/request-passthrough-stream/constants.ts:4
+msgid "An error occurred while requesting passthrough stream."
+msgstr "An error occurred while requesting passthrough stream."
+
+#: src/actions/octopus/reserve-stream/constants.ts:4
+msgid "An error occurred while reserving stream."
+msgstr "An error occurred while reserving stream."
+
+#: src/components/widgets/streaming-widget/components/idle-widget/main.tsx:60
+msgid "Busy"
+msgstr "Busy"
+
+#: src/hooks/use-toasts/main.tsx:19
+msgid "Error"
+msgstr "Error"
+
+#: src/components/metadata/root/root-error-metadata/main.tsx:14
+msgid "Error • poppy"
+msgstr "Error • poppy"
+
+#: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:51
+msgid "Event"
+msgstr "Event"
+
+#: src/components/widgets/streaming-widget/components/idle-widget/main.tsx:33
+msgid "Event is required"
+msgstr "Event is required"
+
+#: src/hooks/use-stream/utils.ts:70
+msgid "Failed to create WHIP session"
+msgstr "Failed to create WHIP session"
+
+#: src/hooks/use-stream/utils.ts:53
+msgid "Failed to request passthrough stream"
+msgstr "Failed to request passthrough stream"
+
+#: src/hooks/use-stream/utils.ts:28
+msgid "Failed to reserve stream"
+msgstr "Failed to reserve stream"
+
+#: src/components/widgets/streaming-widget/components/idle-widget/main.tsx:59
+msgid "Free"
+msgstr "Free"
+
+#: src/hooks/use-toasts/main.tsx:31
+msgid "Info"
+msgstr "Info"
+
+#: src/actions/beaver/list-schedules/constants.ts:5
+#: src/actions/loris/request-passthrough-stream/constants.ts:7
+#: src/actions/octopus/reserve-stream/constants.ts:5
+#: src/actions/whip/create-whip-session/constants.ts:5
+msgid "Invalid input."
+msgstr "Invalid input."
+
+#: src/components/metadata/root/root-not-found-metadata/main.tsx:14
+msgid "Not Found • poppy"
+msgstr "Not Found • poppy"
+
+#: src/components/views/root/root-not-found-view/main.tsx:12
+msgid "Page not found"
+msgstr "Page not found"
+
+#: src/app/layout.tsx:19
+#: src/app/layout.tsx:20
+#: src/app/page.tsx:16
+#: src/app/page.tsx:17
+#: src/components/metadata/root/root-error-metadata/main.tsx:13
+#: src/components/metadata/root/root-not-found-metadata/main.tsx:13
+#: src/components/metadata/root/root-page-metadata/main.tsx:13
+#: src/components/metadata/root/root-page-metadata/main.tsx:14
+msgid "poppy"
+msgstr "poppy"
+
+#: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:56
+msgid "Record"
+msgstr "Record"
+
+#: src/components/views/root/root-error-view/main.tsx:22
+msgid "Retry"
+msgstr "Retry"
+
+#: src/components/views/root/root-error-view/main.tsx:15
+msgid "Something went wrong"
+msgstr "Something went wrong"
+
+#: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:65
+msgid "Start"
+msgstr "Start"
+
+#: src/components/widgets/streaming-widget/components/live-widget/main.tsx:14
+msgid "Stop"
+msgstr "Stop"
+
+#: src/hooks/use-stream/utils.ts:114
+msgid "Stream connection failed"
+msgstr "Stream connection failed"
+
+#: src/actions/octopus/reserve-stream/constants.ts:6
+msgid "Stream is already reserved."
+msgstr "Stream is already reserved."
+
+#: src/hooks/use-stream/main.ts:19
+msgid "Stream is already running"
+msgstr "Stream is already running"
+
+#: src/hooks/use-stream/main.ts:37
+msgid "Stream is not running"
+msgstr "Stream is not running"
+
+#: src/actions/loris/request-passthrough-stream/constants.ts:8
+msgid "Stream not available."
+msgstr "Stream not available."
+
+#: src/components/widgets/streaming-widget/main.tsx:34
+msgid "Stream started"
+msgstr "Stream started"
+
+#: src/components/widgets/streaming-widget/main.tsx:43
+msgid "Stream stopped"
+msgstr "Stream stopped"
+
+#: src/hooks/use-toasts/main.tsx:43
+msgid "Success"
+msgstr "Success"
+
+#: src/components/widgets/streaming-widget/components/idle-widget/main.tsx:57
+msgid "Unknown"
+msgstr "Unknown"
+
+#: src/hooks/use-toasts/main.tsx:55
+msgid "Warning"
+msgstr "Warning"
+
+#: src/actions/whip/delete-whip-session/constants.ts:5
+msgid "WHIP session not found."
+msgstr "WHIP session not found."
