@@ -13,9 +13,6 @@ You can configure the app at runtime using various environment variables:
 - `POPPY__SERVER__PORT` -
   port to run the server on
   (default: `10410`)
-- `POPPY__EVENTS__WINDOW` -
-  time window to search for event instances around the current time
-  (default: `PT1H`)
 - `POPPY__BEAVER__HTTP__SCHEME`
   scheme of the HTTP API of the beaver service
   (default: `http`)

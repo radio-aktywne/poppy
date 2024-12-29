@@ -1,21 +1,28 @@
-import { getSchedules } from "../actions";
-import { NoEventsWidget, StreamingWidget } from "../components";
-import { labels } from "../config/labels";
+import { i18n } from "@lingui/core";
+import { msg, t } from "@lingui/macro";
+import { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
+import { RootPageMetadata } from "../components/metadata/root/root-page-metadata";
+import { RootPageView } from "../components/views/root/root-page-view";
+import { getLanguage } from "../lib/i18n/get-language";
+import { loadLocale } from "../lib/i18n/load-locale";
+import { RootPageInput } from "./types";
 
-export default async function IndexPage() {
-  const { data: schedules, error } = await getSchedules();
+export async function generateMetadata(): Promise<Metadata> {
+  const { language } = getLanguage();
+  await loadLocale({ i18n, language });
 
-  if (error !== undefined) throw new Error(error);
+  return {
+    description: t(i18n)(msg({ message: "poppy" })),
+    title: t(i18n)(msg({ message: "poppy" })),
+  };
+}
 
-  if (schedules === undefined || schedules.length === 0)
-    return <NoEventsWidget labels={labels.pages.index.widgets.noEvents} />;
-
+export default function RootPage({}: RootPageInput) {
   return (
-    <StreamingWidget
-      schedules={schedules}
-      labels={labels.pages.index.widgets.streaming}
-    />
+    <>
+      <RootPageMetadata />
+      <RootPageView />
+    </>
   );
 }
