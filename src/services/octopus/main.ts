@@ -1,4 +1,4 @@
-import createClient from "openapi-fetch";
+import createClient, { ClientOptions } from "openapi-fetch";
 import "server-only";
 
 import type { paths } from "./types";
@@ -16,4 +16,8 @@ const path = (process.env.POPPY__OCTOPUS__HTTP__PATH || "")
   .replace(/\/+$/, "");
 const url = `${scheme}://${host}${port ? `:${port}` : ""}${path}`;
 
-export const octopus = createClient<paths>({ baseUrl: url });
+export const octopusConfig = {
+  baseUrl: url,
+} satisfies ClientOptions;
+
+export const octopus = createClient<paths>(octopusConfig);
