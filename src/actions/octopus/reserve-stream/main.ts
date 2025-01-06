@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "../../../auth";
 import { OctopusError } from "../../../lib/octopus/errors";
 import { reserveStream as internalReserveStream } from "../../../lib/octopus/reserve-stream";
 import {
@@ -13,6 +14,9 @@ import { ReserveStreamInput, ReserveStreamOutput } from "./types";
 export async function reserveStream(
   input: ReserveStreamInput,
 ): Promise<ReserveStreamOutput> {
+  const session = await auth.auth();
+  if (!session) return { error: errors.unauthorized };
+
   const parsed = inputSchema.safeParse(input);
   if (!parsed.success) return { error: errors.invalidInput };
 

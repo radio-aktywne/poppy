@@ -4,14 +4,15 @@
   "scripts": {
     "build": "next build",
     "clean": "rm --recursive --force build/",
-    "dev": "next dev --hostname \"${POPPY__SERVER__HOST:-0.0.0.0}\" --port \"${POPPY__SERVER__PORT:-10410}\"",
-    "generate-api": "npm run -- generate-api-beaver && npm run -- generate-api-loris && npm run -- generate-api-octopus && npm run -- generate-api-whip",
+    "dev": "AUTH_URL=\"${POPPY__URLS__PUBLIC:-http://localhost:10410}\" next dev --hostname \"${POPPY__SERVER__HOST:-0.0.0.0}\" --port \"${POPPY__SERVER__PORT:-10410}\"",
+    "generate-api": "npm run -- generate-api-beaver && npm run -- generate-api-loris && npm run -- generate-api-octopus && npm run -- generate-api-scorpion && npm run -- generate-api-whip",
     "generate-api-beaver": "openapi-typescript openapi/beaver.yaml -o src/services/beaver/types.d.ts",
     "generate-api-loris": "openapi-typescript openapi/loris.yaml -o src/services/loris/types.d.ts",
     "generate-api-octopus": "openapi-typescript openapi/octopus.yaml -o src/services/octopus/types.d.ts",
+    "generate-api-scorpion": "openapi-typescript openapi/scorpion.yaml -o src/services/scorpion/types.d.ts",
     "generate-api-whip": "openapi-typescript openapi/whip.yaml -o src/services/whip/types.d.ts",
     "locales": "lingui extract --clean --overwrite",
-    "run": "next start --hostname \"${POPPY__SERVER__HOST:-0.0.0.0}\" --port \"${POPPY__SERVER__PORT:-10410}\"",
+    "run": "AUTH_URL=\"${POPPY__URLS__PUBLIC:-http://localhost:10410}\" next start --hostname \"${POPPY__SERVER__HOST:-0.0.0.0}\" --port \"${POPPY__SERVER__PORT:-10410}\"",
     "update": "ncu --peer --upgrade && npm i --no-audit --no-fund"
   },
   "dependencies": {
@@ -27,6 +28,7 @@
     "immer": "^10.1.1",
     "lodash.merge": "^4.6.2",
     "next": "14.2.17",
+    "next-auth": "^5.0.0-beta.25",
     "openapi-fetch": "^0.13.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

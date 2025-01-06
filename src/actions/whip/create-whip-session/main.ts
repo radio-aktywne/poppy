@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "../../../auth";
 import { createWHIPSession as internalCreateWHIPSession } from "../../../lib/whip/create-whip-session";
 import { InvalidInputError } from "../../../lib/whip/create-whip-session/errors";
 import { WHIPError } from "../../../lib/whip/errors";
@@ -10,6 +11,9 @@ import { CreateWHIPSessionInput, CreateWHIPSessionOutput } from "./types";
 export async function createWHIPSession(
   input: CreateWHIPSessionInput,
 ): Promise<CreateWHIPSessionOutput> {
+  const session = await auth.auth();
+  if (!session) return { error: errors.unauthorized };
+
   const parsed = inputSchema.safeParse(input);
   if (!parsed.success) return { error: errors.invalidInput };
 

@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "../../../auth";
 import { LorisError } from "../../../lib/loris/errors";
 import { requestPassthroughStream as internalRequestPassthroughStream } from "../../../lib/loris/request-passthrough-stream";
 import {
@@ -16,6 +17,9 @@ import {
 export async function requestPassthroughStream(
   input: RequestPassthroughStreamInput,
 ): Promise<RequestPassthroughStreamOutput> {
+  const session = await auth.auth();
+  if (!session) return { error: errors.unauthorized };
+
   const parsed = inputSchema.safeParse(input);
   if (!parsed.success) return { error: errors.invalidInput };
 

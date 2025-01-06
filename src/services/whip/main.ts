@@ -1,4 +1,4 @@
-import createClient from "openapi-fetch";
+import createClient, { ClientOptions } from "openapi-fetch";
 import "server-only";
 
 import type { paths } from "./types";
@@ -16,4 +16,8 @@ const path = (process.env.POPPY__LORIS__WHIP__PATH || "")
   .replace(/\/+$/, "");
 const url = `${scheme}://${host}${port ? `:${port}` : ""}${path}`;
 
-export const whip = createClient<paths>({ baseUrl: url });
+export const whipConfig = {
+  baseUrl: url,
+} satisfies ClientOptions;
+
+export const whip = createClient<paths>(whipConfig);

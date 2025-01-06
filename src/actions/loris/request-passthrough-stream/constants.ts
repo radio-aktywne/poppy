@@ -6,4 +6,7 @@ export const errors = {
   }),
   invalidInput: msg({ message: "Invalid input." }),
   streamNotAvailable: msg({ message: "Stream not available." }),
+  unauthorized: msg({
+    message: "You are not authorized to request passthrough stream.",
+  }),
 };

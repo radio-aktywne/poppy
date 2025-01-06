@@ -37,6 +37,11 @@ msgstr "An error occurred while requesting passthrough stream."
 msgid "An error occurred while reserving stream."
 msgstr "An error occurred while reserving stream."
 
+#: src/app/auth/error/page.tsx:18
+#: src/components/metadata/auth/auth-error-page-metadata/main.tsx:14
+msgid "Auth error • poppy"
+msgstr "Auth error • poppy"
+
 #: src/components/widgets/streaming-widget/components/idle-widget/main.tsx:60
 msgid "Busy"
 msgstr "Busy"
@@ -48,6 +53,10 @@ msgstr "Error"
 #: src/components/metadata/root/root-error-metadata/main.tsx:14
 msgid "Error • poppy"
 msgstr "Error • poppy"
+
+#: src/components/views/auth/auth-error-page-view/main.tsx:14
+msgid "Error in auth flow"
+msgstr "Error in auth flow"
 
 #: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:51
 msgid "Event"
@@ -84,6 +93,10 @@ msgstr "Info"
 msgid "Invalid input."
 msgstr "Invalid input."
 
+#: src/components/layouts/session-layout/components/user-menu/components/logout-button/main.tsx:23
+msgid "Logout"
+msgstr "Logout"
+
 #: src/components/metadata/root/root-not-found-metadata/main.tsx:14
 msgid "Not Found • poppy"
 msgstr "Not Found • poppy"
@@ -92,10 +105,12 @@ msgstr "Not Found • poppy"
 msgid "Page not found"
 msgstr "Page not found"
 
+#: src/app/(protected)/page.tsx:16
+#: src/app/(protected)/page.tsx:17
+#: src/app/auth/error/page.tsx:17
 #: src/app/layout.tsx:19
 #: src/app/layout.tsx:20
-#: src/app/page.tsx:16
-#: src/app/page.tsx:17
+#: src/components/metadata/auth/auth-error-page-metadata/main.tsx:13
 #: src/components/metadata/root/root-error-metadata/main.tsx:13
 #: src/components/metadata/root/root-not-found-metadata/main.tsx:13
 #: src/components/metadata/root/root-page-metadata/main.tsx:13
@@ -166,3 +181,27 @@ msgstr "Warning"
 #: src/actions/whip/delete-whip-session/constants.ts:5
 msgid "WHIP session not found."
 msgstr "WHIP session not found."
+
+#: src/actions/octopus/check-stream-availability/constants.ts:7
+msgid "You are not authorized to check stream availability."
+msgstr "You are not authorized to check stream availability."
+
+#: src/actions/whip/create-whip-session/constants.ts:6
+msgid "You are not authorized to create WHIP session."
+msgstr "You are not authorized to create WHIP session."
+
+#: src/actions/whip/delete-whip-session/constants.ts:6
+msgid "You are not authorized to delete WHIP session."
+msgstr "You are not authorized to delete WHIP session."
+
+#: src/actions/beaver/list-schedules/constants.ts:6
+msgid "You are not authorized to list schedules."
+msgstr "You are not authorized to list schedules."
+
+#: src/actions/loris/request-passthrough-stream/constants.ts:9
+msgid "You are not authorized to request passthrough stream."
+msgstr "You are not authorized to request passthrough stream."
+
+#: src/actions/octopus/reserve-stream/constants.ts:7
+msgid "You are not authorized to reserve stream."
+msgstr "You are not authorized to reserve stream."
