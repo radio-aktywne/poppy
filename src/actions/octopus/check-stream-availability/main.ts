@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "../../../auth";
+import { getSession } from "../../../lib/auth/get-session";
 import { checkStreamAvailability as internalCheckStreamAvailability } from "../../../lib/octopus/check-stream-availability";
 import { OctopusError } from "../../../lib/octopus/errors";
 import { errors } from "./constants";
@@ -10,7 +10,7 @@ import {
 } from "./types";
 
 export async function checkStreamAvailability({}: CheckStreamAvailabilityInput = {}): Promise<CheckStreamAvailabilityOutput> {
-  const session = await auth.auth();
+  const { session } = await getSession();
   if (!session) return { error: errors.unauthorized };
 
   try {
