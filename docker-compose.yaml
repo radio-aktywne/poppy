@@ -6,7 +6,6 @@ services:
     environment:
       - "POPPY__SERVER__HOST=${POPPY__SERVER__HOST:-0.0.0.0}"
       - "POPPY__SERVER__PORT=${POPPY__SERVER__PORT:-10410}"
-      - "POPPY__COOKIES__DOMAIN=${POPPY__COOKIES__DOMAIN:-}"
       - "POPPY__SECRETS__AUTH=${POPPY__SECRETS__AUTH:-secret}"
       - "POPPY__URLS__PUBLIC=${POPPY__URLS__PUBLIC:-http://localhost:10410}"
       - "POPPY__BEAVER__HTTP__SCHEME=${POPPY__BEAVER__HTTP__SCHEME:-http}"
