@@ -37,8 +37,8 @@ msgstr "An error occurred while requesting passthrough stream."
 msgid "An error occurred while reserving stream."
 msgstr "An error occurred while reserving stream."
 
-#: src/app/auth/error/page.tsx:18
 #: src/components/metadata/auth/auth-error-page-metadata/main.tsx:14
+#: src/app/auth/error/page.tsx:18
 msgid "Auth error • poppy"
 msgstr "Auth error • poppy"
 
@@ -86,10 +86,10 @@ msgstr "Free"
 msgid "Info"
 msgstr "Info"
 
-#: src/actions/beaver/list-schedules/constants.ts:5
-#: src/actions/loris/request-passthrough-stream/constants.ts:7
-#: src/actions/octopus/reserve-stream/constants.ts:5
 #: src/actions/whip/create-whip-session/constants.ts:5
+#: src/actions/octopus/reserve-stream/constants.ts:5
+#: src/actions/loris/request-passthrough-stream/constants.ts:7
+#: src/actions/beaver/list-schedules/constants.ts:5
 msgid "Invalid input."
 msgstr "Invalid input."
 
@@ -105,16 +105,16 @@ msgstr "Not Found • poppy"
 msgid "Page not found"
 msgstr "Page not found"
 
-#: src/app/(protected)/page.tsx:16
-#: src/app/(protected)/page.tsx:17
-#: src/app/auth/error/page.tsx:17
-#: src/app/layout.tsx:19
-#: src/app/layout.tsx:20
-#: src/components/metadata/auth/auth-error-page-metadata/main.tsx:13
-#: src/components/metadata/root/root-error-metadata/main.tsx:13
-#: src/components/metadata/root/root-not-found-metadata/main.tsx:13
 #: src/components/metadata/root/root-page-metadata/main.tsx:13
 #: src/components/metadata/root/root-page-metadata/main.tsx:14
+#: src/components/metadata/root/root-not-found-metadata/main.tsx:13
+#: src/components/metadata/root/root-error-metadata/main.tsx:13
+#: src/components/metadata/auth/auth-error-page-metadata/main.tsx:13
+#: src/app/layout.tsx:19
+#: src/app/layout.tsx:20
+#: src/app/auth/error/page.tsx:17
+#: src/app/(protected)/page.tsx:16
+#: src/app/(protected)/page.tsx:17
 msgid "poppy"
 msgstr "poppy"
 
