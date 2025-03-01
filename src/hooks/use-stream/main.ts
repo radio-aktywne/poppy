@@ -1,4 +1,4 @@
-import { msg } from "@lingui/macro";
+import { msg } from "@lingui/core/macro";
 import "client-only";
 import { useCallback, useMemo, useState } from "react";
 

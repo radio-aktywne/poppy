@@ -50,14 +50,8 @@ export function useStreamForm({
 
   const form = useForm<UseStreamFormValues>({
     initialValues: {
-      event:
-        initialValues?.event === undefined
-          ? defaultValues.event
-          : initialValues.event,
-      record:
-        initialValues?.record === undefined
-          ? defaultValues.record
-          : initialValues.record,
+      event: initialValues?.event ?? defaultValues.event,
+      record: initialValues?.record ?? defaultValues.record,
     },
     validate: validate,
   });
@@ -75,13 +69,10 @@ export function useStreamForm({
     const closestInstance = getClosestInstance(eventsData, now);
     const values = {
       event:
-        initialValues?.event === undefined
-          ? closestInstance?.event.id ?? defaultValues.event
-          : initialValues.event,
-      record:
-        initialValues?.record === undefined
-          ? defaultValues.record
-          : initialValues.record,
+        initialValues?.event ??
+        closestInstance?.event.id ??
+        defaultValues.event,
+      record: initialValues?.record ?? defaultValues.record,
     };
 
     if (formIsDirty()) formSetInitialValues(values);

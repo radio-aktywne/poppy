@@ -1,6 +1,6 @@
 "use client";
 
-import { msg } from "@lingui/macro";
+import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react";
 import { Badge, Center, Divider, Loader, Stack } from "@mantine/core";
 import { useCallback } from "react";
@@ -56,8 +56,8 @@ export function IdleWidget({ onStart }: IdleWidgetInput) {
         {available === undefined
           ? _(msg({ message: "Unknown" }))
           : available
-          ? _(msg({ message: "Free" }))
-          : _(msg({ message: "Busy" }))}
+            ? _(msg({ message: "Free" }))
+            : _(msg({ message: "Busy" }))}
       </Badge>
     </Stack>
   );

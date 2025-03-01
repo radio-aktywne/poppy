@@ -20,5 +20,5 @@ export async function createWHIPSession({
     throw new WHIPError();
   }
 
-  return { answer: data as string };
+  return { answer: data! };
 }

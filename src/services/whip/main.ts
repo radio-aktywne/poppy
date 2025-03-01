@@ -5,10 +5,7 @@ import type { paths } from "./types";
 
 const scheme = process.env.POPPY__LORIS__WHIP__SCHEME || "http";
 const host = process.env.POPPY__LORIS__WHIP__HOST || "localhost";
-const port =
-  process.env.POPPY__LORIS__WHIP__PORT === undefined
-    ? 10401
-    : process.env.POPPY__LORIS__WHIP__PORT;
+const port = process.env.POPPY__LORIS__WHIP__PORT ?? 10401;
 const path = (process.env.POPPY__LORIS__WHIP__PATH || "")
   // Ensure path starts with a slash
   .replace(/^(?!\/)(.*)$/, "/$1")
