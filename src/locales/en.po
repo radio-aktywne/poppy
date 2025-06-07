@@ -58,7 +58,7 @@ msgstr "Error • poppy"
 msgid "Error in auth flow"
 msgstr "Error in auth flow"
 
-#: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:51
+#: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:69
 msgid "Event"
 msgstr "Event"
 
@@ -93,7 +93,7 @@ msgstr "Info"
 msgid "Invalid input."
 msgstr "Invalid input."
 
-#: src/components/layouts/session-layout/components/user-menu/components/logout-button/main.tsx:23
+#: src/components/layouts/session-layout/main.tsx:30
 msgid "Logout"
 msgstr "Logout"
 
@@ -118,7 +118,7 @@ msgstr "Page not found"
 msgid "poppy"
 msgstr "poppy"
 
-#: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:56
+#: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:74
 msgid "Record"
 msgstr "Record"
 
@@ -130,7 +130,7 @@ msgstr "Retry"
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
-#: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:65
+#: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:83
 msgid "Start"
 msgstr "Start"
 
