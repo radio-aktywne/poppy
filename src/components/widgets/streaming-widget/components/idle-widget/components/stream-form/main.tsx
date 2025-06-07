@@ -3,23 +3,38 @@
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react";
 import { Button, Checkbox, Loader, Select, Stack } from "@mantine/core";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
+import { useListSchedules } from "../../../../../../../hooks/beaver/use-list-schedules";
 import {
   useStreamForm,
   UseStreamFormValues,
 } from "../../../../../../../hooks/forms/use-stream-form";
+import { useNow } from "../../../../../../../hooks/use-now";
+import { schedulesFilter, schedulesInclude } from "./constants";
 import { StreamFormInput } from "./types";
-import { getEventLabel } from "./utils";
+import {
+  formatDatetime,
+  getClosestInstances,
+  getEventLabel,
+  getSchedulesWindow,
+} from "./utils";
 
 export function StreamForm({ disabled, onStart, validate }: StreamFormInput) {
   const [starting, setStarting] = useState(false);
 
   const { _ } = useLingui();
 
-  const { allowedValues, eventsData, form, loading } = useStreamForm({
-    validate: validate,
+  const { now } = useNow();
+  const { end, start } = useMemo(() => getSchedulesWindow(now), [now]);
+  const { data: schedules, loading: schedulesLoading } = useListSchedules({
+    end: formatDatetime(end),
+    include: JSON.stringify(schedulesInclude),
+    start: formatDatetime(start),
+    where: JSON.stringify(schedulesFilter),
   });
+
+  const { form } = useStreamForm({ validate: validate });
 
   const formSetErrors = form.setErrors;
 
@@ -36,11 +51,14 @@ export function StreamForm({ disabled, onStart, validate }: StreamFormInput) {
     [formSetErrors, onStart],
   );
 
-  if (loading) return <Loader />;
+  if (schedulesLoading) return <Loader />;
 
-  const eventSelectData = allowedValues.event.map((value) => ({
-    label: _(getEventLabel(value, eventsData[value]!)),
-    value: value,
+  const eventSelectData = getClosestInstances(
+    schedules?.schedules ?? [],
+    now,
+  ).map(({ event }) => ({
+    label: getEventLabel(event),
+    value: event.id,
   }));
 
   return (
