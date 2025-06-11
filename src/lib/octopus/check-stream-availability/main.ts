@@ -8,7 +8,9 @@ import {
 } from "./types";
 
 export async function checkStreamAvailability({}: CheckStreamAvailabilityInput = {}): Promise<CheckStreamAvailabilityOutput> {
-  const { data, error, response } = await octopus.GET("/check");
+  const { data, error, response } = await octopus.GET("/check", {
+    cache: "no-store",
+  });
 
   if (error || !response.ok) throw new OctopusError();
 
