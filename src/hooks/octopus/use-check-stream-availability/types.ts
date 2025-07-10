@@ -7,23 +7,20 @@ export type UseCheckStreamAvailabilityInput = {
 };
 
 export type UseCheckStreamAvailabilityLoadingState = {
-  checkedAt?: never;
+  data?: never;
   error?: never;
-  event?: never;
   loading: true;
 };
 
 export type UseCheckStreamAvailabilityErrorState = {
-  checkedAt?: never;
+  data?: never;
   error: MessageDescriptor;
-  event?: never;
   loading: false;
 };
 
 export type UseCheckStreamAvailabilitySuccessState = {
-  checkedAt: CheckStreamAvailabilityOutput["checkedAt"];
+  data: CheckStreamAvailabilityOutput;
   error?: never;
-  event: CheckStreamAvailabilityOutput["event"];
   loading: false;
 };
 

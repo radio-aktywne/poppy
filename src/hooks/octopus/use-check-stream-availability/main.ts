@@ -17,9 +17,9 @@ export function useCheckStreamAvailability({
   });
 
   const refresh = useCallback(async () => {
-    const { checkedAt, error, event } = await checkStreamAvailability();
+    const { data, error } = await checkStreamAvailability();
     if (error) setState({ error: error, loading: false });
-    else setState({ checkedAt: checkedAt, event: event, loading: false });
+    else setState({ data: data, loading: false });
   }, []);
 
   const { start, stop } = useInterval(refresh, interval);
@@ -31,7 +31,7 @@ export function useCheckStreamAvailability({
   useEffect(() => {
     start();
     return stop;
-  }, [start, stop]);
+  }, []);
 
   return useMemo(() => ({ ...state, refresh }), [state, refresh]);
 }

@@ -6,7 +6,7 @@ import dayjs from "../../dayjs";
 import { UseNowInput, UseNowOutput } from "./types";
 
 export function useNow({
-  interval = 1000 * 5,
+  interval = 1000 * 1,
 }: UseNowInput = {}): UseNowOutput {
   const [now, setNow] = useState(() => dayjs.utc());
 
@@ -23,7 +23,7 @@ export function useNow({
   useEffect(() => {
     start();
     return stop;
-  }, [start, stop]);
+  }, []);
 
   return useMemo(() => ({ now, refresh }), [now, refresh]);
 }

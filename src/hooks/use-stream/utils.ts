@@ -19,7 +19,7 @@ import { audioCodec, audioFormat } from "./constants";
 import { UseStreamStartData } from "./types";
 
 async function wrappedReserveStream(data: UseStreamStartData) {
-  const { credentials, error, port } = await reserveStream({
+  const { data: reserveStreamData, error } = await reserveStream({
     event: data.event,
     format: audioFormat,
     record: data.record,
@@ -27,7 +27,7 @@ async function wrappedReserveStream(data: UseStreamStartData) {
 
   if (error) return { error: msg({ message: "Failed to reserve stream" }) };
 
-  return { credentials: credentials, port: port };
+  return { data: reserveStreamData };
 }
 
 async function wrappedRequestPassthroughStream(
@@ -35,11 +35,7 @@ async function wrappedRequestPassthroughStream(
   host: string,
   port: number,
 ) {
-  const {
-    error,
-    port: passthroughPort,
-    stun,
-  } = await requestPassthroughStream({
+  const { data, error } = await requestPassthroughStream({
     codec: audioCodec,
     format: audioFormat,
     srt: {
@@ -52,11 +48,11 @@ async function wrappedRequestPassthroughStream(
   if (error)
     return { error: msg({ message: "Failed to request passthrough stream" }) };
 
-  return { port: passthroughPort, stun: stun };
+  return { data: data };
 }
 
 export function wrappedCreatePeer(
-  stun: RequestPassthroughStreamSuccessOutput["stun"],
+  stun: RequestPassthroughStreamSuccessOutput["data"]["stun"],
 ) {
   return createPeer({
     config: { iceServers: [{ urls: `stun:${stun.host}:${stun.port}` }] },
@@ -64,31 +60,33 @@ export function wrappedCreatePeer(
 }
 
 export async function wrappedCreateWHIPSession(offer: string) {
-  const { answer, error } = await createWHIPSession({ offer: offer });
+  const { data, error } = await createWHIPSession({ offer: offer });
 
   if (error)
     return { error: msg({ message: "Failed to create WHIP session" }) };
 
-  return { answer: answer };
+  return { data: data };
 }
 
 export async function setupStreams(data: UseStreamStartData) {
-  const { credentials, error: reserveStreamError } =
+  const { data: reserveStreamData, error: reserveStreamError } =
     await wrappedReserveStream(data);
 
   if (reserveStreamError) return { error: reserveStreamError };
 
-  const { error: requestPassthroughStreamError, stun } =
-    await wrappedRequestPassthroughStream(
-      credentials.token,
-      data.target.host,
-      data.target.port,
-    );
+  const {
+    data: requestPassthroughStreamData,
+    error: requestPassthroughStreamError,
+  } = await wrappedRequestPassthroughStream(
+    reserveStreamData.credentials.token,
+    data.target.host,
+    data.target.port,
+  );
 
   if (requestPassthroughStreamError)
     return { error: requestPassthroughStreamError };
 
-  return { stun: stun };
+  return { stun: requestPassthroughStreamData.stun };
 }
 
 export async function setupPeer(peer: RTCPeerConnection, media: MediaStream) {
@@ -100,12 +98,12 @@ export async function setupPeer(peer: RTCPeerConnection, media: MediaStream) {
 
   const { offer } = await createOffer({ peer: peer });
 
-  const { answer, error: createWHIPSessionError } =
+  const { data: createWHIPSessionData, error: createWHIPSessionError } =
     await wrappedCreateWHIPSession(offer);
 
   if (createWHIPSessionError) return { error: createWHIPSessionError };
 
-  handleAnswer({ answer: answer, peer: peer });
+  handleAnswer({ answer: createWHIPSessionData.answer, peer: peer });
 
   const connected = await connectionPromise;
 

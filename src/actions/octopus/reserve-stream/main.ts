@@ -21,12 +21,12 @@ export async function reserveStream(
   if (!parsed.success) return { error: errors.invalidInput };
 
   try {
-    const { credentials, port } = await internalReserveStream({
+    const data = await internalReserveStream({
       event: parsed.data.event,
       format: parsed.data.format,
       record: parsed.data.record,
     });
-    return { credentials: credentials, port: port };
+    return { data: data };
   } catch (error) {
     if (error instanceof InvalidInputError)
       return { error: errors.invalidInput };

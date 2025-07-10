@@ -44,7 +44,7 @@ export function useListSchedules({
   useEffect(() => {
     start();
     return stop;
-  }, [start, stop]);
+  }, []);
 
   return useMemo(() => ({ ...state, refresh }), [state, refresh]);
 }

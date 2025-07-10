@@ -14,8 +14,8 @@ export async function checkStreamAvailability({}: CheckStreamAvailabilityInput =
   if (!session) return { error: errors.unauthorized };
 
   try {
-    const { checkedAt, event } = await internalCheckStreamAvailability();
-    return { checkedAt: checkedAt, event: event };
+    const availability = await internalCheckStreamAvailability();
+    return { data: availability };
   } catch (error) {
     if (error instanceof OctopusError) return { error: errors.generic };
     throw error;

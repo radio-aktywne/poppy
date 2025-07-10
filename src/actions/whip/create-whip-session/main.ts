@@ -18,10 +18,10 @@ export async function createWHIPSession(
   if (!parsed.success) return { error: errors.invalidInput };
 
   try {
-    const { answer } = await internalCreateWHIPSession({
+    const data = await internalCreateWHIPSession({
       offer: parsed.data.offer,
     });
-    return { answer: answer };
+    return { data: data };
   } catch (error) {
     if (error instanceof InvalidInputError)
       return { error: errors.invalidInput };

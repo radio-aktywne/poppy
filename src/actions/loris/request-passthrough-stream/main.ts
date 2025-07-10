@@ -24,13 +24,13 @@ export async function requestPassthroughStream(
   if (!parsed.success) return { error: errors.invalidInput };
 
   try {
-    const { port, stun } = await internalRequestPassthroughStream({
+    const data = await internalRequestPassthroughStream({
       codec: parsed.data.codec,
       format: parsed.data.format,
       srt: parsed.data.srt,
       stun: parsed.data.stun,
     });
-    return { port: port, stun: stun };
+    return { data: data };
   } catch (error) {
     if (error instanceof InvalidInputError)
       return { error: errors.invalidInput };
