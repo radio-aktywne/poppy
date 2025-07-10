@@ -7,15 +7,13 @@ export type CheckStreamAvailabilityInput = {
 };
 
 export type CheckStreamAvailabilitySuccessOutput = {
-  checkedAt: InternalCheckStreamAvailabilityOutput["checkedAt"];
+  data: InternalCheckStreamAvailabilityOutput;
   error?: never;
-  event: InternalCheckStreamAvailabilityOutput["event"];
 };
 
 export type CheckStreamAvailabilityErrorOutput = {
-  checkedAt?: never;
+  data?: never;
   error: MessageDescriptor;
-  event?: never;
 };
 
 export type CheckStreamAvailabilityOutput =

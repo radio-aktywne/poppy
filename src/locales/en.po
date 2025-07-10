@@ -25,6 +25,10 @@ msgstr "An error occurred while creating WHIP session."
 msgid "An error occurred while deleting WHIP session."
 msgstr "An error occurred while deleting WHIP session."
 
+#: src/actions/beaver/get-event/constants.ts:4
+msgid "An error occurred while fetching the event."
+msgstr "An error occurred while fetching the event."
+
 #: src/actions/beaver/list-schedules/constants.ts:4
 msgid "An error occurred while listing schedules."
 msgstr "An error occurred while listing schedules."
@@ -38,13 +42,9 @@ msgid "An error occurred while reserving stream."
 msgstr "An error occurred while reserving stream."
 
 #: src/components/metadata/auth/auth-error-page-metadata/main.tsx:14
-#: src/app/auth/error/page.tsx:18
+#: src/app/auth/error/page.tsx:20
 msgid "Auth error • poppy"
 msgstr "Auth error • poppy"
-
-#: src/components/widgets/streaming-widget/components/idle-widget/main.tsx:60
-msgid "Busy"
-msgstr "Busy"
 
 #: src/hooks/use-toasts/main.tsx:19
 msgid "Error"
@@ -58,19 +58,19 @@ msgstr "Error • poppy"
 msgid "Error in auth flow"
 msgstr "Error in auth flow"
 
-#: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:69
-msgid "Event"
-msgstr "Event"
-
 #: src/components/widgets/streaming-widget/components/idle-widget/main.tsx:33
 msgid "Event is required"
 msgstr "Event is required"
 
-#: src/hooks/use-stream/utils.ts:70
+#: src/actions/beaver/get-event/constants.ts:6
+msgid "Event not found."
+msgstr "Event not found."
+
+#: src/hooks/use-stream/utils.ts:66
 msgid "Failed to create WHIP session"
 msgstr "Failed to create WHIP session"
 
-#: src/hooks/use-stream/utils.ts:53
+#: src/hooks/use-stream/utils.ts:49
 msgid "Failed to request passthrough stream"
 msgstr "Failed to request passthrough stream"
 
@@ -78,7 +78,7 @@ msgstr "Failed to request passthrough stream"
 msgid "Failed to reserve stream"
 msgstr "Failed to reserve stream"
 
-#: src/components/widgets/streaming-widget/components/idle-widget/main.tsx:59
+#: src/components/widgets/status-widget/components/free-display/main.tsx:15
 msgid "Free"
 msgstr "Free"
 
@@ -90,8 +90,13 @@ msgstr "Info"
 #: src/actions/octopus/reserve-stream/constants.ts:5
 #: src/actions/loris/request-passthrough-stream/constants.ts:7
 #: src/actions/beaver/list-schedules/constants.ts:5
+#: src/actions/beaver/get-event/constants.ts:5
 msgid "Invalid input."
 msgstr "Invalid input."
+
+#: src/components/widgets/status-widget/components/logo/main.tsx:15
+msgid "Logo"
+msgstr "Logo"
 
 #: src/components/layouts/session-layout/main.tsx:30
 msgid "Logout"
@@ -110,15 +115,15 @@ msgstr "Page not found"
 #: src/components/metadata/root/root-not-found-metadata/main.tsx:13
 #: src/components/metadata/root/root-error-metadata/main.tsx:13
 #: src/components/metadata/auth/auth-error-page-metadata/main.tsx:13
-#: src/app/layout.tsx:19
-#: src/app/layout.tsx:20
-#: src/app/auth/error/page.tsx:17
-#: src/app/(protected)/page.tsx:16
-#: src/app/(protected)/page.tsx:17
+#: src/app/layout.tsx:21
+#: src/app/layout.tsx:22
+#: src/app/auth/error/page.tsx:19
+#: src/app/(protected)/(main)/page.tsx:18
+#: src/app/(protected)/(main)/page.tsx:19
 msgid "poppy"
 msgstr "poppy"
 
-#: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:74
+#: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:73
 msgid "Record"
 msgstr "Record"
 
@@ -126,19 +131,23 @@ msgstr "Record"
 msgid "Retry"
 msgstr "Retry"
 
+#: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:68
+msgid "Show"
+msgstr "Show"
+
 #: src/components/views/root/root-error-view/main.tsx:15
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
-#: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:83
+#: src/components/widgets/streaming-widget/components/idle-widget/components/stream-form/main.tsx:82
 msgid "Start"
 msgstr "Start"
 
-#: src/components/widgets/streaming-widget/components/live-widget/main.tsx:14
+#: src/components/widgets/streaming-widget/components/live-widget/main.tsx:19
 msgid "Stop"
 msgstr "Stop"
 
-#: src/hooks/use-stream/utils.ts:114
+#: src/hooks/use-stream/utils.ts:112
 msgid "Stream connection failed"
 msgstr "Stream connection failed"
 
@@ -170,7 +179,7 @@ msgstr "Stream stopped"
 msgid "Success"
 msgstr "Success"
 
-#: src/components/widgets/streaming-widget/components/idle-widget/main.tsx:57
+#: src/components/widgets/status-widget/components/busy-display/main.tsx:35
 msgid "Unknown"
 msgstr "Unknown"
 
@@ -193,6 +202,10 @@ msgstr "You are not authorized to create WHIP session."
 #: src/actions/whip/delete-whip-session/constants.ts:6
 msgid "You are not authorized to delete WHIP session."
 msgstr "You are not authorized to delete WHIP session."
+
+#: src/actions/beaver/get-event/constants.ts:7
+msgid "You are not authorized to fetch the event."
+msgstr "You are not authorized to fetch the event."
 
 #: src/actions/beaver/list-schedules/constants.ts:6
 msgid "You are not authorized to list schedules."

@@ -25,7 +25,7 @@ export function StreamForm({ disabled, onStart, validate }: StreamFormInput) {
 
   const { _ } = useLingui();
 
-  const { now } = useNow();
+  const { now } = useNow({ interval: 1000 * 5 });
   const { end, start } = useMemo(() => getSchedulesWindow(now), [now]);
   const { data: schedules, loading: schedulesLoading } = useListSchedules({
     end: formatDatetime(end),
@@ -53,10 +53,9 @@ export function StreamForm({ disabled, onStart, validate }: StreamFormInput) {
 
   if (schedulesLoading) return <Loader />;
 
-  const eventSelectData = getClosestInstances(
-    schedules?.schedules ?? [],
-    now,
-  ).map(({ event }) => ({
+  const instances = getClosestInstances(schedules?.schedules ?? [], now);
+
+  const eventSelectData = instances.map(({ event }) => ({
     label: getEventLabel(event),
     value: event.id,
   }));
@@ -66,7 +65,7 @@ export function StreamForm({ disabled, onStart, validate }: StreamFormInput) {
       <Stack>
         <Select
           data={eventSelectData}
-          label={_(msg({ message: "Event" }))}
+          label={_(msg({ message: "Show" }))}
           required={true}
           {...form.getInputProps("event")}
         />
@@ -75,7 +74,7 @@ export function StreamForm({ disabled, onStart, validate }: StreamFormInput) {
           {...form.getInputProps("record", { type: "checkbox" })}
         />
         <Button
-          color="green"
+          color="ra-green"
           disabled={disabled}
           loading={starting}
           type="submit"

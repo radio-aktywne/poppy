@@ -10,12 +10,12 @@ export type CreateWHIPSessionInput = {
 };
 
 export type CreateWHIPSessionSuccessOutput = {
-  answer: InternalCreateWHIPSessionOutput["answer"];
+  data: InternalCreateWHIPSessionOutput;
   error?: never;
 };
 
 export type CreateWHIPSessionErrorOutput = {
-  answer?: never;
+  data?: never;
   error: MessageDescriptor;
 };
 

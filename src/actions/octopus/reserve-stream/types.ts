@@ -12,15 +12,13 @@ export type ReserveStreamInput = {
 };
 
 export type ReserveStreamSuccessOutput = {
-  credentials: InternalReserveStreamOutput["credentials"];
+  data: InternalReserveStreamOutput;
   error?: never;
-  port: InternalReserveStreamOutput["port"];
 };
 
 export type ReserveStreamErrorOutput = {
-  credentials?: never;
+  data?: never;
   error: MessageDescriptor;
-  port?: never;
 };
 
 export type ReserveStreamOutput =

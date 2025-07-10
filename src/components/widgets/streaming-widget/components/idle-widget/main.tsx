@@ -2,7 +2,7 @@
 
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react";
-import { Badge, Center, Divider, Loader, Stack } from "@mantine/core";
+import { Center, Loader, Stack } from "@mantine/core";
 import { useCallback } from "react";
 
 import { useCheckStreamAvailability } from "../../../../../hooks/octopus/use-check-stream-availability";
@@ -12,9 +12,9 @@ import { IdleWidgetInput, IdleWidgetStartStreamData } from "./types";
 export function IdleWidget({ onStart }: IdleWidgetInput) {
   const { _ } = useLingui();
 
-  const { error, event, loading } = useCheckStreamAvailability();
+  const { data, error, loading } = useCheckStreamAvailability();
 
-  const available = error ? undefined : event == null;
+  const available = error ? undefined : data?.event == null;
 
   const handleStartAfterValidation = useCallback(
     async (data: IdleWidgetStartStreamData) => {
@@ -47,18 +47,6 @@ export function IdleWidget({ onStart }: IdleWidgetInput) {
       <Center>
         <StreamForm disabled={!available} onStart={handleStart} />
       </Center>
-      <Divider />
-      <Badge
-        color={available === undefined ? "gray" : available ? "green" : "red"}
-        fullWidth
-        variant="light"
-      >
-        {available === undefined
-          ? _(msg({ message: "Unknown" }))
-          : available
-            ? _(msg({ message: "Free" }))
-            : _(msg({ message: "Busy" }))}
-      </Badge>
     </Stack>
   );
 }

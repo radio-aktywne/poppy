@@ -13,15 +13,13 @@ export type RequestPassthroughStreamInput = {
 };
 
 export type RequestPassthroughStreamSuccessOutput = {
+  data: InternalRequestPassthroughStreamOutput;
   error?: never;
-  port: InternalRequestPassthroughStreamOutput["port"];
-  stun: InternalRequestPassthroughStreamOutput["stun"];
 };
 
 export type RequestPassthroughStreamErrorOutput = {
+  data?: never;
   error: MessageDescriptor;
-  port?: never;
-  stun?: never;
 };
 
 export type RequestPassthroughStreamOutput =
