@@ -1,3 +1,3 @@
 export type DeleteWHIPSessionInput = {
-  [key: string]: never;
+  session: string;
 };

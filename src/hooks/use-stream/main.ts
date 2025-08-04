@@ -21,11 +21,11 @@ export function useStream({}: UseStreamInput = {}): UseStreamOutput {
       setLoading(true);
 
       try {
-        const { error, media, peer } = await startStream(data);
+        const { error, media, peer, session } = await startStream(data);
 
         if (error) return error;
 
-        setState({ live: true, media: media, peer: peer });
+        setState({ live: true, media: media, peer: peer, session: session });
       } finally {
         setLoading(false);
       }
@@ -39,7 +39,7 @@ export function useStream({}: UseStreamInput = {}): UseStreamOutput {
     setLoading(true);
 
     try {
-      await stopStream(state.media, state.peer);
+      await stopStream(state.media, state.peer, state.session);
       setState({ live: false });
     } finally {
       setLoading(false);

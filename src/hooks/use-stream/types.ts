@@ -7,12 +7,14 @@ export type UseStreamIdleState = {
   live: false;
   media?: undefined;
   peer?: undefined;
+  session?: undefined;
 };
 
 export type UseStreamLiveState = {
   live: true;
   media: MediaStream;
   peer: RTCPeerConnection;
+  session: string;
 };
 
 export type UseStreamState = UseStreamIdleState | UseStreamLiveState;

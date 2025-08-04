@@ -39,11 +39,18 @@ paths:
               schema:
                 type: string
                 example: Session active already
-  /whip/resource/whip-client:
+  /whip/resource/{session}:
     delete:
       summary: Delete a session
       description: Delete a session and stop the stream
       operationId: DeleteSession
+      parameters:
+        - name: session
+          in: path
+          required: true
+          description: The identifier of the session to delete
+          schema:
+            type: string
       responses:
         "200":
           description: Session deleted
