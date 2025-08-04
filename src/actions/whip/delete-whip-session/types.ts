@@ -1,7 +1,9 @@
 import { MessageDescriptor } from "@lingui/core";
 
+import { DeleteWHIPSessionInput as InternalDeleteWHIPSessionInput } from "../../../lib/whip/delete-whip-session";
+
 export type DeleteWHIPSessionInput = {
-  [key: string]: never;
+  session: InternalDeleteWHIPSessionInput["session"];
 };
 
 export type DeleteWHIPSessionSuccessOutput = {

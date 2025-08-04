@@ -2,21 +2,24 @@
 
 import { getSession } from "../../../lib/auth/get-session";
 import { deleteWHIPSession as internalDeleteWHIPSession } from "../../../lib/whip/delete-whip-session";
-import { SessionNotFoundError } from "../../../lib/whip/delete-whip-session/errors";
 import { WHIPError } from "../../../lib/whip/errors";
 import { errors } from "./constants";
+import { inputSchema } from "./schemas";
 import { DeleteWHIPSessionInput, DeleteWHIPSessionOutput } from "./types";
 
-export async function deleteWHIPSession({}: DeleteWHIPSessionInput = {}): Promise<DeleteWHIPSessionOutput> {
+export async function deleteWHIPSession(
+  input: DeleteWHIPSessionInput,
+): Promise<DeleteWHIPSessionOutput> {
   const { session } = await getSession();
   if (!session) return { error: errors.unauthorized };
 
+  const parsed = inputSchema.safeParse(input);
+  if (!parsed.success) return { error: errors.invalidInput };
+
   try {
-    await internalDeleteWHIPSession();
+    await internalDeleteWHIPSession({ session: parsed.data.session });
     return {};
   } catch (error) {
-    if (error instanceof SessionNotFoundError)
-      return { error: errors.notFound };
     if (error instanceof WHIPError) return { error: errors.generic };
     throw error;
   }

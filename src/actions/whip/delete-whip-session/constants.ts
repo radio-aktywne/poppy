@@ -2,7 +2,7 @@ import { msg } from "@lingui/core/macro";
 
 export const errors = {
   generic: msg({ message: "An error occurred while deleting WHIP session." }),
-  notFound: msg({ message: "WHIP session not found." }),
+  invalidInput: msg({ message: "Invalid input." }),
   unauthorized: msg({
     message: "You are not authorized to delete WHIP session.",
   }),

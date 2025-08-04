@@ -6,16 +6,33 @@ export function createCandidatesGatheredPromise(
   peer: RTCPeerConnection,
 ): Promise<void> {
   return new Promise<void>((resolve) => {
-    const handleStateChange = () => {
-      if (peer.iceGatheringState === "complete") {
-        peer.removeEventListener("icegatheringstatechange", handleStateChange);
-        resolve();
-      }
+    const timeouts = [] as NodeJS.Timeout[];
+
+    const removeTimeouts = () => {
+      while (timeouts.length > 0) clearTimeout(timeouts.pop());
     };
 
-    const handleCandidate = () => {
+    const cleanupAndResolve = () => {
+      peer.removeEventListener("icegatheringstatechange", handleStateChange);
       peer.removeEventListener("icecandidate", handleCandidate);
-      setTimeout(() => resolve(), 1000);
+      removeTimeouts();
+      resolve();
+    };
+
+    const handleStateChange = () => {
+      if (peer.iceGatheringState === "complete") cleanupAndResolve();
+    };
+
+    const handleCandidate = (event: RTCPeerConnectionIceEvent) => {
+      if (!event.candidate) return cleanupAndResolve();
+
+      switch (event.candidate.type) {
+        case "host":
+        case "srflx":
+          removeTimeouts();
+          timeouts.push(setTimeout(() => cleanupAndResolve(), 250));
+          break;
+      }
     };
 
     peer.addEventListener("icegatheringstatechange", handleStateChange);

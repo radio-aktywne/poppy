@@ -4,4 +4,5 @@ export type CreateWHIPSessionInput = {
 
 export type CreateWHIPSessionOutput = {
   answer: string;
+  session: string;
 };

@@ -20,5 +20,8 @@ export async function createWHIPSession({
     throw new WHIPError();
   }
 
-  return { answer: data! };
+  const answer = data!;
+  const session = response.headers.get("Location")!.split("/").pop()!;
+
+  return { answer: answer, session: session };
 }

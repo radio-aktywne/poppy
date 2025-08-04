@@ -24,7 +24,7 @@ export type paths = {
     put?: never;
     trace?: never;
   };
-  "/whip/resource/whip-client": {
+  "/whip/resource/{session}": {
     /**
      * Delete a session
      * @description Delete a session and stop the stream
@@ -104,7 +104,10 @@ export type operations = {
     parameters: {
       cookie?: never;
       header?: never;
-      path?: never;
+      path: {
+        /** @description The identifier of the session to delete */
+        session: string;
+      };
       query?: never;
     };
     requestBody?: never;

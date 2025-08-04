@@ -108,11 +108,11 @@ export async function setupPeer(peer: RTCPeerConnection, media: MediaStream) {
   const connected = await connectionPromise;
 
   if (!connected) {
-    await deleteWHIPSession();
+    await deleteWHIPSession({ session: createWHIPSessionData.session });
     return { error: msg({ message: "Stream connection failed" }) };
   }
 
-  return {};
+  return { session: createWHIPSessionData.session };
 }
 
 export async function startStream(data: UseStreamStartData) {
@@ -127,7 +127,7 @@ export async function startStream(data: UseStreamStartData) {
 
   const { peer } = wrappedCreatePeer(stun);
 
-  const { error: setupPeerError } = await setupPeer(peer, media);
+  const { error: setupPeerError, session } = await setupPeer(peer, media);
 
   if (setupPeerError) {
     closeMedia({ media: media });
@@ -135,11 +135,15 @@ export async function startStream(data: UseStreamStartData) {
     return { error: setupPeerError };
   }
 
-  return { media: media, peer: peer };
+  return { media: media, peer: peer, session: session };
 }
 
-export async function stopStream(media: MediaStream, peer: RTCPeerConnection) {
-  await deleteWHIPSession();
+export async function stopStream(
+  media: MediaStream,
+  peer: RTCPeerConnection,
+  session: string,
+) {
+  await deleteWHIPSession({ session: session });
 
   closeMedia({ media: media });
   closePeer({ peer: peer });
