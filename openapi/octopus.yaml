@@ -1,9 +1,12 @@
+openapi: "3.1.0"
 info:
   title: octopus
-openapi: 3.1.0
+  version: "0.25.0"
 paths:
   /check:
     get:
+      tags:
+        - Check
       summary: Check availability
       description: Check the availability of the stream.
       operationId: CheckCheck
@@ -14,10 +17,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Availability"
+                $ref: "#/components/schemas/CheckResponseAvailability"
       deprecated: false
   /ping:
     get:
+      tags:
+        - Ping
       summary: Ping
       description: Ping.
       operationId: PingPing
@@ -25,19 +30,15 @@ paths:
         "204":
           description: Request fulfilled, nothing follows
           headers:
-            cache-control:
+            Cache-Control:
               schema:
                 type: string
-              required: false
+              required: true
               deprecated: false
-              allowEmptyValue: false
-              allowReserved: false
-          content:
-            application/json:
-              schema:
-                type: "null"
       deprecated: false
     head:
+      tags:
+        - Ping
       summary: Ping headers
       description: Ping headers.
       operationId: PingHeadping
@@ -45,20 +46,16 @@ paths:
         "204":
           description: Request fulfilled, nothing follows
           headers:
-            cache-control:
+            Cache-Control:
               schema:
                 type: string
-              required: false
+              required: true
               deprecated: false
-              allowEmptyValue: false
-              allowReserved: false
-          content:
-            application/json:
-              schema:
-                type: "null"
       deprecated: false
   /reserve:
     post:
+      tags:
+        - Reserve
       summary: Reserve a stream
       description: Reserve a stream.
       operationId: ReserveReserve
@@ -75,7 +72,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ReserveResponseData"
+                $ref: "#/components/schemas/ReserveResponseReservation"
         "400":
           description: Bad request syntax or unsupported method
           content:
@@ -126,8 +123,53 @@ paths:
                   - status_code: 409
                     detail: Conflict
                     extra: {}
-        "422":
-          description: Unprocessable Content
+      deprecated: false
+  /sse:
+    get:
+      tags:
+        - SSE
+      summary: Get SSE stream
+      description: Get a stream of Server-Sent Events.
+      operationId: SseSubscribe
+      parameters:
+        - name: types
+          in: query
+          schema:
+            oneOf:
+              - anyOf:
+                  - $ref: "#/components/schemas/SubscribeRequestTypes"
+                  - type: string
+                    contentMediaType: application/json
+                    contentSchema:
+                      $ref: "#/components/schemas/SubscribeRequestTypes"
+                title: SubscribeRequestTypes
+              - type: "null"
+            description: Types of events to subscribe to.
+          description: Types of events to subscribe to.
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          allowReserved: false
+      responses:
+        "200":
+          description: Request fulfilled, stream of Server-Sent Events follows
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+              required: true
+              deprecated: false
+            Connection:
+              schema:
+                type: string
+              required: true
+              deprecated: false
+          content:
+            text/event-stream:
+              schema:
+                type: string
+        "400":
+          description: Bad request syntax or unsupported method
           content:
             application/json:
               schema:
@@ -146,107 +188,150 @@ paths:
                 required:
                   - detail
                   - status_code
-                description: Unprocessable Content Exception
+                description: Validation Exception
                 examples:
-                  - status_code: 422
-                    detail: Unprocessable Content
+                  - status_code: 400
+                    detail: Bad Request
                     extra: {}
       deprecated: false
-  /sse:
+  /test:
     get:
-      summary: Get SSE stream
-      description: Get a stream of Server-Sent Events.
-      operationId: SseSubscribe
+      tags:
+        - Test
+      summary: Test
+      description: Test.
+      operationId: TestTest
+      parameters:
+        - name: parameters
+          in: query
+          schema:
+            oneOf:
+              - anyOf:
+                  - $ref: "#/components/schemas/TestRequestParameters"
+                  - type: string
+                    contentMediaType: application/json
+                    contentSchema:
+                      $ref: "#/components/schemas/TestRequestParameters"
+                title: TestRequestParameters
+              - type: "null"
+            description: Parameters for testing.
+          description: Parameters for testing.
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          allowReserved: false
       responses:
         "200":
           description: Request fulfilled, document follows
-          headers:
-            content-length:
-              schema:
-                type: string
-              description: File size in bytes
-              required: false
-              deprecated: false
-              allowEmptyValue: false
-              allowReserved: false
-            last-modified:
-              schema:
-                type: string
-                format: date-time
-              description: Last modified data-time in RFC 2822 format
-              required: false
-              deprecated: false
-              allowEmptyValue: false
-              allowReserved: false
-            etag:
-              schema:
-                type: string
-              description: Entity tag
-              required: false
-              deprecated: false
-              allowEmptyValue: false
-              allowReserved: false
+          headers: {}
           content:
-            "":
+            application/json:
               schema:
-                type: string
-                contentMediaType: application/octet-stream
+                $ref: "#/components/schemas/TestResponseResult"
+        "400":
+          description: Bad request syntax or unsupported method
+          content:
+            application/json:
+              schema:
+                properties:
+                  status_code:
+                    type: integer
+                  detail:
+                    type: string
+                  extra:
+                    additionalProperties: {}
+                    type:
+                      - "null"
+                      - object
+                      - array
+                type: object
+                required:
+                  - detail
+                  - status_code
+                description: Validation Exception
+                examples:
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
       deprecated: false
 components:
   schemas:
-    Availability:
+    CheckResponseAvailability:
       properties:
         event:
-          oneOf:
-            - type: "null"
+          anyOf:
             - type: string
               format: uuid
+            - type: "null"
+          title: Event
           description: Identifier of the event that is currently being streamed.
         checkedAt:
-          type: string
-          format: date-time
-          description: Time in UTC at which the availability was checked.
+          $ref: "#/components/schemas/check_models_NaiveDatetime"
       type: object
       required:
+        - event
         - checkedAt
       title: Availability
+      description: Availability of a stream.
     Credentials:
       properties:
         token:
           type: string
+          title: Token
           description: Token to use to connect to the stream.
         expiresAt:
-          type: string
-          format: date-time
-          description: Time in UTC at which the token expires if not used.
+          $ref: "#/components/schemas/reserve_models_NaiveDatetime"
       type: object
       required:
-        - expiresAt
         - token
+        - expiresAt
       title: Credentials
-      description: Credentials to use to connect to the stream.
+      description: Credentials for accessing the stream.
+    EventType:
+      type: string
+      enum:
+        - test
+        - availability-changed
+      title: EventType
+      description: Event types.
+    Format:
+      type: string
+      enum:
+        - ogg
+      title: Format
+      description: Audio format.
+    Parameters:
+      properties:
+        message:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Message
+          description: Optional message to include in the test.
+          default: null
+      type: object
+      title: Parameters
+      description: Parameters for testing.
     ReserveRequestData:
       properties:
         event:
           type: string
           format: uuid
+          title: Event
           description: Identifier of the event to reserve the stream for.
         format:
-          type: string
-          enum:
-            - ogg
-          description: Format of the audio in the stream.
-          default: ogg
+          $ref: "#/components/schemas/Format"
         record:
           type: boolean
+          title: Record
           description: Whether to record the stream.
           default: false
       type: object
       required:
         - event
-      title: ReserveRequestData
-      description: Data for the request.
-    ReserveResponseData:
+      title: ReservationInput
+      description: Data for reserving a stream.
+    ReserveResponseReservation:
       properties:
         credentials:
           $ref: "#/components/schemas/Credentials"
@@ -254,9 +339,49 @@ components:
           type: integer
           maximum: 65535
           minimum: 1
+          title: Port
           description: Port to use to connect to the stream.
       type: object
       required:
         - credentials
         - port
-      title: ReserveResponseData
+      title: Reservation
+      description: Reservation of a stream.
+    SubscribeRequestTypes:
+      anyOf:
+        - type: string
+        - items:
+            $ref: "#/components/schemas/EventType"
+          type: array
+          uniqueItems: true
+        - type: "null"
+    TestRequestParameters:
+      anyOf:
+        - $ref: "#/components/schemas/Parameters"
+        - type: "null"
+    TestResponseResult:
+      properties:
+        success:
+          type: boolean
+          title: Success
+          description: Indicates if the test was successful.
+        message:
+          type: string
+          title: Message
+          description: Message returned from the test.
+      type: object
+      required:
+        - success
+        - message
+      title: Result
+      description: Result of the test.
+    check_models_NaiveDatetime:
+      type: string
+      format: date-time
+      examples:
+        - 2000-01-01T00:00:00
+    reserve_models_NaiveDatetime:
+      type: string
+      format: date-time
+      examples:
+        - 2000-01-01T00:00:00

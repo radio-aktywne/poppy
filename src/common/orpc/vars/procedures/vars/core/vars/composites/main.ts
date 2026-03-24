@@ -1,0 +1,7 @@
+import { listClosestInstances } from "./vars/list-closest-instances";
+import { reserveStreamWithPassthrough } from "./vars/reserve-stream-with-passthrough";
+
+export const composites = {
+  listClosestInstances: listClosestInstances,
+  reserveStreamWithPassthrough: reserveStreamWithPassthrough,
+};

@@ -1,0 +1,194 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: poppy\n"
+"Language: pl\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"MIME-Version: 1.0\n"
+"X-Generator: @lingui/cli\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/client/test/components/test-widget/main.tsx:52
+msgid "An unexpected error occurred"
+msgstr "Wystąpił nieoczekiwany błąd"
+
+#: src/client/test/components/test-widget/components/test-form/main.tsx:25
+msgid "Enter some value"
+msgstr "Wprowadź jakąś wartość"
+
+#: src/isomorphic/notifications/hooks/use-notifications/main.ts:46
+msgid "Error"
+msgstr "Błąd"
+
+#: src/app/(root)/(main)/error.tsx:11
+#: src/app/(root)/(stream)/(master)/(detail)/error.tsx:11
+#: src/app/(root)/(stream)/error.tsx:11
+msgid "Error • poppy"
+msgstr "Błąd • poppy"
+
+#: src/client/core/hooks/use-stream/main.ts:53
+msgid "Failed to make stream ready"
+msgstr "Nie udało się przygotować transmisji"
+
+#: src/client/core/hooks/use-stream/main.ts:85
+msgid "Failed to start stream"
+msgstr "Nie udało się rozpocząć transmisji"
+
+#: src/client/core/components/status-widget/components/free-badge/main.tsx:22
+msgid "Free"
+msgstr "Wolne"
+
+#: src/isomorphic/notifications/hooks/use-notifications/main.ts:56
+msgid "Info"
+msgstr "Informacja"
+
+#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:24
+#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:48
+#: src/client/test/components/test-widget/main.tsx:41
+#: src/client/test/components/test-widget/main.tsx:62
+msgid "Invalid input"
+msgstr "Nieprawidłowe dane wejściowe"
+
+#: src/client/core/components/status-widget/main.tsx:38
+msgid "Logo"
+msgstr "Logo"
+
+#: src/app/(root)/(main)/not-found.tsx:15
+#: src/app/(root)/(stream)/(master)/(detail)/not-found.tsx:15
+msgid "Not Found • poppy"
+msgstr "Nie znaleziono • poppy"
+
+#: src/client/core/components/stream-widget/components/live-widget/components/live-preview/main.tsx:88
+#: src/client/core/components/stream-widget/components/ready-widget/components/ready-preview/main.tsx:76
+msgid "Not recording"
+msgstr "Bez nagrywania"
+
+#: src/app/(root)/(main)/not-found.view.tsx:8
+#: src/app/(root)/(stream)/(master)/(detail)/not-found.view.tsx:8
+msgid "Page not found"
+msgstr "Nie znaleziono strony"
+
+#: src/app/(root)/(stream)/(master)/(detail)/(home)/page.tsx:20
+#: src/app/(root)/layout.tsx:39
+msgid "poppy"
+msgstr "poppy"
+
+#: src/app/(root)/layout.tsx:33
+msgid "poppy is a Next.js app"
+msgstr "poppy to aplikacja Next.js"
+
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:140
+msgid "Ready"
+msgstr "Przygotuj"
+
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:129
+msgid "Record"
+msgstr "Nagraj"
+
+#: src/client/core/components/stream-widget/components/live-widget/components/live-preview/main.tsx:87
+#: src/client/core/components/stream-widget/components/ready-widget/components/ready-preview/main.tsx:75
+msgid "Recording"
+msgstr "Nagrywanie"
+
+#: src/isomorphic/core/components/generic/error-widget/main.tsx:21
+msgid "Retry"
+msgstr "Spróbuj ponownie"
+
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:122
+msgid "Select show"
+msgstr "Wybierz audycję"
+
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:121
+msgid "Show"
+msgstr "Audycja"
+
+#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:25
+msgid "Show is required"
+msgstr "Audycja jest wymagana"
+
+#: src/app/(root)/(main)/error.view.tsx:10
+#: src/app/(root)/(stream)/(master)/(detail)/error.view.tsx:10
+#: src/app/(root)/(stream)/error.view.tsx:12
+msgid "Something went wrong"
+msgstr "Coś poszło nie tak"
+
+#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:47
+msgid "Start"
+msgstr "Start"
+
+#: src/client/core/components/status-widget/main.tsx:33
+msgid "Status"
+msgstr "Status"
+
+#: src/client/core/components/stream-widget/components/live-widget/main.tsx:37
+msgid "Stop"
+msgstr "Stop"
+
+#: src/client/core/components/stream-widget/main.tsx:30
+msgid "Stream"
+msgstr "Transmisja"
+
+#: src/client/core/hooks/use-stream/main.ts:26
+msgid "Stream can't be made ready, because it is not currently idle"
+msgstr "Transmisja nie może być przygotowana, ponieważ jest aktualnie w innym stanie"
+
+#: src/client/core/hooks/use-stream/main.ts:111
+msgid "Stream can't be made unready, because it is not currently ready"
+msgstr "Transmisja nie może być cofnięta z gotowości, ponieważ nie jest aktualnie w stanie gotowości"
+
+#: src/client/core/hooks/use-stream/main.ts:61
+msgid "Stream can't be started, because it is not currently ready"
+msgstr "Transmisja nie może być rozpoczęta, ponieważ nie jest aktualnie w stanie gotowości"
+
+#: src/client/core/hooks/use-stream/main.ts:91
+msgid "Stream can't be stopped, because it is not currently live"
+msgstr "Transmisja nie może być zatrzymana, ponieważ nie jest aktualnie uruchomiona"
+
+#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:32
+msgid "Stream got unready"
+msgstr "Transmisja została cofnięta z gotowości"
+
+#: src/client/core/hooks/use-stream/main.ts:122
+msgid "Stream got unready, but some resources failed to clean up"
+msgstr "Transmisja została cofnięta z gotowości, ale niektóre zasoby nie zostały poprawnie zwolnione"
+
+#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:41
+msgid "Stream is ready"
+msgstr "Transmisja jest gotowa"
+
+#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:23
+msgid "Stream started"
+msgstr "Rozpoczęto transmisję"
+
+#: src/client/core/components/stream-widget/components/live-widget/main.tsx:23
+msgid "Stream stopped"
+msgstr "Zakończono transmisję"
+
+#: src/client/core/hooks/use-stream/main.ts:101
+msgid "Stream stopped, but some resources failed to clean up"
+msgstr "Transmisja została zakończona, ale niektóre zasoby nie zostały poprawnie zwolnione"
+
+#: src/client/test/components/test-widget/components/test-form/main.tsx:30
+msgid "Submit"
+msgstr "Wyślij"
+
+#: src/isomorphic/notifications/hooks/use-notifications/main.ts:66
+msgid "Success"
+msgstr "Sukces"
+
+#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:55
+msgid "Unready"
+msgstr "Cofnij"
+
+#: src/isomorphic/notifications/hooks/use-notifications/main.ts:76
+msgid "Warning"
+msgstr "Ostrzeżenie"
+
+#: src/server/orpc/vars/procedures/vars/test/vars/validate/main.ts:27
+msgid "Why did the chicken cross the road? To get to the other side."
+msgstr "Dlaczego kura przeszła przez ulicę? Żeby dostać się na drugą stronę."

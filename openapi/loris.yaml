@@ -1,9 +1,12 @@
+openapi: "3.1.0"
 info:
   title: loris
-openapi: 3.1.0
+  version: "0.14.0"
 paths:
   /ping:
     get:
+      tags:
+        - Ping
       summary: Ping
       description: Ping.
       operationId: PingPing
@@ -11,19 +14,15 @@ paths:
         "204":
           description: Request fulfilled, nothing follows
           headers:
-            cache-control:
+            Cache-Control:
               schema:
                 type: string
-              required: false
+              required: true
               deprecated: false
-              allowEmptyValue: false
-              allowReserved: false
-          content:
-            application/json:
-              schema:
-                type: "null"
       deprecated: false
     head:
+      tags:
+        - Ping
       summary: Ping headers
       description: Ping headers.
       operationId: PingHeadping
@@ -31,20 +30,86 @@ paths:
         "204":
           description: Request fulfilled, nothing follows
           headers:
-            cache-control:
+            Cache-Control:
               schema:
                 type: string
-              required: false
+              required: true
               deprecated: false
-              allowEmptyValue: false
-              allowReserved: false
+      deprecated: false
+  /sse:
+    get:
+      tags:
+        - SSE
+      summary: Get SSE stream
+      description: Get a stream of Server-Sent Events.
+      operationId: SseSubscribe
+      parameters:
+        - name: types
+          in: query
+          schema:
+            oneOf:
+              - anyOf:
+                  - $ref: "#/components/schemas/SubscribeRequestTypes"
+                  - type: string
+                    contentMediaType: application/json
+                    contentSchema:
+                      $ref: "#/components/schemas/SubscribeRequestTypes"
+                title: SubscribeRequestTypes
+              - type: "null"
+            description: Types of events to subscribe to.
+          description: Types of events to subscribe to.
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          allowReserved: false
+      responses:
+        "200":
+          description: Request fulfilled, stream of Server-Sent Events follows
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+              required: true
+              deprecated: false
+            Connection:
+              schema:
+                type: string
+              required: true
+              deprecated: false
+          content:
+            text/event-stream:
+              schema:
+                type: string
+        "400":
+          description: Bad request syntax or unsupported method
           content:
             application/json:
               schema:
-                type: "null"
+                properties:
+                  status_code:
+                    type: integer
+                  detail:
+                    type: string
+                  extra:
+                    additionalProperties: {}
+                    type:
+                      - "null"
+                      - object
+                      - array
+                type: object
+                required:
+                  - detail
+                  - status_code
+                description: Validation Exception
+                examples:
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
       deprecated: false
   /stream:
     post:
+      tags:
+        - Stream
       summary: Request a stream
       description: Request a stream.
       operationId: StreamStream
@@ -52,7 +117,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/StreamRequestData"
+              $ref: "#/components/schemas/StreamInput"
         required: true
       responses:
         "201":
@@ -61,7 +126,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StreamResponseData"
+                $ref: "#/components/schemas/StreamDetails"
         "400":
           description: Bad request syntax or unsupported method
           content:
@@ -113,18 +178,115 @@ paths:
                     detail: Conflict
                     extra: {}
       deprecated: false
+  /test:
+    get:
+      tags:
+        - Test
+      summary: Test
+      description: Test.
+      operationId: TestTest
+      parameters:
+        - name: parameters
+          in: query
+          schema:
+            oneOf:
+              - anyOf:
+                  - $ref: "#/components/schemas/TestRequestParameters"
+                  - type: string
+                    contentMediaType: application/json
+                    contentSchema:
+                      $ref: "#/components/schemas/TestRequestParameters"
+                title: TestRequestParameters
+              - type: "null"
+            description: Parameters for testing.
+          description: Parameters for testing.
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          allowReserved: false
+      responses:
+        "200":
+          description: Request fulfilled, document follows
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TestResponseResult"
+        "400":
+          description: Bad request syntax or unsupported method
+          content:
+            application/json:
+              schema:
+                properties:
+                  status_code:
+                    type: integer
+                  detail:
+                    type: string
+                  extra:
+                    additionalProperties: {}
+                    type:
+                      - "null"
+                      - object
+                      - array
+                type: object
+                required:
+                  - detail
+                  - status_code
+                description: Validation Exception
+                examples:
+                  - status_code: 400
+                    detail: Bad Request
+                    extra: {}
+      deprecated: false
 components:
   schemas:
+    Codec:
+      type: string
+      enum:
+        - opus
+      title: Codec
+      description: Audio codec.
+    EventType:
+      type: string
+      enum:
+        - test
+      title: EventType
+      description: Event types.
+    Format:
+      type: string
+      enum:
+        - ogg
+      title: Format
+      description: Audio format.
+    Parameters:
+      properties:
+        message:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Message
+          description: Optional message to include in the test.
+          default: null
+      type: object
+      title: Parameters
+      description: Parameters for testing.
     SRTServer:
       properties:
         host:
           type: string
+          title: Host
+          description: Host of the SRT server.
         port:
           type: integer
+          title: Port
+          description: Port of the SRT server.
         password:
-          oneOf:
-            - type: "null"
+          anyOf:
             - type: string
+            - type: "null"
+          title: Password
+          description: Password to authenticate with the SRT server.
+          default: null
       type: object
       required:
         - host
@@ -135,40 +297,19 @@ components:
       properties:
         host:
           type: string
+          title: Host
+          description: Host of the STUN server.
         port:
           type: integer
+          title: Port
+          description: Port of the STUN server.
       type: object
       required:
         - host
         - port
       title: STUNServer
-    StreamRequestData:
-      properties:
-        codec:
-          type: string
-          enum:
-            - opus
-          description: Audio codec.
-          default: opus
-        format:
-          type: string
-          enum:
-            - ogg
-          description: Audio format.
-          default: ogg
-        srt:
-          $ref: "#/components/schemas/SRTServer"
-        stun:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/STUNServer"
-          description: STUN server configuration.
-      type: object
-      required:
-        - srt
-      title: StreamRequestData
-      description: Data for the request.
-    StreamResponseData:
+      description: STUN server configuration.
+    StreamDetails:
       properties:
         stun:
           $ref: "#/components/schemas/STUNServer"
@@ -176,9 +317,58 @@ components:
           type: integer
           maximum: 65535
           minimum: 1
+          title: Port
           description: Port to stream to.
       type: object
       required:
-        - port
         - stun
-      title: StreamResponseData
+        - port
+      title: StreamDetails
+      description: Details of the stream.
+    StreamInput:
+      properties:
+        codec:
+          $ref: "#/components/schemas/Codec"
+        format:
+          $ref: "#/components/schemas/Format"
+        srt:
+          $ref: "#/components/schemas/SRTServer"
+        stun:
+          anyOf:
+            - $ref: "#/components/schemas/STUNServer"
+            - type: "null"
+          description: STUN server configuration.
+          default: null
+      type: object
+      required:
+        - srt
+      title: StreamInput
+      description: Data for requesting a stream.
+    SubscribeRequestTypes:
+      anyOf:
+        - type: string
+        - items:
+            $ref: "#/components/schemas/EventType"
+          type: array
+          uniqueItems: true
+        - type: "null"
+    TestRequestParameters:
+      anyOf:
+        - $ref: "#/components/schemas/Parameters"
+        - type: "null"
+    TestResponseResult:
+      properties:
+        success:
+          type: boolean
+          title: Success
+          description: Indicates if the test was successful.
+        message:
+          type: string
+          title: Message
+          description: Message returned from the test.
+      type: object
+      required:
+        - success
+        - message
+      title: Result
+      description: Result of the test.
