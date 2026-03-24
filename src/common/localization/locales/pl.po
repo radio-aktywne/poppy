@@ -17,6 +17,10 @@ msgstr ""
 msgid "An unexpected error occurred"
 msgstr "Wystąpił nieoczekiwany błąd"
 
+#: src/app/(root)/layout.tsx:33
+msgid "Broadcast streaming app 🎤"
+msgstr "Broadcast streaming app 🎤"
+
 #: src/client/test/components/test-widget/components/test-form/main.tsx:25
 msgid "Enter some value"
 msgstr "Wprowadź jakąś wartość"
@@ -77,10 +81,6 @@ msgstr "Nie znaleziono strony"
 #: src/app/(root)/layout.tsx:39
 msgid "poppy"
 msgstr "poppy"
-
-#: src/app/(root)/layout.tsx:33
-msgid "poppy is a Next.js app"
-msgstr "poppy to aplikacja Next.js"
 
 #: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:140
 msgid "Ready"
