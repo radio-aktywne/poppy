@@ -9,4 +9,5 @@ Broadcast streaming app 🎤
 
 ## 💡 About
 
-`poppy` is a web app for going live.
+`poppy` is a [`Next.js`](https://nextjs.org) app
+for going live.

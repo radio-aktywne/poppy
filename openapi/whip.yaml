@@ -1,6 +1,6 @@
+openapi: "3.1.0"
 info:
   title: WHIP
-openapi: 3.1.0
 paths:
   /whip/endpoint:
     post:
@@ -17,7 +17,7 @@ paths:
         "201":
           description: Session created
           headers:
-            location:
+            Location:
               description: URL to the created session resource
               schema:
                 type: string

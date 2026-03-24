@@ -1,0 +1,194 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: poppy\n"
+"Language: en\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"MIME-Version: 1.0\n"
+"X-Generator: @lingui/cli\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/client/test/components/test-widget/main.tsx:52
+msgid "An unexpected error occurred"
+msgstr "An unexpected error occurred"
+
+#: src/client/test/components/test-widget/components/test-form/main.tsx:25
+msgid "Enter some value"
+msgstr "Enter some value"
+
+#: src/isomorphic/notifications/hooks/use-notifications/main.ts:46
+msgid "Error"
+msgstr "Error"
+
+#: src/app/(root)/(main)/error.tsx:11
+#: src/app/(root)/(stream)/(master)/(detail)/error.tsx:11
+#: src/app/(root)/(stream)/error.tsx:11
+msgid "Error • poppy"
+msgstr "Error • poppy"
+
+#: src/client/core/hooks/use-stream/main.ts:53
+msgid "Failed to make stream ready"
+msgstr "Failed to make stream ready"
+
+#: src/client/core/hooks/use-stream/main.ts:85
+msgid "Failed to start stream"
+msgstr "Failed to start stream"
+
+#: src/client/core/components/status-widget/components/free-badge/main.tsx:22
+msgid "Free"
+msgstr "Free"
+
+#: src/isomorphic/notifications/hooks/use-notifications/main.ts:56
+msgid "Info"
+msgstr "Info"
+
+#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:24
+#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:48
+#: src/client/test/components/test-widget/main.tsx:41
+#: src/client/test/components/test-widget/main.tsx:62
+msgid "Invalid input"
+msgstr "Invalid input"
+
+#: src/client/core/components/status-widget/main.tsx:38
+msgid "Logo"
+msgstr "Logo"
+
+#: src/app/(root)/(main)/not-found.tsx:15
+#: src/app/(root)/(stream)/(master)/(detail)/not-found.tsx:15
+msgid "Not Found • poppy"
+msgstr "Not Found • poppy"
+
+#: src/client/core/components/stream-widget/components/live-widget/components/live-preview/main.tsx:88
+#: src/client/core/components/stream-widget/components/ready-widget/components/ready-preview/main.tsx:76
+msgid "Not recording"
+msgstr "Not recording"
+
+#: src/app/(root)/(main)/not-found.view.tsx:8
+#: src/app/(root)/(stream)/(master)/(detail)/not-found.view.tsx:8
+msgid "Page not found"
+msgstr "Page not found"
+
+#: src/app/(root)/(stream)/(master)/(detail)/(home)/page.tsx:20
+#: src/app/(root)/layout.tsx:39
+msgid "poppy"
+msgstr "poppy"
+
+#: src/app/(root)/layout.tsx:33
+msgid "poppy is a Next.js app"
+msgstr "poppy is a Next.js app"
+
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:140
+msgid "Ready"
+msgstr "Ready"
+
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:129
+msgid "Record"
+msgstr "Record"
+
+#: src/client/core/components/stream-widget/components/live-widget/components/live-preview/main.tsx:87
+#: src/client/core/components/stream-widget/components/ready-widget/components/ready-preview/main.tsx:75
+msgid "Recording"
+msgstr "Recording"
+
+#: src/isomorphic/core/components/generic/error-widget/main.tsx:21
+msgid "Retry"
+msgstr "Retry"
+
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:122
+msgid "Select show"
+msgstr "Select show"
+
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:121
+msgid "Show"
+msgstr "Show"
+
+#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:25
+msgid "Show is required"
+msgstr "Show is required"
+
+#: src/app/(root)/(main)/error.view.tsx:10
+#: src/app/(root)/(stream)/(master)/(detail)/error.view.tsx:10
+#: src/app/(root)/(stream)/error.view.tsx:12
+msgid "Something went wrong"
+msgstr "Something went wrong"
+
+#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:47
+msgid "Start"
+msgstr "Start"
+
+#: src/client/core/components/status-widget/main.tsx:33
+msgid "Status"
+msgstr "Status"
+
+#: src/client/core/components/stream-widget/components/live-widget/main.tsx:37
+msgid "Stop"
+msgstr "Stop"
+
+#: src/client/core/components/stream-widget/main.tsx:30
+msgid "Stream"
+msgstr "Stream"
+
+#: src/client/core/hooks/use-stream/main.ts:26
+msgid "Stream can't be made ready, because it is not currently idle"
+msgstr "Stream can't be made ready, because it is not currently idle"
+
+#: src/client/core/hooks/use-stream/main.ts:111
+msgid "Stream can't be made unready, because it is not currently ready"
+msgstr "Stream can't be made unready, because it is not currently ready"
+
+#: src/client/core/hooks/use-stream/main.ts:61
+msgid "Stream can't be started, because it is not currently ready"
+msgstr "Stream can't be started, because it is not currently ready"
+
+#: src/client/core/hooks/use-stream/main.ts:91
+msgid "Stream can't be stopped, because it is not currently live"
+msgstr "Stream can't be stopped, because it is not currently live"
+
+#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:32
+msgid "Stream got unready"
+msgstr "Stream got unready"
+
+#: src/client/core/hooks/use-stream/main.ts:122
+msgid "Stream got unready, but some resources failed to clean up"
+msgstr "Stream got unready, but some resources failed to clean up"
+
+#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:41
+msgid "Stream is ready"
+msgstr "Stream is ready"
+
+#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:23
+msgid "Stream started"
+msgstr "Stream started"
+
+#: src/client/core/components/stream-widget/components/live-widget/main.tsx:23
+msgid "Stream stopped"
+msgstr "Stream stopped"
+
+#: src/client/core/hooks/use-stream/main.ts:101
+msgid "Stream stopped, but some resources failed to clean up"
+msgstr "Stream stopped, but some resources failed to clean up"
+
+#: src/client/test/components/test-widget/components/test-form/main.tsx:30
+msgid "Submit"
+msgstr "Submit"
+
+#: src/isomorphic/notifications/hooks/use-notifications/main.ts:66
+msgid "Success"
+msgstr "Success"
+
+#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:55
+msgid "Unready"
+msgstr "Unready"
+
+#: src/isomorphic/notifications/hooks/use-notifications/main.ts:76
+msgid "Warning"
+msgstr "Warning"
+
+#: src/server/orpc/vars/procedures/vars/test/vars/validate/main.ts:27
+msgid "Why did the chicken cross the road? To get to the other side."
+msgstr "Why did the chicken cross the road? To get to the other side."

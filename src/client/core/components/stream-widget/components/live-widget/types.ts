@@ -1,0 +1,1 @@
+export type LiveWidgetInput = object;
