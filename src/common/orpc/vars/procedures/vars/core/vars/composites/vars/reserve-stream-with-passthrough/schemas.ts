@@ -8,14 +8,20 @@ import { ReserveReserveRequestSchema } from "../../../../../../../../../apis/oct
 
 export const Schemas = {
   Input: z.object({
+    ...ReserveReserveRequestSchema.shape.body.omit({
+      format: true,
+      metadata: true,
+    }).shape,
+    ...StreamStreamRequestSchema.shape.body.omit({
+      codec: true,
+      format: true,
+      srt: true,
+    }).shape,
     codec: StreamStreamRequestSchema.shape.body.shape.codec.unwrap(),
-    event: ReserveReserveRequestSchema.shape.body.shape.event,
     format: z.intersection(
       ReserveReserveRequestSchema.shape.body.shape.format.unwrap(),
       StreamStreamRequestSchema.shape.body.shape.format.unwrap(),
     ),
-    record: ReserveReserveRequestSchema.shape.body.shape.record,
-    stun: StreamStreamRequestSchema.shape.body.shape.stun,
   }),
   Output: z.object({
     stun: StreamStreamResponseSchema.shape.stun,

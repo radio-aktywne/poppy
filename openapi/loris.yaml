@@ -1,7 +1,7 @@
 openapi: "3.1.0"
 info:
   title: loris
-  version: "0.14.0"
+  version: "0.15.0"
 paths:
   /ping:
     get:
@@ -270,14 +270,22 @@ components:
       type: object
       title: Parameters
       description: Parameters for testing.
-    SRTServer:
+    SRT:
       properties:
         host:
           type: string
           title: Host
           description: Host of the SRT server.
+        latency:
+          type: string
+          format: duration
+          title: Latency
+          description: Target latency for buffering outgoing stream.
+          default: PT0.2S
         port:
           type: integer
+          maximum: 65535
+          minimum: 1
           title: Port
           description: Port of the SRT server.
         password:
@@ -291,9 +299,9 @@ components:
       required:
         - host
         - port
-      title: SRTServer
-      description: SRT server configuration.
-    STUNServer:
+      title: SRT
+      description: SRT configuration.
+    STUN:
       properties:
         host:
           type: string
@@ -301,44 +309,65 @@ components:
           description: Host of the STUN server.
         port:
           type: integer
+          maximum: 65535
+          minimum: 1
           title: Port
           description: Port of the STUN server.
       type: object
       required:
         - host
         - port
-      title: STUNServer
-      description: STUN server configuration.
+      title: STUN
+      description: STUN configuration.
     StreamDetails:
       properties:
         stun:
-          $ref: "#/components/schemas/STUNServer"
-        port:
-          type: integer
-          maximum: 65535
-          minimum: 1
-          title: Port
-          description: Port to stream to.
+          $ref: "#/components/schemas/STUN"
       type: object
       required:
         - stun
-        - port
       title: StreamDetails
       description: Details of the stream.
     StreamInput:
       properties:
+        bitrate:
+          type: integer
+          maximum: 512000
+          minimum: 32000
+          title: Bitrate
+          description: Audio bitrate in bits per second.
+          default: 256000
+        channels:
+          type: integer
+          maximum: 8
+          minimum: 1
+          title: Channels
+          description: Number of audio channels.
+          default: 2
         codec:
           $ref: "#/components/schemas/Codec"
         format:
           $ref: "#/components/schemas/Format"
-        srt:
-          $ref: "#/components/schemas/SRTServer"
-        stun:
+        metadata:
           anyOf:
-            - $ref: "#/components/schemas/STUNServer"
+            - additionalProperties:
+                type: string
+              type: object
             - type: "null"
-          description: STUN server configuration.
+          title: Metadata
+          description: Metadata to attach to the stream.
           default: null
+        samplerate:
+          type: integer
+          maximum: 192000
+          minimum: 8000
+          title: Samplerate
+          description: Audio sample rate in Hz.
+          default: 48000
+        srt:
+          $ref: "#/components/schemas/SRT"
+        webrtc:
+          $ref: "#/components/schemas/WebRTC"
       type: object
       required:
         - srt
@@ -372,3 +401,20 @@ components:
         - message
       title: Result
       description: Result of the test.
+    WebRTC:
+      properties:
+        latency:
+          type: string
+          format: duration
+          title: Latency
+          description: Target latency for buffering incoming stream.
+          default: PT0.2S
+        stun:
+          anyOf:
+            - $ref: "#/components/schemas/STUN"
+            - type: "null"
+          description: STUN configuration.
+          default: null
+      type: object
+      title: WebRTC
+      description: WebRTC configuration.

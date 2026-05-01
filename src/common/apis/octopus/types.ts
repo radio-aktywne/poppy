@@ -60,12 +60,6 @@ export type EventType = "test" | "availability-changed";
  */
 export type ReserveResponseReservation = {
   credentials: Credentials;
-  /**
-   * Port
-   *
-   * Port to use to connect to the stream.
-   */
-  port: number;
 };
 
 /**
@@ -102,6 +96,14 @@ export type ReserveRequestData = {
    * Whether to record the stream.
    */
   record?: boolean;
+  /**
+   * Metadata
+   *
+   * Metadata to attach to the stream.
+   */
+  metadata?: {
+    [key: string]: string;
+  } | null;
 };
 
 /**

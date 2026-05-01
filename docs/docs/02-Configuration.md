@@ -79,6 +79,9 @@ You can configure the app at runtime using various environment variables:
 - `POPPY__SRT__OCTOPUS__HOST` -
   host of the octopus SRT server
   (default: `localhost`)
+- `POPPY__SRT__OCTOPUS__LATENCY` -
+  target latency for buffering outgoing SRT stream
+  (default: `PT0.2S`)
 - `POPPY__SRT__OCTOPUS__PORT` -
   port of the octopus SRT server
   (default: `10300`)

@@ -1,7 +1,7 @@
 openapi: "3.1.0"
 info:
   title: octopus
-  version: "0.25.0"
+  version: "0.26.0"
 paths:
   /check:
     get:
@@ -326,6 +326,15 @@ components:
           title: Record
           description: Whether to record the stream.
           default: false
+        metadata:
+          anyOf:
+            - additionalProperties:
+                type: string
+              type: object
+            - type: "null"
+          title: Metadata
+          description: Metadata to attach to the stream.
+          default: null
       type: object
       required:
         - event
@@ -335,16 +344,9 @@ components:
       properties:
         credentials:
           $ref: "#/components/schemas/Credentials"
-        port:
-          type: integer
-          maximum: 65535
-          minimum: 1
-          title: Port
-          description: Port to use to connect to the stream.
       type: object
       required:
         - credentials
-        - port
       title: Reservation
       description: Reservation of a stream.
     SubscribeRequestTypes:

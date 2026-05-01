@@ -1,36 +1,25 @@
 export const constants = {
-  codec: "opus",
-  format: "ogg",
-
-  ice: {
-    candidates: {
-      size: 1,
-      timeout: 1000,
-    },
-
-    server: {
-      host: "stun.l.google.com",
-      port: 19302,
-    },
+  audio: {
+    bitrate: 256000,
+    channels: 2,
+    codec: "opus",
+    format: "ogg",
+    samplerate: 48000,
   },
 
-  media: {
-    audio: {
-      constraints: {
-        autoGainControl: false,
-        channelCount: 2,
-        echoCancellation: false,
-        noiseSuppression: false,
-        sampleRate: 48000,
-        sampleSize: 16,
+  webrtc: {
+    ice: {
+      candidates: {
+        size: 1,
+        timeout: 1000,
+      },
+
+      server: {
+        host: "stun.l.google.com",
+        port: 19302,
       },
     },
-  },
 
-  sdp: {
-    codec: {
-      maxaveragebitrate: "510000",
-      ptime: "10",
-    },
+    latency: 200,
   },
 } as const;
