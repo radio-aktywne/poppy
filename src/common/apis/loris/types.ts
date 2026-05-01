@@ -5,6 +5,44 @@ export type ClientOptions = {
 };
 
 /**
+ * WebRTC
+ *
+ * WebRTC configuration.
+ */
+export type WebRtc = {
+  /**
+   * Latency
+   *
+   * Target latency for buffering incoming stream.
+   */
+  latency?: string;
+  /**
+   * STUN configuration.
+   */
+  stun?: Stun | null;
+};
+
+/**
+ * STUN
+ *
+ * STUN configuration.
+ */
+export type Stun = {
+  /**
+   * Host
+   *
+   * Host of the STUN server.
+   */
+  host: string;
+  /**
+   * Port
+   *
+   * Port of the STUN server.
+   */
+  port: number;
+};
+
+/**
  * Result
  *
  * Result of the test.
@@ -55,47 +93,56 @@ export type EventType = "test";
  * Data for requesting a stream.
  */
 export type StreamInput = {
+  /**
+   * Bitrate
+   *
+   * Audio bitrate in bits per second.
+   */
+  bitrate?: number;
+  /**
+   * Channels
+   *
+   * Number of audio channels.
+   */
+  channels?: number;
   codec?: Codec;
   format?: Format;
-  srt: SrtServer;
   /**
-   * STUN server configuration.
+   * Metadata
+   *
+   * Metadata to attach to the stream.
    */
-  stun?: StunServer | null;
+  metadata?: {
+    [key: string]: string;
+  } | null;
+  /**
+   * Samplerate
+   *
+   * Audio sample rate in Hz.
+   */
+  samplerate?: number;
+  srt: Srt;
+  webrtc?: WebRtc;
 };
 
 /**
- * STUNServer
+ * SRT
  *
- * STUN server configuration.
+ * SRT configuration.
  */
-export type StunServer = {
-  /**
-   * Host
-   *
-   * Host of the STUN server.
-   */
-  host: string;
-  /**
-   * Port
-   *
-   * Port of the STUN server.
-   */
-  port: number;
-};
-
-/**
- * SRTServer
- *
- * SRT server configuration.
- */
-export type SrtServer = {
+export type Srt = {
   /**
    * Host
    *
    * Host of the SRT server.
    */
   host: string;
+  /**
+   * Latency
+   *
+   * Target latency for buffering outgoing stream.
+   */
+  latency?: string;
   /**
    * Port
    *
@@ -130,13 +177,7 @@ export type Codec = "opus";
  * Details of the stream.
  */
 export type StreamDetails = {
-  stun: StunServer;
-  /**
-   * Port
-   *
-   * Port to stream to.
-   */
-  port: number;
+  stun: Stun;
 };
 
 export type PingPingRequest = {

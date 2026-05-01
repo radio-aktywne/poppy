@@ -80,6 +80,7 @@ export const ConfigSchemas = {
           octopus: z
             .object({
               host: z.string().default("localhost"),
+              latency: z.iso.duration().default("PT0.2S"),
               port: z.coerce.number().min(0).max(65535).default(10300),
             })
             .prefault({}),

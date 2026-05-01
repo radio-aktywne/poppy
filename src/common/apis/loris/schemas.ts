@@ -3,6 +3,44 @@
 import * as z from "zod";
 
 /**
+ * STUN
+ *
+ * STUN configuration.
+ */
+export const StunSchema = z
+  .object({
+    host: z.string().register(z.globalRegistry, {
+      description: "Host of the STUN server.",
+    }),
+    port: z.int().gte(1).lte(65535).register(z.globalRegistry, {
+      description: "Port of the STUN server.",
+    }),
+  })
+  .register(z.globalRegistry, {
+    description: "STUN configuration.",
+  });
+
+/**
+ * WebRTC
+ *
+ * WebRTC configuration.
+ */
+export const WebRtcSchema = z
+  .object({
+    latency: z
+      .string()
+      .register(z.globalRegistry, {
+        description: "Target latency for buffering incoming stream.",
+      })
+      .optional()
+      .default("PT0.2S"),
+    stun: StunSchema.nullish().default(null),
+  })
+  .register(z.globalRegistry, {
+    description: "WebRTC configuration.",
+  });
+
+/**
  * Result
  *
  * Result of the test.
@@ -49,40 +87,29 @@ export const SubscribeRequestTypesSchema = z
   .nullable();
 
 /**
- * STUNServer
+ * SRT
  *
- * STUN server configuration.
+ * SRT configuration.
  */
-export const StunServerSchema = z
-  .object({
-    host: z.string().register(z.globalRegistry, {
-      description: "Host of the STUN server.",
-    }),
-    port: z.int().register(z.globalRegistry, {
-      description: "Port of the STUN server.",
-    }),
-  })
-  .register(z.globalRegistry, {
-    description: "STUN server configuration.",
-  });
-
-/**
- * SRTServer
- *
- * SRT server configuration.
- */
-export const SrtServerSchema = z
+export const SrtSchema = z
   .object({
     host: z.string().register(z.globalRegistry, {
       description: "Host of the SRT server.",
     }),
-    port: z.int().register(z.globalRegistry, {
+    latency: z
+      .string()
+      .register(z.globalRegistry, {
+        description: "Target latency for buffering outgoing stream.",
+      })
+      .optional()
+      .default("PT0.2S"),
+    port: z.int().gte(1).lte(65535).register(z.globalRegistry, {
       description: "Port of the SRT server.",
     }),
     password: z.string().nullish().default(null),
   })
   .register(z.globalRegistry, {
-    description: "SRT server configuration.",
+    description: "SRT configuration.",
   });
 
 /**
@@ -110,10 +137,38 @@ export const CodecSchema = z.enum(["opus"]).register(z.globalRegistry, {
  */
 export const StreamInputSchema = z
   .object({
+    bitrate: z
+      .int()
+      .gte(32000)
+      .lte(512000)
+      .register(z.globalRegistry, {
+        description: "Audio bitrate in bits per second.",
+      })
+      .optional()
+      .default(256000),
+    channels: z
+      .int()
+      .gte(1)
+      .lte(8)
+      .register(z.globalRegistry, {
+        description: "Number of audio channels.",
+      })
+      .optional()
+      .default(2),
     codec: CodecSchema.optional(),
     format: FormatSchema.optional(),
-    srt: SrtServerSchema,
-    stun: StunServerSchema.nullish().default(null),
+    metadata: z.record(z.string(), z.string()).nullish().default(null),
+    samplerate: z
+      .int()
+      .gte(8000)
+      .lte(192000)
+      .register(z.globalRegistry, {
+        description: "Audio sample rate in Hz.",
+      })
+      .optional()
+      .default(48000),
+    srt: SrtSchema,
+    webrtc: WebRtcSchema.optional(),
   })
   .register(z.globalRegistry, {
     description: "Data for requesting a stream.",
@@ -126,10 +181,7 @@ export const StreamInputSchema = z
  */
 export const StreamDetailsSchema = z
   .object({
-    stun: StunServerSchema,
-    port: z.int().gte(1).lte(65535).register(z.globalRegistry, {
-      description: "Port to stream to.",
-    }),
+    stun: StunSchema,
   })
   .register(z.globalRegistry, {
     description: "Details of the stream.",

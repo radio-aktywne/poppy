@@ -84,9 +84,6 @@ export const CredentialsSchema = z
 export const ReserveResponseReservationSchema = z
   .object({
     credentials: CredentialsSchema,
-    port: z.int().gte(1).lte(65535).register(z.globalRegistry, {
-      description: "Port to use to connect to the stream.",
-    }),
   })
   .register(z.globalRegistry, {
     description: "Reservation of a stream.",
@@ -119,6 +116,7 @@ export const ReserveRequestDataSchema = z
       })
       .optional()
       .default(false),
+    metadata: z.record(z.string(), z.string()).nullish().default(null),
   })
   .register(z.globalRegistry, {
     description: "Data for reserving a stream.",

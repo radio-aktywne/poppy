@@ -15,14 +15,19 @@ export const reserveStreamWithPassthrough =
       });
 
       const passthroughRequestData = await call(passthrough.request, {
+        bitrate: input.bitrate,
+        channels: input.channels,
         codec: input.codec,
         format: input.format,
+        metadata: input.metadata,
+        samplerate: input.samplerate,
         srt: {
           host: state.current.config.srt.octopus.host,
+          latency: state.current.config.srt.octopus.latency,
           password: streamReserveData.credentials.token,
           port: state.current.config.srt.octopus.port,
         },
-        stun: input.stun,
+        webrtc: input.webrtc,
       });
 
       return { stun: passthroughRequestData.stun };

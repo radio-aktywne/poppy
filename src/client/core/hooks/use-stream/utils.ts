@@ -6,12 +6,20 @@ import type {
   StreamReadyingData,
 } from "../../../../isomorphic/state/types";
 
+import { dayjs } from "../../../../common/dates/vars/dayjs";
 import { orpcClientSideClient } from "../../../orpc/vars/clients";
 import { constants } from "./constants";
 
 export async function getMedia() {
   return await navigator.mediaDevices.getUserMedia({
-    audio: constants.media.audio.constraints,
+    audio: {
+      autoGainControl: false,
+      channelCount: constants.audio.channels,
+      echoCancellation: false,
+      noiseSuppression: false,
+      sampleRate: constants.audio.samplerate,
+      sampleSize: 16,
+    },
   });
 }
 
@@ -21,10 +29,10 @@ export function cleanupMedia(media: MediaStream) {
 
 export function createPeer() {
   return new RTCPeerConnection({
-    iceCandidatePoolSize: constants.ice.candidates.size,
+    iceCandidatePoolSize: constants.webrtc.ice.candidates.size,
     iceServers: [
       {
-        urls: `stun:${constants.ice.server.host}:${constants.ice.server.port}`,
+        urls: `stun:${constants.webrtc.ice.server.host}:${constants.webrtc.ice.server.port}`,
       },
     ],
   });
@@ -69,7 +77,7 @@ export function createCandidatesPromise(peer: RTCPeerConnection) {
           timeouts.push(
             setTimeout(
               () => cleanupAndResolve(),
-              constants.ice.candidates.timeout,
+              constants.webrtc.ice.candidates.timeout,
             ),
           );
           break;
@@ -85,8 +93,10 @@ export function transformSessionDescription(sdp: string) {
   const parsed = SDPInfo.parse(sdp);
   for (const media of parsed.getMedias()) {
     for (const codec of media.getCodecs().values()) {
-      if (codec.getCodec() === constants.codec)
-        codec.addParams(constants.sdp.codec);
+      if (codec.getCodec() === constants.audio.codec)
+        codec.addParams({
+          maxaveragebitrate: constants.audio.bitrate.toString(),
+        });
     }
   }
 
@@ -105,13 +115,21 @@ export async function createOffer(peer: RTCPeerConnection) {
 
 export async function reserveStream(data: StreamReadyData) {
   await orpcClientSideClient.core.composites.reserveStreamWithPassthrough({
-    codec: constants.codec,
+    bitrate: constants.audio.bitrate,
+    channels: constants.audio.channels,
+    codec: constants.audio.codec,
     event: data.event,
-    format: constants.format,
+    format: constants.audio.format,
     record: data.recording,
-    stun: {
-      host: constants.ice.server.host,
-      port: constants.ice.server.port,
+    samplerate: constants.audio.samplerate,
+    webrtc: {
+      latency: dayjs
+        .duration({ milliseconds: constants.webrtc.latency })
+        .toISOString(),
+      stun: {
+        host: constants.webrtc.ice.server.host,
+        port: constants.webrtc.ice.server.port,
+      },
     },
   });
 }
