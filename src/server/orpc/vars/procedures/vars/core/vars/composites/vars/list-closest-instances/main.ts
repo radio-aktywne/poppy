@@ -6,11 +6,13 @@ import { mapValues } from "es-toolkit/object";
 
 import { dayjs } from "../../../../../../../../../../common/dates/vars/dayjs";
 import { orpcServerRootBase } from "../../../../../../../bases/root";
+import { authenticatedMiddleware } from "../../../../../../../middleware/authenticated";
 import { schedule } from "../../../schedule";
 
 export const listClosestInstances =
-  orpcServerRootBase.core.composites.listClosestInstances.handler(
-    async ({ input }) => {
+  orpcServerRootBase.core.composites.listClosestInstances
+    .use(authenticatedMiddleware)
+    .handler(async ({ input }) => {
       const reference = input.reference
         ? dayjs.utc(input.reference)
         : dayjs.utc();
@@ -56,5 +58,4 @@ export const listClosestInstances =
       );
 
       return { results: results };
-    },
-  );
+    });

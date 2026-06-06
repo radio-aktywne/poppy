@@ -1,12 +1,14 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: 0.11.0
+_commit: 0.12.0
 _src_path: gh:radio-aktywne/template-app-next
+access: true
 accountname: radio-aktywne
 appname: poppy
 description: Broadcast streaming app 🎤
 docs: true
 docsurl: https://radio-aktywne.github.io/poppy
 envprefix: POPPY
+identity: true
 imagename: apps/poppy
 keyprefix: poppy
 port: 10410

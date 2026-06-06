@@ -1,8 +1,10 @@
 import { state } from "../../../../../../../../../state/vars/state";
 import { orpcServerRootBase } from "../../../../../../../bases/root";
+import { authenticatedMiddleware } from "../../../../../../../middleware/authenticated";
 
-export const reserve = orpcServerRootBase.core.stream.reserve.handler(
-  async ({ errors, input }) => {
+export const reserve = orpcServerRootBase.core.stream.reserve
+  .use(authenticatedMiddleware)
+  .handler(async ({ errors, input }) => {
     const { data: reserveReserveData, response: reserveReserveResponse } =
       await state.current.apis.octopus.reserveReserve({ body: input });
 
@@ -12,5 +14,4 @@ export const reserve = orpcServerRootBase.core.stream.reserve.handler(
     }
 
     return reserveReserveData;
-  },
-);
+  });
