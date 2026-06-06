@@ -2,12 +2,14 @@ import { call } from "@orpc/server";
 
 import { state } from "../../../../../../../../../state/vars/state";
 import { orpcServerRootBase } from "../../../../../../../bases/root";
+import { authenticatedMiddleware } from "../../../../../../../middleware/authenticated";
 import { passthrough } from "../../../passthrough";
 import { stream } from "../../../stream";
 
 export const reserveStreamWithPassthrough =
-  orpcServerRootBase.core.composites.reserveStreamWithPassthrough.handler(
-    async ({ input }) => {
+  orpcServerRootBase.core.composites.reserveStreamWithPassthrough
+    .use(authenticatedMiddleware)
+    .handler(async ({ input }) => {
       const streamReserveData = await call(stream.reserve, {
         event: input.event,
         format: input.format,
@@ -31,5 +33,4 @@ export const reserveStreamWithPassthrough =
       });
 
       return { stun: passthroughRequestData.stun };
-    },
-  );
+    });

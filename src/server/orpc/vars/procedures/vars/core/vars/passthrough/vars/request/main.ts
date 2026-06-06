@@ -1,8 +1,10 @@
 import { state } from "../../../../../../../../../state/vars/state";
 import { orpcServerRootBase } from "../../../../../../../bases/root";
+import { authenticatedMiddleware } from "../../../../../../../middleware/authenticated";
 
-export const request = orpcServerRootBase.core.passthrough.request.handler(
-  async ({ errors, input }) => {
+export const request = orpcServerRootBase.core.passthrough.request
+  .use(authenticatedMiddleware)
+  .handler(async ({ errors, input }) => {
     const { data: streamStreamData, response: streamStreamResponse } =
       await state.current.apis.loris.streamStream({ body: input });
 
@@ -12,5 +14,4 @@ export const request = orpcServerRootBase.core.passthrough.request.handler(
     }
 
     return streamStreamData;
-  },
-);
+  });

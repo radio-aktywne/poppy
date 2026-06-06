@@ -3,6 +3,7 @@ import { connection } from "next/server";
 import type { LayoutInput } from "../../../types";
 import type { Keys } from "./types";
 
+import { Authenticated } from "../../../../server/access/components/authenticated";
 import { StreamMasterLayoutView } from "./layout.view";
 
 export default async function StreamMasterLayout({
@@ -10,5 +11,9 @@ export default async function StreamMasterLayout({
 }: LayoutInput<Keys.Path, Keys.Slots>) {
   await connection();
 
-  return <StreamMasterLayoutView>{children}</StreamMasterLayoutView>;
+  return (
+    <Authenticated>
+      <StreamMasterLayoutView>{children}</StreamMasterLayoutView>
+    </Authenticated>
+  );
 }

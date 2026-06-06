@@ -17,7 +17,7 @@ msgstr ""
 msgid "An unexpected error occurred"
 msgstr "Wystąpił nieoczekiwany błąd"
 
-#: src/app/(root)/layout.tsx:33
+#: src/app/(root)/layout.tsx:36
 msgid "Broadcast streaming app 🎤"
 msgstr "Broadcast streaming app 🎤"
 
@@ -25,13 +25,12 @@ msgstr "Broadcast streaming app 🎤"
 msgid "Enter some value"
 msgstr "Wprowadź jakąś wartość"
 
-#: src/isomorphic/notifications/hooks/use-notifications/main.ts:46
+#: src/isomorphic/notifications/hooks/use-notifications/main.ts:40
 msgid "Error"
 msgstr "Błąd"
 
-#: src/app/(root)/(main)/error.tsx:11
 #: src/app/(root)/(stream)/(master)/(detail)/error.tsx:11
-#: src/app/(root)/(stream)/error.tsx:11
+#: src/app/(root)/error.tsx:11
 msgid "Error • poppy"
 msgstr "Błąd • poppy"
 
@@ -43,11 +42,15 @@ msgstr "Nie udało się przygotować transmisji"
 msgid "Failed to start stream"
 msgstr "Nie udało się rozpocząć transmisji"
 
+#: src/app/(root)/forbidden.tsx:10
+msgid "Forbidden • poppy"
+msgstr "Brak dostępu • poppy"
+
 #: src/client/core/components/status-widget/components/free-badge/main.tsx:22
 msgid "Free"
 msgstr "Wolne"
 
-#: src/isomorphic/notifications/hooks/use-notifications/main.ts:56
+#: src/isomorphic/notifications/hooks/use-notifications/main.ts:51
 msgid "Info"
 msgstr "Informacja"
 
@@ -62,8 +65,12 @@ msgstr "Nieprawidłowe dane wejściowe"
 msgid "Logo"
 msgstr "Logo"
 
-#: src/app/(root)/(main)/not-found.tsx:15
+#: src/isomorphic/identity/components/identity-widget/main.tsx:21
+msgid "Logout"
+msgstr "Wyloguj się"
+
 #: src/app/(root)/(stream)/(master)/(detail)/not-found.tsx:15
+#: src/app/(root)/not-found.tsx:15
 msgid "Not Found • poppy"
 msgstr "Nie znaleziono • poppy"
 
@@ -72,13 +79,12 @@ msgstr "Nie znaleziono • poppy"
 msgid "Not recording"
 msgstr "Bez nagrywania"
 
-#: src/app/(root)/(main)/not-found.view.tsx:8
-#: src/app/(root)/(stream)/(master)/(detail)/not-found.view.tsx:8
+#: src/isomorphic/core/components/generic/not-found-widget/main.tsx:15
 msgid "Page not found"
 msgstr "Nie znaleziono strony"
 
-#: src/app/(root)/(stream)/(master)/(detail)/(home)/page.tsx:20
-#: src/app/(root)/layout.tsx:39
+#: src/app/(root)/(stream)/(master)/(detail)/(home)/page.tsx:21
+#: src/app/(root)/layout.tsx:42
 msgid "poppy"
 msgstr "poppy"
 
@@ -95,7 +101,7 @@ msgstr "Nagraj"
 msgid "Recording"
 msgstr "Nagrywanie"
 
-#: src/isomorphic/core/components/generic/error-widget/main.tsx:21
+#: src/isomorphic/core/components/generic/error-widget/main.tsx:25
 msgid "Retry"
 msgstr "Spróbuj ponownie"
 
@@ -111,9 +117,7 @@ msgstr "Audycja"
 msgid "Show is required"
 msgstr "Audycja jest wymagana"
 
-#: src/app/(root)/(main)/error.view.tsx:10
-#: src/app/(root)/(stream)/(master)/(detail)/error.view.tsx:10
-#: src/app/(root)/(stream)/error.view.tsx:12
+#: src/isomorphic/core/components/generic/error-widget/main.tsx:16
 msgid "Something went wrong"
 msgstr "Coś poszło nie tak"
 
@@ -177,7 +181,7 @@ msgstr "Transmisja została zakończona, ale niektóre zasoby nie zostały popra
 msgid "Submit"
 msgstr "Wyślij"
 
-#: src/isomorphic/notifications/hooks/use-notifications/main.ts:66
+#: src/isomorphic/notifications/hooks/use-notifications/main.ts:62
 msgid "Success"
 msgstr "Sukces"
 
@@ -185,10 +189,18 @@ msgstr "Sukces"
 msgid "Unready"
 msgstr "Cofnij"
 
-#: src/isomorphic/notifications/hooks/use-notifications/main.ts:76
+#: src/isomorphic/notifications/hooks/use-notifications/main.ts:73
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
-#: src/server/orpc/vars/procedures/vars/test/vars/validate/main.ts:27
+#: src/server/orpc/vars/procedures/vars/test/vars/validate/main.ts:29
 msgid "Why did the chicken cross the road? To get to the other side."
 msgstr "Dlaczego kura przeszła przez ulicę? Żeby dostać się na drugą stronę."
+
+#: src/isomorphic/access/components/forbidden-widget/main.tsx:16
+msgid "You are not allowed to access this page"
+msgstr "Nie masz dostępu do tej strony"
+
+#: src/isomorphic/identity/components/identity-provider/components/user-synchronizer/main.tsx:56
+msgid "You are not authenticated. Reload the page to authenticate again."
+msgstr "Nie jesteś uwierzytelniony. Odśwież stronę, aby ponownie się uwierzytelnić."

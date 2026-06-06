@@ -1,8 +1,10 @@
 import { state } from "../../../../../../../../../state/vars/state";
 import { orpcServerRootBase } from "../../../../../../../bases/root";
+import { authenticatedMiddleware } from "../../../../../../../middleware/authenticated";
 
-export const create = orpcServerRootBase.core.whip.create.handler(
-  async ({ errors, input }) => {
+export const create = orpcServerRootBase.core.whip.create
+  .use(authenticatedMiddleware)
+  .handler(async ({ errors, input }) => {
     const { data: createSessionData, response: createSessionResponse } =
       await state.current.apis.whip.createSession({ body: input });
 
@@ -18,5 +20,4 @@ export const create = orpcServerRootBase.core.whip.create.handler(
       .pop()!;
 
     return { answer: answer, session: session };
-  },
-);
+  });
