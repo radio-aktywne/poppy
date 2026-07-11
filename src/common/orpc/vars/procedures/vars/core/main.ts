@@ -1,7 +1,7 @@
 import { composites } from "./vars/composites";
 import { events } from "./vars/events";
+import { instances } from "./vars/instances";
 import { passthrough } from "./vars/passthrough";
-import { schedule } from "./vars/schedule";
 import { shows } from "./vars/shows";
 import { stream } from "./vars/stream";
 import { whip } from "./vars/whip";
@@ -9,8 +9,8 @@ import { whip } from "./vars/whip";
 export const core = {
   composites: composites,
   events: events,
+  instances: instances,
   passthrough: passthrough,
-  schedule: schedule,
   shows: shows,
   stream: stream,
   whip: whip,

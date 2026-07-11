@@ -36,10 +36,10 @@ export function ReadyForm({
 
   const listClosestInstancesInput = useMemo(
     () => ({
-      end: now.add(1, "hour").utc().format("YYYY-MM-DDTHH:mm:ss"),
-      reference: now.utc().format("YYYY-MM-DDTHH:mm:ss"),
-      start: now.subtract(1, "hour").utc().format("YYYY-MM-DDTHH:mm:ss"),
-      where: { type: "live" as const },
+      end: now.add(1, "hour").utc().format("YYYY-MM-DDTHH:mm:ss[Z]"),
+      reference: now.utc().format("YYYY-MM-DDTHH:mm:ss[Z]"),
+      start: now.subtract(1, "hour").utc().format("YYYY-MM-DDTHH:mm:ss[Z]"),
+      where: { event: { is: { type: "live" as const } } },
     }),
     [now],
   );
@@ -52,12 +52,12 @@ export function ReadyForm({
     ),
   );
 
-  const instances = listClosestInstancesQuery.data.results;
+  const instances = listClosestInstancesQuery.data.instances;
 
   const mergedInitialValues = useMemo(
     () => ({
       show: instances[0]
-        ? `${instances[0].event.id}/${instances[0].instance.start}/${instances[0].instance.end}`
+        ? `${instances[0].event.id}/${instances[0].start}/${instances[0].duration}`
         : undefined,
       ...initialValues,
     }),
@@ -76,21 +76,22 @@ export function ReadyForm({
 
   const renderShowOption = useCallback(
     ({ checked, option }: ComboboxLikeRenderOptionInput<ComboboxItem>) => {
-      const { event, instance } = instances.find(
-        ({ event, instance }) =>
-          option.value === `${event.id}/${instance.start}/${instance.end}`,
+      const instance = instances.find(
+        (instance) =>
+          option.value ===
+          `${instance.event.id}/${instance.start}/${instance.duration}`,
       )!;
 
       return (
         <Group gap="xl" w="100%">
           <Group flex={1} gap="xs">
             {checked && <TbCheck size="1em" />}
-            <Text inherit={true}>{event.show.title}</Text>
+            <Text inherit={true}>{instance.event.show.title}</Text>
           </Group>
           <Group gap="xs">
             <Text inherit={true}>
               {dayjs
-                .tz(instance.start, event.timezone)
+                .tz(instance.start, instance.event.timezone)
                 .locale(localization.locale)
                 .local()
                 .format("LT")}
@@ -98,7 +99,8 @@ export function ReadyForm({
             <Text inherit={true}>&ndash;</Text>
             <Text inherit={true}>
               {dayjs
-                .tz(instance.end, event.timezone)
+                .tz(instance.start, instance.event.timezone)
+                .add(dayjs.duration(instance.duration))
                 .locale(localization.locale)
                 .local()
                 .format("LT")}
@@ -113,9 +115,9 @@ export function ReadyForm({
   return (
     <form onSubmit={handleFormSubmit} style={{ display: "contents" }}>
       <Select
-        data={instances.map(({ event, instance }) => ({
-          label: event.show.title,
-          value: `${event.id}/${instance.start}/${instance.end}`,
+        data={instances.map((instance) => ({
+          label: instance.event.show.title,
+          value: `${instance.event.id}/${instance.start}/${instance.duration}`,
         }))}
         key={form.key("show")}
         label={localization.localize(msg({ message: "Show" }))}

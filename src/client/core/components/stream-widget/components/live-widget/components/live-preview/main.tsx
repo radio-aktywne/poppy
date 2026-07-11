@@ -59,7 +59,8 @@ export function LivePreview({ data }: LivePreviewInput) {
             <Text inherit={true}>&ndash;</Text>
             <Text inherit={true}>
               {dayjs
-                .tz(data.instance.end, event.timezone)
+                .tz(data.instance.start, event.timezone)
+                .add(dayjs.duration(data.instance.duration))
                 .locale(localization.locale)
                 .local()
                 .format("LT")}

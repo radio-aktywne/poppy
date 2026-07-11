@@ -4,7 +4,7 @@ import type { StreamState } from "../../../../isomorphic/state/types";
 
 export type UseStreamReadyInput = {
   event: string;
-  instance: { end: string; start: string };
+  instance: { duration: string; start: string };
   record: boolean;
 };
 

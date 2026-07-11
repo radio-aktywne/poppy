@@ -55,7 +55,7 @@ msgid "Info"
 msgstr "Info"
 
 #: src/client/core/components/stream-widget/components/idle-widget/main.tsx:24
-#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:48
+#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:52
 #: src/client/test/components/test-widget/main.tsx:41
 #: src/client/test/components/test-widget/main.tsx:62
 msgid "Invalid input"
@@ -74,8 +74,8 @@ msgstr "Logout"
 msgid "Not Found • poppy"
 msgstr "Not Found • poppy"
 
-#: src/client/core/components/stream-widget/components/live-widget/components/live-preview/main.tsx:88
-#: src/client/core/components/stream-widget/components/ready-widget/components/ready-preview/main.tsx:76
+#: src/client/core/components/stream-widget/components/live-widget/components/live-preview/main.tsx:89
+#: src/client/core/components/stream-widget/components/ready-widget/components/ready-preview/main.tsx:77
 msgid "Not recording"
 msgstr "Not recording"
 
@@ -88,16 +88,16 @@ msgstr "Page not found"
 msgid "poppy"
 msgstr "poppy"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:140
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:142
 msgid "Ready"
 msgstr "Ready"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:129
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:131
 msgid "Record"
 msgstr "Record"
 
-#: src/client/core/components/stream-widget/components/live-widget/components/live-preview/main.tsx:87
-#: src/client/core/components/stream-widget/components/ready-widget/components/ready-preview/main.tsx:75
+#: src/client/core/components/stream-widget/components/live-widget/components/live-preview/main.tsx:88
+#: src/client/core/components/stream-widget/components/ready-widget/components/ready-preview/main.tsx:76
 msgid "Recording"
 msgstr "Recording"
 
@@ -105,11 +105,11 @@ msgstr "Recording"
 msgid "Retry"
 msgstr "Retry"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:122
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:124
 msgid "Select show"
 msgstr "Select show"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:121
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:123
 msgid "Show"
 msgstr "Show"
 
@@ -161,7 +161,7 @@ msgstr "Stream got unready"
 msgid "Stream got unready, but some resources failed to clean up"
 msgstr "Stream got unready, but some resources failed to clean up"
 
-#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:41
+#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:45
 msgid "Stream is ready"
 msgstr "Stream is ready"
 

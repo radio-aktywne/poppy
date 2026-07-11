@@ -13,7 +13,7 @@ export type StreamLiveData = StreamStartingData & {
 
 export type StreamReadyingData = {
   event: string;
-  instance: { end: string; start: string };
+  instance: { duration: string; start: string };
   recording: boolean;
 };
 

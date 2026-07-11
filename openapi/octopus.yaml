@@ -1,7 +1,7 @@
 openapi: "3.1.0"
 info:
   title: octopus
-  version: "0.26.0"
+  version: "0.27.0"
 paths:
   /check:
     get:
@@ -266,7 +266,7 @@ components:
           title: Event
           description: Identifier of the event that is currently being streamed.
         checkedAt:
-          $ref: "#/components/schemas/check_models_NaiveDatetime"
+          $ref: "#/components/schemas/check_models_UTCDatetime"
       type: object
       required:
         - event
@@ -280,7 +280,7 @@ components:
           title: Token
           description: Token to use to connect to the stream.
         expiresAt:
-          $ref: "#/components/schemas/reserve_models_NaiveDatetime"
+          $ref: "#/components/schemas/reserve_models_UTCDatetime"
       type: object
       required:
         - token
@@ -377,13 +377,15 @@ components:
         - message
       title: Result
       description: Result of the test.
-    check_models_NaiveDatetime:
+    check_models_UTCDatetime:
       type: string
       format: date-time
+      description: Datetime in UTC.
       examples:
-        - 2000-01-01T00:00:00
-    reserve_models_NaiveDatetime:
+        - 2000-01-01T00:00:00Z
+    reserve_models_UTCDatetime:
       type: string
       format: date-time
+      description: Datetime in UTC.
       examples:
-        - 2000-01-01T00:00:00
+        - 2000-01-01T00:00:00Z
