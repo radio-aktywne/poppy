@@ -25,11 +25,15 @@ export function IdleWidget({}: IdleWidgetInput) {
         return { errors: { show: msg({ message: "Show is required" }) } };
       }
 
-      const [event, start, end] = show.split("/") as [string, string, string];
+      const [event, start, duration] = show.split("/") as [
+        string,
+        string,
+        string,
+      ];
 
       const error = await ready({
         event: event,
-        instance: { end: end, start: start },
+        instance: { duration: duration, start: start },
         record: record,
       });
 

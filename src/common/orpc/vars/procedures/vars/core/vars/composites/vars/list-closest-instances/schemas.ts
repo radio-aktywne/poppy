@@ -1,11 +1,10 @@
 import * as z from "zod";
 
 import {
-  EventInstanceSchema,
+  InstanceSchema,
+  InstancesModelsListRequestWhereSchema,
   ListRequestEndSchema,
   ListRequestStartSchema,
-  ScheduleModelsEventSchema,
-  ScheduleModelsListRequestWhereSchema,
 } from "../../../../../../../../../apis/beaver/schemas";
 
 export const Schemas = {
@@ -13,21 +12,19 @@ export const Schemas = {
     .object({
       end: ListRequestEndSchema.optional(),
       order: z.enum(["asc", "desc"]).default("asc"),
-      reference: z.iso.datetime({ local: true }).optional(),
+      reference: z.iso.datetime().optional(),
       start: ListRequestStartSchema.optional(),
-      where: ScheduleModelsListRequestWhereSchema.optional(),
+      where: InstancesModelsListRequestWhereSchema.optional(),
     })
     .prefault({}),
   Output: z.object({
-    results: z
+    instances: z
       .object({
+        ...InstanceSchema.omit({ event: true }).shape,
         event: z.object({
-          ...ScheduleModelsEventSchema.omit({ show: true }).shape,
-          show: ScheduleModelsEventSchema.shape.show
-            .unwrap()
-            .omit({ events: true }),
+          ...InstanceSchema.shape.event.unwrap().omit({ show: true }).shape,
+          show: InstanceSchema.shape.event.unwrap().shape.show.unwrap(),
         }),
-        instance: EventInstanceSchema,
       })
       .array(),
   }),

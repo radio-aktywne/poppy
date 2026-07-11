@@ -21,19 +21,20 @@ export const StunSchema = z
   });
 
 /**
+ * Duration of time.
+ */
+export const TimedeltaSchema = z.string().register(z.globalRegistry, {
+  description: "Duration of time.",
+});
+
+/**
  * WebRTC
  *
  * WebRTC configuration.
  */
 export const WebRtcSchema = z
   .object({
-    latency: z
-      .string()
-      .register(z.globalRegistry, {
-        description: "Target latency for buffering incoming stream.",
-      })
-      .optional()
-      .default("PT0.2S"),
+    latency: TimedeltaSchema.optional(),
     stun: StunSchema.nullish().default(null),
   })
   .register(z.globalRegistry, {
@@ -96,13 +97,7 @@ export const SrtSchema = z
     host: z.string().register(z.globalRegistry, {
       description: "Host of the SRT server.",
     }),
-    latency: z
-      .string()
-      .register(z.globalRegistry, {
-        description: "Target latency for buffering outgoing stream.",
-      })
-      .optional()
-      .default("PT0.2S"),
+    latency: TimedeltaSchema.optional(),
     port: z.int().gte(1).lte(65535).register(z.globalRegistry, {
       description: "Port of the SRT server.",
     }),

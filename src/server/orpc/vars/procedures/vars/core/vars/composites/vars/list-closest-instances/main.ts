@@ -1,13 +1,13 @@
 import type { SetNonNullableDeep } from "type-fest";
 
 import { call } from "@orpc/server";
-import { flatMap, groupBy, minBy, sortBy } from "es-toolkit/array";
-import { mapValues } from "es-toolkit/object";
+import { groupBy, minBy, sortBy } from "es-toolkit/array";
+import { mapValues, toMerged } from "es-toolkit/object";
 
 import { dayjs } from "../../../../../../../../../../common/dates/vars/dayjs";
 import { orpcServerRootBase } from "../../../../../../../bases/root";
 import { authenticatedMiddleware } from "../../../../../../../middleware/authenticated";
-import { schedule } from "../../../schedule";
+import { instances } from "../../../instances";
 
 export const listClosestInstances =
   orpcServerRootBase.core.composites.listClosestInstances
@@ -17,45 +17,41 @@ export const listClosestInstances =
         ? dayjs.utc(input.reference)
         : dayjs.utc();
 
-      const scheduleListData = await call(schedule.list, {
+      const instancesListData = await call(instances.list, {
         end: input.end,
-        include: { show: true },
-        limit: null,
+        include: { event: { include: { show: true } } },
         start: input.start,
-        where: input.where,
+        where: toMerged(input.where ?? {}, {
+          event: { isNot: { showId: null } },
+        }),
       });
 
-      const schedules = scheduleListData.schedules as SetNonNullableDeep<
-        typeof scheduleListData.schedules,
-        "0.event.show"
+      const all = instancesListData.instances as SetNonNullableDeep<
+        typeof instancesListData.instances,
+        "0.event" | "0.event.show"
       >;
 
-      const results = sortBy(
+      const closest = sortBy(
         Object.values(
           mapValues(
-            groupBy(
-              flatMap(schedules, (schedule) =>
-                schedule.instances.map((instance) => ({
-                  event: schedule.event,
-                  instance: instance,
-                })),
-              ),
-              ({ event }) => event.show.id,
-            ),
+            groupBy(all, (instance) => instance.event.show.id),
             (group) =>
-              minBy(group, ({ event, instance }) =>
+              minBy(group, (instance) =>
                 Math.abs(
-                  dayjs.tz(instance.start, event.timezone).diff(reference),
+                  dayjs
+                    .tz(instance.start, instance.event.timezone)
+                    .diff(reference),
                 ),
               )!,
           ),
         ),
         [
-          ({ event, instance }) =>
-            Math.abs(dayjs.tz(instance.start, event.timezone).diff(reference)) *
-            (input.order === "asc" ? 1 : -1),
+          (instance) =>
+            Math.abs(
+              dayjs.tz(instance.start, instance.event.timezone).diff(reference),
+            ) * (input.order === "asc" ? 1 : -1),
         ],
       );
 
-      return { results: results };
+      return { instances: closest };
     });

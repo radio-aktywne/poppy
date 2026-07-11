@@ -4,9 +4,15 @@ export type ClientOptions = {
   baseUrl: `${string}://${string}` | (string & {});
 };
 
-export type ReserveModelsNaiveDatetime = string;
+/**
+ * Datetime in UTC.
+ */
+export type ReserveModelsUtcDatetime = string;
 
-export type CheckModelsNaiveDatetime = string;
+/**
+ * Datetime in UTC.
+ */
+export type CheckModelsUtcDatetime = string;
 
 /**
  * Result
@@ -74,7 +80,7 @@ export type Credentials = {
    * Token to use to connect to the stream.
    */
   token: string;
-  expiresAt: ReserveModelsNaiveDatetime;
+  expiresAt: ReserveModelsUtcDatetime;
 };
 
 /**
@@ -125,7 +131,7 @@ export type CheckResponseAvailability = {
    * Identifier of the event that is currently being streamed.
    */
   event: string | null;
-  checkedAt: CheckModelsNaiveDatetime;
+  checkedAt: CheckModelsUtcDatetime;
 };
 
 export type CheckCheckRequest = {

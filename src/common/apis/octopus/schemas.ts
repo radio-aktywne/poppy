@@ -2,15 +2,23 @@
 
 import * as z from "zod";
 
-export const ReserveModelsNaiveDatetimeSchema = z.iso.datetime({
-  offset: true,
-  local: true,
-});
+/**
+ * Datetime in UTC.
+ */
+export const ReserveModelsUtcDatetimeSchema = z.iso
+  .datetime({ offset: true, local: true })
+  .register(z.globalRegistry, {
+    description: "Datetime in UTC.",
+  });
 
-export const CheckModelsNaiveDatetimeSchema = z.iso.datetime({
-  offset: true,
-  local: true,
-});
+/**
+ * Datetime in UTC.
+ */
+export const CheckModelsUtcDatetimeSchema = z.iso
+  .datetime({ offset: true, local: true })
+  .register(z.globalRegistry, {
+    description: "Datetime in UTC.",
+  });
 
 /**
  * Result
@@ -70,7 +78,7 @@ export const CredentialsSchema = z
     token: z.string().register(z.globalRegistry, {
       description: "Token to use to connect to the stream.",
     }),
-    expiresAt: ReserveModelsNaiveDatetimeSchema,
+    expiresAt: ReserveModelsUtcDatetimeSchema,
   })
   .register(z.globalRegistry, {
     description: "Credentials for accessing the stream.",
@@ -130,7 +138,7 @@ export const ReserveRequestDataSchema = z
 export const CheckResponseAvailabilitySchema = z
   .object({
     event: z.uuid().nullable(),
-    checkedAt: CheckModelsNaiveDatetimeSchema,
+    checkedAt: CheckModelsUtcDatetimeSchema,
   })
   .register(z.globalRegistry, {
     description: "Availability of a stream.",

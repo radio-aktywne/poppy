@@ -1,7 +1,7 @@
 openapi: "3.1.0"
 info:
   title: loris
-  version: "0.15.0"
+  version: "0.16.0"
 paths:
   /ping:
     get:
@@ -277,11 +277,7 @@ components:
           title: Host
           description: Host of the SRT server.
         latency:
-          type: string
-          format: duration
-          title: Latency
-          description: Target latency for buffering outgoing stream.
-          default: PT0.2S
+          $ref: "#/components/schemas/Timedelta"
         port:
           type: integer
           maximum: 65535
@@ -401,14 +397,16 @@ components:
         - message
       title: Result
       description: Result of the test.
+    Timedelta:
+      type: string
+      format: duration
+      description: Duration of time.
+      examples:
+        - PT1H
     WebRTC:
       properties:
         latency:
-          type: string
-          format: duration
-          title: Latency
-          description: Target latency for buffering incoming stream.
-          default: PT0.2S
+          $ref: "#/components/schemas/Timedelta"
         stun:
           anyOf:
             - $ref: "#/components/schemas/STUN"

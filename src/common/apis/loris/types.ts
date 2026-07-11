@@ -10,12 +10,7 @@ export type ClientOptions = {
  * WebRTC configuration.
  */
 export type WebRtc = {
-  /**
-   * Latency
-   *
-   * Target latency for buffering incoming stream.
-   */
-  latency?: string;
+  latency?: Timedelta;
   /**
    * STUN configuration.
    */
@@ -41,6 +36,11 @@ export type Stun = {
    */
   port: number;
 };
+
+/**
+ * Duration of time.
+ */
+export type Timedelta = string;
 
 /**
  * Result
@@ -137,12 +137,7 @@ export type Srt = {
    * Host of the SRT server.
    */
   host: string;
-  /**
-   * Latency
-   *
-   * Target latency for buffering outgoing stream.
-   */
-  latency?: string;
+  latency?: Timedelta;
   /**
    * Port
    *
