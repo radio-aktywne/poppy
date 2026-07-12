@@ -22,8 +22,8 @@ export function LivePreview({ data }: LivePreviewInput) {
   const { timestamp } = useNow();
 
   const eventsGetInput = useMemo(
-    () => ({ id: data.event, include: { show: true } }),
-    [data.event],
+    () => ({ id: data.instance.event, include: { show: true } }),
+    [data.instance.event],
   );
 
   const eventsGetQuery = useSuspenseQuery(

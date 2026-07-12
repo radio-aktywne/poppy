@@ -1,7 +1,7 @@
 openapi: "3.1.0"
 info:
   title: octopus
-  version: "0.27.0"
+  version: "0.28.0"
 paths:
   /check:
     get:
@@ -258,18 +258,16 @@ components:
   schemas:
     CheckResponseAvailability:
       properties:
-        event:
+        instance:
           anyOf:
-            - type: string
-              format: uuid
+            - $ref: "#/components/schemas/check_models_Instance"
             - type: "null"
-          title: Event
-          description: Identifier of the event that is currently being streamed.
+          description: Instance that is currently being streamed.
         checkedAt:
           $ref: "#/components/schemas/check_models_UTCDatetime"
       type: object
       required:
-        - event
+        - instance
         - checkedAt
       title: Availability
       description: Availability of a stream.
@@ -314,11 +312,8 @@ components:
       description: Parameters for testing.
     ReserveRequestData:
       properties:
-        event:
-          type: string
-          format: uuid
-          title: Event
-          description: Identifier of the event to reserve the stream for.
+        instance:
+          $ref: "#/components/schemas/reserve_models_Instance"
         format:
           $ref: "#/components/schemas/Format"
         record:
@@ -337,7 +332,7 @@ components:
           default: null
       type: object
       required:
-        - event
+        - instance
       title: ReservationInput
       description: Data for reserving a stream.
     ReserveResponseReservation:
@@ -377,12 +372,54 @@ components:
         - message
       title: Result
       description: Result of the test.
+    check_models_Instance:
+      properties:
+        event:
+          type: string
+          format: uuid
+          title: Event
+          description: Identifier of the event the instance belongs to.
+        start:
+          $ref: "#/components/schemas/check_models_NaiveDatetime"
+      type: object
+      required:
+        - event
+        - start
+      title: Instance
+      description: Instance data.
+    check_models_NaiveDatetime:
+      type: string
+      format: date-time
+      description: Datetime without timezone.
+      examples:
+        - 2000-01-01T00:00:00
     check_models_UTCDatetime:
       type: string
       format: date-time
       description: Datetime in UTC.
       examples:
         - 2000-01-01T00:00:00Z
+    reserve_models_Instance:
+      properties:
+        event:
+          type: string
+          format: uuid
+          title: Event
+          description: Identifier of the event the instance belongs to.
+        start:
+          $ref: "#/components/schemas/reserve_models_NaiveDatetime"
+      type: object
+      required:
+        - event
+        - start
+      title: Instance
+      description: Instance data.
+    reserve_models_NaiveDatetime:
+      type: string
+      format: date-time
+      description: Datetime without timezone.
+      examples:
+        - 2000-01-01T00:00:00
     reserve_models_UTCDatetime:
       type: string
       format: date-time

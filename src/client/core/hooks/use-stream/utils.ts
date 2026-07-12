@@ -118,8 +118,11 @@ export async function reserveStream(data: StreamReadyData) {
     bitrate: constants.audio.bitrate,
     channels: constants.audio.channels,
     codec: constants.audio.codec,
-    event: data.event,
     format: constants.audio.format,
+    instance: {
+      event: data.instance.event,
+      start: data.instance.start,
+    },
     record: data.recording,
     samplerate: constants.audio.samplerate,
     webrtc: {
@@ -183,7 +186,6 @@ export async function ready(data: StreamReadyingData) {
       await createOffer(peer);
 
       return {
-        event: data.event,
         instance: data.instance,
         media: media,
         peer: peer,
@@ -210,7 +212,6 @@ export async function start(data: StreamReadyData) {
     await connected;
 
     return {
-      event: data.event,
       instance: data.instance,
       media: data.media,
       peer: data.peer,

@@ -12,12 +12,62 @@ export const ReserveModelsUtcDatetimeSchema = z.iso
   });
 
 /**
+ * Datetime without timezone.
+ */
+export const ReserveModelsNaiveDatetimeSchema = z.iso
+  .datetime({ offset: true, local: true })
+  .register(z.globalRegistry, {
+    description: "Datetime without timezone.",
+  });
+
+/**
+ * Instance
+ *
+ * Instance data.
+ */
+export const ReserveModelsInstanceSchema = z
+  .object({
+    event: z.uuid().register(z.globalRegistry, {
+      description: "Identifier of the event the instance belongs to.",
+    }),
+    start: ReserveModelsNaiveDatetimeSchema,
+  })
+  .register(z.globalRegistry, {
+    description: "Instance data.",
+  });
+
+/**
  * Datetime in UTC.
  */
 export const CheckModelsUtcDatetimeSchema = z.iso
   .datetime({ offset: true, local: true })
   .register(z.globalRegistry, {
     description: "Datetime in UTC.",
+  });
+
+/**
+ * Datetime without timezone.
+ */
+export const CheckModelsNaiveDatetimeSchema = z.iso
+  .datetime({ offset: true, local: true })
+  .register(z.globalRegistry, {
+    description: "Datetime without timezone.",
+  });
+
+/**
+ * Instance
+ *
+ * Instance data.
+ */
+export const CheckModelsInstanceSchema = z
+  .object({
+    event: z.uuid().register(z.globalRegistry, {
+      description: "Identifier of the event the instance belongs to.",
+    }),
+    start: CheckModelsNaiveDatetimeSchema,
+  })
+  .register(z.globalRegistry, {
+    description: "Instance data.",
   });
 
 /**
@@ -113,9 +163,7 @@ export const FormatSchema = z.enum(["ogg"]).register(z.globalRegistry, {
  */
 export const ReserveRequestDataSchema = z
   .object({
-    event: z.uuid().register(z.globalRegistry, {
-      description: "Identifier of the event to reserve the stream for.",
-    }),
+    instance: ReserveModelsInstanceSchema,
     format: FormatSchema.optional(),
     record: z
       .boolean()
@@ -137,7 +185,7 @@ export const ReserveRequestDataSchema = z
  */
 export const CheckResponseAvailabilitySchema = z
   .object({
-    event: z.uuid().nullable(),
+    instance: CheckModelsInstanceSchema.nullable(),
     checkedAt: CheckModelsUtcDatetimeSchema,
   })
   .register(z.globalRegistry, {

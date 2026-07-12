@@ -29,7 +29,6 @@ export function useStream({}: UseStreamInput = {}): UseStreamOutput {
         });
 
       const currentData = {
-        event: input.event,
         instance: input.instance,
         recording: input.record,
       };
@@ -40,7 +39,6 @@ export function useStream({}: UseStreamInput = {}): UseStreamOutput {
 
         state.current.stream = {
           data: {
-            event: newData.event,
             instance: newData.instance,
             media: ref(newData.media),
             peer: ref(newData.peer),
@@ -70,7 +68,6 @@ export function useStream({}: UseStreamInput = {}): UseStreamOutput {
 
       state.current.stream = {
         data: {
-          event: newData.event,
           instance: newData.instance,
           media: ref(newData.media),
           peer: ref(newData.peer),

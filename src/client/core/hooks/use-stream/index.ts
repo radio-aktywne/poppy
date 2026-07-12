@@ -3,6 +3,7 @@ import "client-only";
 export { useStream } from "./main";
 export type {
   UseStreamInput,
+  UseStreamInstanceData,
   UseStreamOutput,
   UseStreamReady,
   UseStreamReadyInput,

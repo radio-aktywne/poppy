@@ -132,7 +132,7 @@ export function ReadyForm({
         {...form.getInputProps("record", { type: "checkbox" })}
       />
       <Button
-        disabled={!ready || !!streamCheckQuery.data.event}
+        disabled={!ready || !!streamCheckQuery.data.instance}
         loaderProps={{ type: "dots" }}
         loading={submitting}
         mt="auto"
