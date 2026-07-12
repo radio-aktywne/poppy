@@ -49,8 +49,8 @@ export function StatusWidget({}: StatusWidgetInput) {
           </Title>
         </Stack>
       </Center>
-      {streamCheckQuery.data.event ? (
-        <BusyBadge id={streamCheckQuery.data.event} />
+      {streamCheckQuery.data.instance ? (
+        <BusyBadge id={streamCheckQuery.data.instance.event} />
       ) : (
         <FreeBadge />
       )}

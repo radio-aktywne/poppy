@@ -6,14 +6,19 @@ export type NowState = {
   timestamp: number;
 };
 
+export type InstanceData = {
+  duration: string;
+  event: string;
+  start: string;
+};
+
 export type StreamLiveData = StreamStartingData & {
   session: string;
   timestamp: number;
 };
 
 export type StreamReadyingData = {
-  event: string;
-  instance: { duration: string; start: string };
+  instance: InstanceData;
   recording: boolean;
 };
 

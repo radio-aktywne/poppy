@@ -2,9 +2,14 @@ import type { MessageDescriptor } from "@lingui/core";
 
 import type { StreamState } from "../../../../isomorphic/state/types";
 
-export type UseStreamReadyInput = {
+export type UseStreamInstanceData = {
+  duration: string;
   event: string;
-  instance: { duration: string; start: string };
+  start: string;
+};
+
+export type UseStreamReadyInput = {
+  instance: UseStreamInstanceData;
   record: boolean;
 };
 

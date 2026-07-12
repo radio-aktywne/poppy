@@ -11,8 +11,8 @@ export const reserveStreamWithPassthrough =
     .use(authenticatedMiddleware)
     .handler(async ({ input }) => {
       const streamReserveData = await call(stream.reserve, {
-        event: input.event,
         format: input.format,
+        instance: input.instance,
         record: input.record,
       });
 

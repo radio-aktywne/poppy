@@ -34,11 +34,11 @@ msgstr "Error"
 msgid "Error • poppy"
 msgstr "Error • poppy"
 
-#: src/client/core/hooks/use-stream/main.ts:53
+#: src/client/core/hooks/use-stream/main.ts:51
 msgid "Failed to make stream ready"
 msgstr "Failed to make stream ready"
 
-#: src/client/core/hooks/use-stream/main.ts:85
+#: src/client/core/hooks/use-stream/main.ts:82
 msgid "Failed to start stream"
 msgstr "Failed to start stream"
 
@@ -55,7 +55,7 @@ msgid "Info"
 msgstr "Info"
 
 #: src/client/core/components/stream-widget/components/idle-widget/main.tsx:24
-#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:52
+#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:55
 #: src/client/test/components/test-widget/main.tsx:41
 #: src/client/test/components/test-widget/main.tsx:62
 msgid "Invalid input"
@@ -141,15 +141,15 @@ msgstr "Stream"
 msgid "Stream can't be made ready, because it is not currently idle"
 msgstr "Stream can't be made ready, because it is not currently idle"
 
-#: src/client/core/hooks/use-stream/main.ts:111
+#: src/client/core/hooks/use-stream/main.ts:108
 msgid "Stream can't be made unready, because it is not currently ready"
 msgstr "Stream can't be made unready, because it is not currently ready"
 
-#: src/client/core/hooks/use-stream/main.ts:61
+#: src/client/core/hooks/use-stream/main.ts:59
 msgid "Stream can't be started, because it is not currently ready"
 msgstr "Stream can't be started, because it is not currently ready"
 
-#: src/client/core/hooks/use-stream/main.ts:91
+#: src/client/core/hooks/use-stream/main.ts:88
 msgid "Stream can't be stopped, because it is not currently live"
 msgstr "Stream can't be stopped, because it is not currently live"
 
@@ -157,11 +157,11 @@ msgstr "Stream can't be stopped, because it is not currently live"
 msgid "Stream got unready"
 msgstr "Stream got unready"
 
-#: src/client/core/hooks/use-stream/main.ts:122
+#: src/client/core/hooks/use-stream/main.ts:119
 msgid "Stream got unready, but some resources failed to clean up"
 msgstr "Stream got unready, but some resources failed to clean up"
 
-#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:45
+#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:48
 msgid "Stream is ready"
 msgstr "Stream is ready"
 
@@ -173,7 +173,7 @@ msgstr "Stream started"
 msgid "Stream stopped"
 msgstr "Stream stopped"
 
-#: src/client/core/hooks/use-stream/main.ts:101
+#: src/client/core/hooks/use-stream/main.ts:98
 msgid "Stream stopped, but some resources failed to clean up"
 msgstr "Stream stopped, but some resources failed to clean up"
 

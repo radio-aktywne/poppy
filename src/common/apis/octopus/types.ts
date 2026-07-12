@@ -10,9 +10,49 @@ export type ClientOptions = {
 export type ReserveModelsUtcDatetime = string;
 
 /**
+ * Datetime without timezone.
+ */
+export type ReserveModelsNaiveDatetime = string;
+
+/**
+ * Instance
+ *
+ * Instance data.
+ */
+export type ReserveModelsInstance = {
+  /**
+   * Event
+   *
+   * Identifier of the event the instance belongs to.
+   */
+  event: string;
+  start: ReserveModelsNaiveDatetime;
+};
+
+/**
  * Datetime in UTC.
  */
 export type CheckModelsUtcDatetime = string;
+
+/**
+ * Datetime without timezone.
+ */
+export type CheckModelsNaiveDatetime = string;
+
+/**
+ * Instance
+ *
+ * Instance data.
+ */
+export type CheckModelsInstance = {
+  /**
+   * Event
+   *
+   * Identifier of the event the instance belongs to.
+   */
+  event: string;
+  start: CheckModelsNaiveDatetime;
+};
 
 /**
  * Result
@@ -89,12 +129,7 @@ export type Credentials = {
  * Data for reserving a stream.
  */
 export type ReserveRequestData = {
-  /**
-   * Event
-   *
-   * Identifier of the event to reserve the stream for.
-   */
-  event: string;
+  instance: ReserveModelsInstance;
   format?: Format;
   /**
    * Record
@@ -126,11 +161,9 @@ export type Format = "ogg";
  */
 export type CheckResponseAvailability = {
   /**
-   * Event
-   *
-   * Identifier of the event that is currently being streamed.
+   * Instance that is currently being streamed.
    */
-  event: string | null;
+  instance: CheckModelsInstance | null;
   checkedAt: CheckModelsUtcDatetime;
 };
 

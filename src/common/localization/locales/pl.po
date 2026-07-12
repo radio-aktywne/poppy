@@ -34,11 +34,11 @@ msgstr "Błąd"
 msgid "Error • poppy"
 msgstr "Błąd • poppy"
 
-#: src/client/core/hooks/use-stream/main.ts:53
+#: src/client/core/hooks/use-stream/main.ts:51
 msgid "Failed to make stream ready"
 msgstr "Nie udało się przygotować transmisji"
 
-#: src/client/core/hooks/use-stream/main.ts:85
+#: src/client/core/hooks/use-stream/main.ts:82
 msgid "Failed to start stream"
 msgstr "Nie udało się rozpocząć transmisji"
 
@@ -55,7 +55,7 @@ msgid "Info"
 msgstr "Informacja"
 
 #: src/client/core/components/stream-widget/components/idle-widget/main.tsx:24
-#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:52
+#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:55
 #: src/client/test/components/test-widget/main.tsx:41
 #: src/client/test/components/test-widget/main.tsx:62
 msgid "Invalid input"
@@ -141,15 +141,15 @@ msgstr "Transmisja"
 msgid "Stream can't be made ready, because it is not currently idle"
 msgstr "Transmisja nie może być przygotowana, ponieważ jest aktualnie w innym stanie"
 
-#: src/client/core/hooks/use-stream/main.ts:111
+#: src/client/core/hooks/use-stream/main.ts:108
 msgid "Stream can't be made unready, because it is not currently ready"
 msgstr "Transmisja nie może być cofnięta z gotowości, ponieważ nie jest aktualnie w stanie gotowości"
 
-#: src/client/core/hooks/use-stream/main.ts:61
+#: src/client/core/hooks/use-stream/main.ts:59
 msgid "Stream can't be started, because it is not currently ready"
 msgstr "Transmisja nie może być rozpoczęta, ponieważ nie jest aktualnie w stanie gotowości"
 
-#: src/client/core/hooks/use-stream/main.ts:91
+#: src/client/core/hooks/use-stream/main.ts:88
 msgid "Stream can't be stopped, because it is not currently live"
 msgstr "Transmisja nie może być zatrzymana, ponieważ nie jest aktualnie uruchomiona"
 
@@ -157,11 +157,11 @@ msgstr "Transmisja nie może być zatrzymana, ponieważ nie jest aktualnie uruch
 msgid "Stream got unready"
 msgstr "Transmisja została cofnięta z gotowości"
 
-#: src/client/core/hooks/use-stream/main.ts:122
+#: src/client/core/hooks/use-stream/main.ts:119
 msgid "Stream got unready, but some resources failed to clean up"
 msgstr "Transmisja została cofnięta z gotowości, ale niektóre zasoby nie zostały poprawnie zwolnione"
 
-#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:45
+#: src/client/core/components/stream-widget/components/idle-widget/main.tsx:48
 msgid "Stream is ready"
 msgstr "Transmisja jest gotowa"
 
@@ -173,7 +173,7 @@ msgstr "Rozpoczęto transmisję"
 msgid "Stream stopped"
 msgstr "Zakończono transmisję"
 
-#: src/client/core/hooks/use-stream/main.ts:101
+#: src/client/core/hooks/use-stream/main.ts:98
 msgid "Stream stopped, but some resources failed to clean up"
 msgstr "Transmisja została zakończona, ale niektóre zasoby nie zostały poprawnie zwolnione"
 

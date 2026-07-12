@@ -32,8 +32,11 @@ export function IdleWidget({}: IdleWidgetInput) {
       ];
 
       const error = await ready({
-        event: event,
-        instance: { duration: duration, start: start },
+        instance: {
+          duration: duration,
+          event: event,
+          start: start,
+        },
         record: record,
       });
 
