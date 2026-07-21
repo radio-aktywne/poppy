@@ -1,5 +1,5 @@
 import { msg } from "@lingui/core/macro";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 
 import type { ReadyFormSubmitInput } from "./components/ready-form";
 import type { IdleWidgetInput } from "./types";
@@ -14,18 +14,25 @@ export function IdleWidget({}: IdleWidgetInput) {
 
   const { ready, state } = useStream();
 
-  const initialValues = useMemo(() => ({ record: false }), []);
-
   const handleReady = useCallback(
     async ({ values }: ReadyFormSubmitInput) => {
-      const { record, show } = values;
+      const { instance, record, title } = values;
 
-      if (!show) {
+      if (!instance) {
         notifications.error({ message: msg({ message: "Invalid input" }) });
-        return { errors: { show: msg({ message: "Show is required" }) } };
+        return {
+          errors: { instance: msg({ message: "Instance is required" }) },
+        };
       }
 
-      const [event, start, duration] = show.split("/") as [
+      if (!title) {
+        notifications.error({ message: msg({ message: "Invalid input" }) });
+        return {
+          errors: { title: msg({ message: "Title is required" }) },
+        };
+      }
+
+      const [event, start, duration] = instance.split("/") as [
         string,
         string,
         string,
@@ -38,6 +45,7 @@ export function IdleWidget({}: IdleWidgetInput) {
           start: start,
         },
         record: record,
+        title: title,
       });
 
       if (error) {
@@ -59,7 +67,13 @@ export function IdleWidget({}: IdleWidgetInput) {
 
   return (
     <ReadyForm
-      initialValues={initialValues}
+      initialValues={{
+        instance: state.data.instance
+          ? `${state.data.instance.event}/${state.data.instance.start}/${state.data.instance.duration}`
+          : undefined,
+        record: state.data.recording,
+        title: state.data.title,
+      }}
       onError={handleError}
       onSubmit={handleReady}
     />

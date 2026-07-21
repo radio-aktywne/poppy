@@ -123,6 +123,9 @@ export async function reserveStream(data: StreamReadyData) {
       event: data.instance.event,
       start: data.instance.start,
     },
+    metadata: {
+      title: data.title,
+    },
     record: data.recording,
     samplerate: constants.audio.samplerate,
     webrtc: {
@@ -190,6 +193,7 @@ export async function ready(data: StreamReadyingData) {
         media: media,
         peer: peer,
         recording: data.recording,
+        title: data.title,
       };
     } catch (error) {
       cleanupPeer(peer);
@@ -218,6 +222,7 @@ export async function start(data: StreamReadyData) {
       recording: data.recording,
       session: session,
       timestamp: getTimestamp(),
+      title: data.title,
     };
   } catch (error) {
     await cleanupSession(session);

@@ -4,6 +4,7 @@ export type {
   ReadyFormInput,
   ReadyFormOnError,
   ReadyFormOnSubmit,
+  ReadyFormPartialInitialValues,
   ReadyFormSubmitInput,
   ReadyFormValues,
 } from "./types";

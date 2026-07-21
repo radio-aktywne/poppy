@@ -12,6 +12,12 @@ export type InstanceData = {
   start: string;
 };
 
+export type StreamIdleData = {
+  instance?: InstanceData;
+  recording?: boolean;
+  title?: string;
+};
+
 export type StreamLiveData = StreamStartingData & {
   session: string;
   timestamp: number;
@@ -20,6 +26,7 @@ export type StreamLiveData = StreamStartingData & {
 export type StreamReadyingData = {
   instance: InstanceData;
   recording: boolean;
+  title: string;
 };
 
 export type StreamReadyData = StreamReadyingData & {
@@ -34,7 +41,7 @@ export type StreamStoppingData = StreamLiveData;
 export type StreamUnreadyingData = StreamReadyData;
 
 export type StreamIdleState = {
-  data?: never;
+  data: StreamIdleData;
   state: "idle";
 };
 

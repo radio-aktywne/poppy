@@ -44,7 +44,7 @@ export function ReadyWidget({}: ReadyWidgetInput) {
         onClick={handleStart}
         style={{ flexShrink: 0 }}
       >
-        {localization.localize(msg({ message: "Start" }))}
+        {localization.localize(msg({ context: "action", message: "Start" }))}
       </Button>
       <Button
         color="gray"
