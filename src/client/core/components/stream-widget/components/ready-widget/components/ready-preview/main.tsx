@@ -1,7 +1,5 @@
-import type { SetNonNullableDeep } from "type-fest";
-
 import { msg } from "@lingui/core/macro";
-import { Group, Stack, Text } from "@mantine/core";
+import { Group, Stack, Text, Title } from "@mantine/core";
 import { Center } from "@radio-aktywne/ui";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
@@ -30,35 +28,30 @@ export function ReadyPreview({ data }: ReadyPreviewInput) {
     }),
   );
 
-  const event = eventsGetQuery.data as SetNonNullableDeep<
-    typeof eventsGetQuery.data,
-    "show"
-  >;
+  const event = eventsGetQuery.data;
+
+  const start = dayjs
+    .tz(data.instance.start, event.timezone)
+    .locale(localization.locale)
+    .local();
+
+  const end = start.add(dayjs.duration(data.instance.duration));
+
+  const format = start.isSame(end, "day")
+    ? "LT"
+    : start.isSame(end, "week")
+      ? "dddd, LT"
+      : "LLLL";
 
   return (
     <Center>
       <Stack align="center" gap="xl">
         <Stack align="center" gap="xs">
-          <Text fw="bold" fz="xl" inherit={true}>
-            {event.show.title}
-          </Text>
+          <Title ta="center">{data.title}</Title>
           <Group c="dimmed" fz="sm" gap="xs">
-            <Text inherit={true}>
-              {dayjs
-                .tz(data.instance.start, event.timezone)
-                .locale(localization.locale)
-                .local()
-                .format("LT")}
-            </Text>
+            <Text inherit={true}>{start.format(format)}</Text>
             <Text inherit={true}>&ndash;</Text>
-            <Text inherit={true}>
-              {dayjs
-                .tz(data.instance.start, event.timezone)
-                .add(dayjs.duration(data.instance.duration))
-                .locale(localization.locale)
-                .local()
-                .format("LT")}
-            </Text>
+            <Text inherit={true}>{end.format(format)}</Text>
           </Group>
         </Stack>
         <Group

@@ -2,7 +2,8 @@ import * as z from "zod";
 
 export const Schemas = {
   Values: z.object({
+    instance: z.string().nullish(),
     record: z.boolean(),
-    show: z.string().nullish(),
+    title: z.string().nullish(),
   }),
 };

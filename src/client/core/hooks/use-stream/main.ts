@@ -14,7 +14,7 @@ import * as utils from "./utils";
 export function useStream({}: UseStreamInput = {}): UseStreamOutput {
   const { state } = useGlobalState();
 
-  const [defaultStreamState] = useState(() => ({ state: "idle" as const }));
+  const [defaultStreamState] = useState({ data: {}, state: "idle" as const });
   const streamState = state.snapshot.stream ?? defaultStreamState;
 
   const ready = useCallback(
@@ -31,6 +31,7 @@ export function useStream({}: UseStreamInput = {}): UseStreamOutput {
       const currentData = {
         instance: input.instance,
         recording: input.record,
+        title: input.title,
       };
       state.current.stream = { data: currentData, state: "readying" };
 
@@ -43,11 +44,12 @@ export function useStream({}: UseStreamInput = {}): UseStreamOutput {
             media: ref(newData.media),
             peer: ref(newData.peer),
             recording: newData.recording,
+            title: newData.title,
           },
           state: "ready",
         };
       } catch {
-        state.current.stream = { state: "idle" };
+        state.current.stream = { data: currentData, state: "idle" };
         return msg({ message: "Failed to make stream ready" });
       }
     },
@@ -74,6 +76,7 @@ export function useStream({}: UseStreamInput = {}): UseStreamOutput {
           recording: newData.recording,
           session: newData.session,
           timestamp: newData.timestamp,
+          title: newData.title,
         },
         state: "live",
       };
@@ -99,7 +102,8 @@ export function useStream({}: UseStreamInput = {}): UseStreamOutput {
         message: "Stream stopped, but some resources failed to clean up",
       });
     } finally {
-      state.current.stream = { state: "idle" };
+      const newData = {};
+      state.current.stream = { data: newData, state: "idle" };
     }
   }, [state.current]);
 
@@ -120,7 +124,12 @@ export function useStream({}: UseStreamInput = {}): UseStreamOutput {
         message: "Stream got unready, but some resources failed to clean up",
       });
     } finally {
-      state.current.stream = { state: "idle" };
+      const newData = {
+        instance: currentData.instance,
+        recording: currentData.recording,
+        title: currentData.title,
+      };
+      state.current.stream = { data: newData, state: "idle" };
     }
   }, [state.current]);
 

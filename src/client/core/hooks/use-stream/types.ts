@@ -11,6 +11,7 @@ export type UseStreamInstanceData = {
 export type UseStreamReadyInput = {
   instance: UseStreamInstanceData;
   record: boolean;
+  title: string;
 };
 
 export type UseStreamReady = (

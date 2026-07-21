@@ -1,14 +1,16 @@
-import type { SetNonNullableDeep } from "type-fest";
-
+import { msg } from "@lingui/core/macro";
 import { Badge, Loader } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
 import type { BusyBadgeInput } from "./types";
 
+import { useLocalization } from "../../../../../../isomorphic/localization/hooks/use-localization";
 import { orpcClientSideQueryClient } from "../../../../../orpc/vars/clients";
 
 export function BusyBadge({ id }: BusyBadgeInput) {
+  const { localization } = useLocalization();
+
   const eventsGetInput = useMemo(
     () => ({ id: id, include: { show: true } }),
     [id],
@@ -21,10 +23,7 @@ export function BusyBadge({ id }: BusyBadgeInput) {
     }),
   );
 
-  const event = eventsGetQuery.data as SetNonNullableDeep<
-    typeof eventsGetQuery.data,
-    "show"
-  >;
+  const event = eventsGetQuery.data;
 
   return (
     <Badge
@@ -38,7 +37,11 @@ export function BusyBadge({ id }: BusyBadgeInput) {
       variant="light"
     >
       {event ? (
-        event.show.title
+        event.show ? (
+          event.show.title
+        ) : (
+          localization.localize(msg({ message: "No show" }))
+        )
       ) : (
         <Loader color="var(--mantine-color-ra-red-light)" type="dots" />
       )}

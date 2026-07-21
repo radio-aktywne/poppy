@@ -13,6 +13,10 @@ export type ReadyFormValues = UseFormValues<ReadyFormSchema>;
 
 export type ReadyFormInitialValues = UseFormInitialValues<ReadyFormSchema>;
 
+export type ReadyFormPartialInitialValues =
+  | Partial<ReadyFormInitialValues>
+  | undefined;
+
 export type ReadyFormOnError = UseFormOnError;
 
 export type ReadyFormSubmitInput = UseFormSubmitInput<ReadyFormSchema>;
@@ -20,7 +24,7 @@ export type ReadyFormSubmitInput = UseFormSubmitInput<ReadyFormSchema>;
 export type ReadyFormOnSubmit = UseFormOnSubmit<ReadyFormSchema>;
 
 export type ReadyFormInput = {
-  initialValues: ReadyFormValues;
+  initialValues?: ReadyFormPartialInitialValues;
   onError?: ReadyFormOnError;
   onSubmit: ReadyFormOnSubmit;
 };
