@@ -9,7 +9,7 @@ export const delete_ = orpcServerRootBase.core.whip.delete
       await state.current.apis.whip.deleteSession({ path: input });
 
     if (deleteSessionData === undefined) {
-      if (deleteSessionResponse.status === 409) throw errors.CONFLICT();
+      if (deleteSessionResponse?.status === 409) throw errors.CONFLICT();
       throw errors.INTERNAL_SERVER_ERROR();
     }
   });

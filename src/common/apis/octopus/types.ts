@@ -5,107 +5,16 @@ export type ClientOptions = {
 };
 
 /**
- * Datetime in UTC.
- */
-export type ReserveModelsUtcDatetime = string;
-
-/**
- * Datetime without timezone.
- */
-export type ReserveModelsNaiveDatetime = string;
-
-/**
- * Instance
+ * Availability
  *
- * Instance data.
+ * Availability of a stream.
  */
-export type ReserveModelsInstance = {
+export type CheckResponseAvailability = {
   /**
-   * Event
-   *
-   * Identifier of the event the instance belongs to.
+   * Instance that is currently being streamed.
    */
-  event: string;
-  start: ReserveModelsNaiveDatetime;
-};
-
-/**
- * Datetime in UTC.
- */
-export type CheckModelsUtcDatetime = string;
-
-/**
- * Datetime without timezone.
- */
-export type CheckModelsNaiveDatetime = string;
-
-/**
- * Instance
- *
- * Instance data.
- */
-export type CheckModelsInstance = {
-  /**
-   * Event
-   *
-   * Identifier of the event the instance belongs to.
-   */
-  event: string;
-  start: CheckModelsNaiveDatetime;
-};
-
-/**
- * Result
- *
- * Result of the test.
- */
-export type TestResponseResult = {
-  /**
-   * Success
-   *
-   * Indicates if the test was successful.
-   */
-  success: boolean;
-  /**
-   * Message
-   *
-   * Message returned from the test.
-   */
-  message: string;
-};
-
-export type TestRequestParameters = Parameters | null;
-
-/**
- * Parameters
- *
- * Parameters for testing.
- */
-export type Parameters = {
-  /**
-   * Message
-   *
-   * Optional message to include in the test.
-   */
-  message?: string | null;
-};
-
-export type SubscribeRequestTypes = string | Array<EventType> | null;
-
-/**
- * EventType
- *
- * Event types.
- */
-export type EventType = "test" | "availability-changed";
-
-/**
- * Reservation
- *
- * Reservation of a stream.
- */
-export type ReserveResponseReservation = {
-  credentials: Credentials;
+  instance: CheckModelsInstance | null;
+  checkedAt: CheckModelsUtcDatetime;
 };
 
 /**
@@ -121,6 +30,34 @@ export type Credentials = {
    */
   token: string;
   expiresAt: ReserveModelsUtcDatetime;
+};
+
+/**
+ * EventType
+ *
+ * Event types.
+ */
+export type EventType = "test" | "availability-changed";
+
+/**
+ * Format
+ *
+ * Audio format.
+ */
+export type Format = "ogg";
+
+/**
+ * Parameters
+ *
+ * Parameters for testing.
+ */
+export type Parameters = {
+  /**
+   * Message
+   *
+   * Optional message to include in the test.
+   */
+  message?: string | null;
 };
 
 /**
@@ -148,24 +85,87 @@ export type ReserveRequestData = {
 };
 
 /**
- * Format
+ * Reservation
  *
- * Audio format.
+ * Reservation of a stream.
  */
-export type Format = "ogg";
+export type ReserveResponseReservation = {
+  credentials: Credentials;
+};
+
+export type SubscribeRequestTypes = string | Array<EventType> | null;
+
+export type TestRequestParameters = Parameters | null;
 
 /**
- * Availability
+ * Result
  *
- * Availability of a stream.
+ * Result of the test.
  */
-export type CheckResponseAvailability = {
+export type TestResponseResult = {
   /**
-   * Instance that is currently being streamed.
+   * Success
+   *
+   * Indicates if the test was successful.
    */
-  instance: CheckModelsInstance | null;
-  checkedAt: CheckModelsUtcDatetime;
+  success: boolean;
+  /**
+   * Message
+   *
+   * Message returned from the test.
+   */
+  message: string;
 };
+
+/**
+ * Instance
+ *
+ * Instance data.
+ */
+export type CheckModelsInstance = {
+  /**
+   * Event
+   *
+   * Identifier of the event the instance belongs to.
+   */
+  event: string;
+  start: CheckModelsNaiveDatetime;
+};
+
+/**
+ * Datetime without timezone.
+ */
+export type CheckModelsNaiveDatetime = string;
+
+/**
+ * Datetime in UTC.
+ */
+export type CheckModelsUtcDatetime = string;
+
+/**
+ * Instance
+ *
+ * Instance data.
+ */
+export type ReserveModelsInstance = {
+  /**
+   * Event
+   *
+   * Identifier of the event the instance belongs to.
+   */
+  event: string;
+  start: ReserveModelsNaiveDatetime;
+};
+
+/**
+ * Datetime without timezone.
+ */
+export type ReserveModelsNaiveDatetime = string;
+
+/**
+ * Datetime in UTC.
+ */
+export type ReserveModelsUtcDatetime = string;
 
 export type CheckCheckRequest = {
   body?: never;

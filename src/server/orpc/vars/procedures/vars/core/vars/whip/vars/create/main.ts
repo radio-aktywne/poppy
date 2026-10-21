@@ -9,12 +9,12 @@ export const create = orpcServerRootBase.core.whip.create
       await state.current.apis.whip.createSession({ body: input });
 
     if (createSessionData === undefined) {
-      if (createSessionResponse.status === 409) throw errors.CONFLICT();
+      if (createSessionResponse?.status === 409) throw errors.CONFLICT();
       throw errors.INTERNAL_SERVER_ERROR();
     }
 
     const answer = createSessionData;
-    const session = createSessionResponse.headers
+    const session = createSessionResponse!.headers
       .get("Location")!
       .split("/")
       .pop()!;

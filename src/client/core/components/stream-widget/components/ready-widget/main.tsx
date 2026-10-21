@@ -50,7 +50,7 @@ export function ReadyWidget({}: ReadyWidgetInput) {
         color="gray"
         onClick={handleUnready}
         style={{ flexShrink: 0 }}
-        variant="light"
+        variant="default"
       >
         {localization.localize(msg({ message: "Unready" }))}
       </Button>

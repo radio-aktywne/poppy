@@ -17,7 +17,7 @@ export function FreeBadge({}: FreeBadgeInput) {
       radius={0}
       size="xl"
       style={{ flexShrink: 0 }}
-      variant="light"
+      variant="outline"
     >
       {localization.localize(msg({ message: "Free" }))}
     </Badge>

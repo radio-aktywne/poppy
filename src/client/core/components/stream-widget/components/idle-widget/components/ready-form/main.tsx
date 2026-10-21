@@ -15,6 +15,7 @@ import { isString } from "es-toolkit/predicate";
 import { useCallback, useState } from "react";
 import { MdOutlineAddBox } from "react-icons/md";
 
+import type { InstancesModelsShow } from "../../../../../../../../common/apis/beaver/types";
 import type { ReadyFormInput } from "./types";
 
 import { dayjs } from "../../../../../../../../common/dates/vars/dayjs";
@@ -86,7 +87,9 @@ export function ReadyForm({
       setSelectedShow(value);
 
       const instance = instances.find(
-        (instance) => (instance.event.show?.id ?? null) === value,
+        (instance) =>
+          ((instance.event.show as InstancesModelsShow | null)?.id ?? null) ===
+          value,
       );
 
       form.setFieldValue(
@@ -96,7 +99,11 @@ export function ReadyForm({
           : null,
       );
 
-      form.setFieldValue("title", instance?.event.show?.title ?? "");
+      form.setFieldValue(
+        "title",
+        (instance?.event.show as InstancesModelsShow | null | undefined)
+          ?.title ?? "",
+      );
     },
     [form.setFieldValue, instances],
   );

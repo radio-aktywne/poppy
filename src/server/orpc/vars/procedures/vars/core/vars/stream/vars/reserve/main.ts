@@ -9,7 +9,7 @@ export const reserve = orpcServerRootBase.core.stream.reserve
       await state.current.apis.octopus.reserveReserve({ body: input });
 
     if (reserveReserveData === undefined) {
-      if (reserveReserveResponse.status === 409) throw errors.CONFLICT();
+      if (reserveReserveResponse?.status === 409) throw errors.CONFLICT();
       throw errors.INTERNAL_SERVER_ERROR();
     }
 

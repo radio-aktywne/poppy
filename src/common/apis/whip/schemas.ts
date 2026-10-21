@@ -2,11 +2,7 @@
 
 import * as z from "zod";
 
-export const CreateSessionRequestSchema = z.object({
-  body: z.string(),
-  path: z.never().optional(),
-  query: z.never().optional(),
-});
+export const ZCreateSessionBody = z.string();
 
 /**
  * Session created
@@ -17,12 +13,20 @@ export const CreateSessionResponseSchema = z
     description: "Session created",
   });
 
+export const ZDeleteSessionPath = z.object({
+  session: z.string().register(z.globalRegistry, {
+    description: "The identifier of the session to delete",
+  }),
+});
+
+export const CreateSessionRequestSchema = z.object({
+  body: ZCreateSessionBody,
+  path: z.never().optional(),
+  query: z.never().optional(),
+});
+
 export const DeleteSessionRequestSchema = z.object({
   body: z.never().optional(),
-  path: z.object({
-    session: z.string().register(z.globalRegistry, {
-      description: "The identifier of the session to delete",
-    }),
-  }),
+  path: ZDeleteSessionPath,
   query: z.never().optional(),
 });

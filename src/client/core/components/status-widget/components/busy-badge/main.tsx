@@ -34,7 +34,7 @@ export function BusyBadge({ id }: BusyBadgeInput) {
       radius={0}
       size="xl"
       style={{ flexShrink: 0 }}
-      variant="light"
+      variant="outline"
     >
       {event ? (
         event.show ? (
