@@ -3,46 +3,60 @@
 import * as z from "zod";
 
 /**
- * Datetime in UTC.
- */
-export const ReserveModelsUtcDatetimeSchema = z.iso
-  .datetime({ offset: true, local: true })
-  .register(z.globalRegistry, {
-    description: "Datetime in UTC.",
-  });
-
-/**
- * Datetime without timezone.
- */
-export const ReserveModelsNaiveDatetimeSchema = z.iso
-  .datetime({ offset: true, local: true })
-  .register(z.globalRegistry, {
-    description: "Datetime without timezone.",
-  });
-
-/**
- * Instance
+ * EventType
  *
- * Instance data.
+ * Event types.
  */
-export const ReserveModelsInstanceSchema = z
+export const EventTypeSchema = z
+  .enum(["test", "availability-changed"])
+  .register(z.globalRegistry, {
+    description: "Event types.",
+  });
+
+/**
+ * Format
+ *
+ * Audio format.
+ */
+export const FormatSchema = z.enum(["ogg"]).register(z.globalRegistry, {
+  description: "Audio format.",
+});
+
+/**
+ * Parameters
+ *
+ * Parameters for testing.
+ */
+export const ParametersSchema = z
   .object({
-    event: z.uuid().register(z.globalRegistry, {
-      description: "Identifier of the event the instance belongs to.",
-    }),
-    start: ReserveModelsNaiveDatetimeSchema,
+    message: z.string().nullish().default(null),
   })
   .register(z.globalRegistry, {
-    description: "Instance data.",
+    description: "Parameters for testing.",
   });
 
+export const SubscribeRequestTypesSchema = z
+  .union([z.string(), z.array(EventTypeSchema)])
+  .nullable();
+
+export const TestRequestParametersSchema = ParametersSchema.nullable();
+
 /**
- * Datetime in UTC.
+ * Result
+ *
+ * Result of the test.
  */
-export const CheckModelsUtcDatetimeSchema = z.iso
-  .datetime({ offset: true, local: true })
+export const TestResponseResultSchema = z
+  .object({
+    success: z.boolean().register(z.globalRegistry, {
+      description: "Indicates if the test was successful.",
+    }),
+    message: z.string().register(z.globalRegistry, {
+      description: "Message returned from the test.",
+    }),
+  })
   .register(z.globalRegistry, {
-    description: "Datetime in UTC.",
+    description: "Result of the test.",
   });
 
 /**
@@ -71,52 +85,83 @@ export const CheckModelsInstanceSchema = z
   });
 
 /**
- * Result
- *
- * Result of the test.
+ * Datetime in UTC.
  */
-export const TestResponseResultSchema = z
-  .object({
-    success: z.boolean().register(z.globalRegistry, {
-      description: "Indicates if the test was successful.",
-    }),
-    message: z.string().register(z.globalRegistry, {
-      description: "Message returned from the test.",
-    }),
-  })
+export const CheckModelsUtcDatetimeSchema = z.iso
+  .datetime({ offset: true, local: true })
   .register(z.globalRegistry, {
-    description: "Result of the test.",
+    description: "Datetime in UTC.",
   });
 
 /**
- * Parameters
+ * Availability
  *
- * Parameters for testing.
+ * Availability of a stream.
  */
-export const ParametersSchema = z
+export const CheckResponseAvailabilitySchema = z
   .object({
-    message: z.string().nullish().default(null),
+    instance: CheckModelsInstanceSchema.nullable(),
+    checkedAt: CheckModelsUtcDatetimeSchema,
   })
   .register(z.globalRegistry, {
-    description: "Parameters for testing.",
+    description: "Availability of a stream.",
   });
-
-export const TestRequestParametersSchema = ParametersSchema.nullable();
 
 /**
- * EventType
- *
- * Event types.
+ * Datetime without timezone.
  */
-export const EventTypeSchema = z
-  .enum(["test", "availability-changed"])
+export const ReserveModelsNaiveDatetimeSchema = z.iso
+  .datetime({ offset: true, local: true })
   .register(z.globalRegistry, {
-    description: "Event types.",
+    description: "Datetime without timezone.",
   });
 
-export const SubscribeRequestTypesSchema = z
-  .union([z.string(), z.array(EventTypeSchema)])
-  .nullable();
+/**
+ * Instance
+ *
+ * Instance data.
+ */
+export const ReserveModelsInstanceSchema = z
+  .object({
+    event: z.uuid().register(z.globalRegistry, {
+      description: "Identifier of the event the instance belongs to.",
+    }),
+    start: ReserveModelsNaiveDatetimeSchema,
+  })
+  .register(z.globalRegistry, {
+    description: "Instance data.",
+  });
+
+/**
+ * ReservationInput
+ *
+ * Data for reserving a stream.
+ */
+export const ReserveRequestDataSchema = z
+  .object({
+    instance: ReserveModelsInstanceSchema,
+    format: FormatSchema.optional(),
+    record: z
+      .boolean()
+      .register(z.globalRegistry, {
+        description: "Whether to record the stream.",
+      })
+      .optional()
+      .default(false),
+    metadata: z.record(z.string(), z.string()).nullish().default(null),
+  })
+  .register(z.globalRegistry, {
+    description: "Data for reserving a stream.",
+  });
+
+/**
+ * Datetime in UTC.
+ */
+export const ReserveModelsUtcDatetimeSchema = z.iso
+  .datetime({ offset: true, local: true })
+  .register(z.globalRegistry, {
+    description: "Datetime in UTC.",
+  });
 
 /**
  * Credentials
@@ -148,78 +193,15 @@ export const ReserveResponseReservationSchema = z
   });
 
 /**
- * Format
- *
- * Audio format.
- */
-export const FormatSchema = z.enum(["ogg"]).register(z.globalRegistry, {
-  description: "Audio format.",
-});
-
-/**
- * ReservationInput
- *
- * Data for reserving a stream.
- */
-export const ReserveRequestDataSchema = z
-  .object({
-    instance: ReserveModelsInstanceSchema,
-    format: FormatSchema.optional(),
-    record: z
-      .boolean()
-      .register(z.globalRegistry, {
-        description: "Whether to record the stream.",
-      })
-      .optional()
-      .default(false),
-    metadata: z.record(z.string(), z.string()).nullish().default(null),
-  })
-  .register(z.globalRegistry, {
-    description: "Data for reserving a stream.",
-  });
-
-/**
- * Availability
- *
- * Availability of a stream.
- */
-export const CheckResponseAvailabilitySchema = z
-  .object({
-    instance: CheckModelsInstanceSchema.nullable(),
-    checkedAt: CheckModelsUtcDatetimeSchema,
-  })
-  .register(z.globalRegistry, {
-    description: "Availability of a stream.",
-  });
-
-export const CheckCheckRequestSchema = z.object({
-  body: z.never().optional(),
-  path: z.never().optional(),
-  query: z.never().optional(),
-});
-
-/**
  * Request fulfilled, document follows
  */
 export const CheckCheckResponseSchema = CheckResponseAvailabilitySchema;
-
-export const PingPingRequestSchema = z.object({
-  body: z.never().optional(),
-  path: z.never().optional(),
-  query: z.never().optional(),
-});
 
 /**
  * Request fulfilled, nothing follows
  */
 export const PingPingResponseSchema = z.void().register(z.globalRegistry, {
   description: "Request fulfilled, nothing follows",
-});
-
-export const PingHeadpingRequestSchema = z.object({
-  body: z.never().optional(),
-  path: z.never().optional(),
-  query: z.never().optional(),
 });
 
 /**
@@ -229,25 +211,15 @@ export const PingHeadpingResponseSchema = z.void().register(z.globalRegistry, {
   description: "Request fulfilled, nothing follows",
 });
 
-export const ReserveReserveRequestSchema = z.object({
-  body: ReserveRequestDataSchema,
-  path: z.never().optional(),
-  query: z.never().optional(),
-});
+export const ZReserveReserveBody = ReserveRequestDataSchema;
 
 /**
  * Document created, URL follows
  */
 export const ReserveReserveResponseSchema = ReserveResponseReservationSchema;
 
-export const SseSubscribeRequestSchema = z.object({
-  body: z.never().optional(),
-  path: z.never().optional(),
-  query: z
-    .object({
-      types: z.union([SubscribeRequestTypesSchema, z.string()]).nullish(),
-    })
-    .optional(),
+export const ZSseSubscribeQuery = z.object({
+  types: z.union([SubscribeRequestTypesSchema, z.string()]).nullish(),
 });
 
 /**
@@ -259,17 +231,47 @@ export const SseSubscribeResponseSchema = z
     description: "Request fulfilled, stream of Server-Sent Events follows",
   });
 
-export const TestTestRequestSchema = z.object({
-  body: z.never().optional(),
-  path: z.never().optional(),
-  query: z
-    .object({
-      parameters: z.union([TestRequestParametersSchema, z.string()]).nullish(),
-    })
-    .optional(),
+export const ZTestTestQuery = z.object({
+  parameters: z.union([TestRequestParametersSchema, z.string()]).nullish(),
 });
 
 /**
  * Request fulfilled, document follows
  */
 export const TestTestResponseSchema = TestResponseResultSchema;
+
+export const CheckCheckRequestSchema = z.object({
+  body: z.never().optional(),
+  path: z.never().optional(),
+  query: z.never().optional(),
+});
+
+export const PingPingRequestSchema = z.object({
+  body: z.never().optional(),
+  path: z.never().optional(),
+  query: z.never().optional(),
+});
+
+export const PingHeadpingRequestSchema = z.object({
+  body: z.never().optional(),
+  path: z.never().optional(),
+  query: z.never().optional(),
+});
+
+export const ReserveReserveRequestSchema = z.object({
+  body: ZReserveReserveBody,
+  path: z.never().optional(),
+  query: z.never().optional(),
+});
+
+export const SseSubscribeRequestSchema = z.object({
+  body: z.never().optional(),
+  path: z.never().optional(),
+  query: ZSseSubscribeQuery.optional(),
+});
+
+export const TestTestRequestSchema = z.object({
+  body: z.never().optional(),
+  path: z.never().optional(),
+  query: ZTestTestQuery.optional(),
+});

@@ -5,16 +5,65 @@ export type ClientOptions = {
 };
 
 /**
- * WebRTC
+ * Codec
  *
- * WebRTC configuration.
+ * Audio codec.
  */
-export type WebRtc = {
+export type Codec = "opus";
+
+/**
+ * EventType
+ *
+ * Event types.
+ */
+export type EventType = "test";
+
+/**
+ * Format
+ *
+ * Audio format.
+ */
+export type Format = "ogg";
+
+/**
+ * Parameters
+ *
+ * Parameters for testing.
+ */
+export type Parameters = {
+  /**
+   * Message
+   *
+   * Optional message to include in the test.
+   */
+  message?: string | null;
+};
+
+/**
+ * SRT
+ *
+ * SRT configuration.
+ */
+export type Srt = {
+  /**
+   * Host
+   *
+   * Host of the SRT server.
+   */
+  host: string;
   latency?: Timedelta;
   /**
-   * STUN configuration.
+   * Port
+   *
+   * Port of the SRT server.
    */
-  stun?: Stun | null;
+  port: number;
+  /**
+   * Password
+   *
+   * Password to authenticate with the SRT server.
+   */
+  password?: string | null;
 };
 
 /**
@@ -38,54 +87,13 @@ export type Stun = {
 };
 
 /**
- * Duration of time.
- */
-export type Timedelta = string;
-
-/**
- * Result
+ * StreamDetails
  *
- * Result of the test.
+ * Details of the stream.
  */
-export type TestResponseResult = {
-  /**
-   * Success
-   *
-   * Indicates if the test was successful.
-   */
-  success: boolean;
-  /**
-   * Message
-   *
-   * Message returned from the test.
-   */
-  message: string;
+export type StreamDetails = {
+  stun: Stun;
 };
-
-export type TestRequestParameters = Parameters | null;
-
-/**
- * Parameters
- *
- * Parameters for testing.
- */
-export type Parameters = {
-  /**
-   * Message
-   *
-   * Optional message to include in the test.
-   */
-  message?: string | null;
-};
-
-export type SubscribeRequestTypes = string | Array<EventType> | null;
-
-/**
- * EventType
- *
- * Event types.
- */
-export type EventType = "test";
 
 /**
  * StreamInput
@@ -125,54 +133,46 @@ export type StreamInput = {
   webrtc?: WebRtc;
 };
 
+export type SubscribeRequestTypes = string | Array<EventType> | null;
+
+export type TestRequestParameters = Parameters | null;
+
 /**
- * SRT
+ * Result
  *
- * SRT configuration.
+ * Result of the test.
  */
-export type Srt = {
+export type TestResponseResult = {
   /**
-   * Host
+   * Success
    *
-   * Host of the SRT server.
+   * Indicates if the test was successful.
    */
-  host: string;
-  latency?: Timedelta;
+  success: boolean;
   /**
-   * Port
+   * Message
    *
-   * Port of the SRT server.
+   * Message returned from the test.
    */
-  port: number;
-  /**
-   * Password
-   *
-   * Password to authenticate with the SRT server.
-   */
-  password?: string | null;
+  message: string;
 };
 
 /**
- * Format
- *
- * Audio format.
+ * Duration of time.
  */
-export type Format = "ogg";
+export type Timedelta = string;
 
 /**
- * Codec
+ * WebRTC
  *
- * Audio codec.
+ * WebRTC configuration.
  */
-export type Codec = "opus";
-
-/**
- * StreamDetails
- *
- * Details of the stream.
- */
-export type StreamDetails = {
-  stun: Stun;
+export type WebRtc = {
+  latency?: Timedelta;
+  /**
+   * STUN configuration.
+   */
+  stun?: Stun | null;
 };
 
 export type PingPingRequest = {

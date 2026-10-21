@@ -1,10 +1,11 @@
-import type { SetNonNullableDeep } from "type-fest";
+import type { SetNonNullableDeep, SetRequiredDeep } from "type-fest";
 
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import dayjs, { type Dayjs } from "dayjs";
 import { sortBy, uniqBy } from "es-toolkit/array";
 import { useMemo, useState } from "react";
 
+import type { InstancesModelsShow } from "../../../../../../../../common/apis/beaver/types";
 import type { ReadyFormInitialValues } from "./types";
 
 import { useLocalization } from "../../../../../../../../isomorphic/localization/hooks/use-localization";
@@ -39,9 +40,9 @@ export function useInstances() {
     }),
   );
 
-  const unsorted = instancesListQuery.data.instances as SetNonNullableDeep<
-    typeof instancesListQuery.data.instances,
-    "0.event"
+  const unsorted = instancesListQuery.data.instances as SetRequiredDeep<
+    SetNonNullableDeep<typeof instancesListQuery.data.instances, "0.event">,
+    "0.event.show"
   >;
 
   const sorted = useMemo(
@@ -67,7 +68,7 @@ export function useShows(instances: ReturnType<typeof useInstances>) {
     () =>
       uniqBy(
         instances
-          .map((instance) => instance.event.show)
+          .map((instance) => instance.event.show as InstancesModelsShow | null)
           .filter((show) => show !== null),
         (show) => show.id,
       ),
@@ -100,7 +101,8 @@ export function useInitialValues(
       title:
         found && initialValues?.title
           ? initialValues.title
-          : (selected?.event.show?.title ?? ""),
+          : ((selected?.event.show as InstancesModelsShow | null | undefined)
+              ?.title ?? ""),
     }),
     [selected],
   );
@@ -147,7 +149,11 @@ export function useSelectedShow(
       instance.duration === duration,
   );
 
-  return useState(selected?.event.show ? selected.event.show.id : null);
+  return useState(
+    selected?.event.show
+      ? (selected.event.show as InstancesModelsShow).id
+      : null,
+  );
 }
 
 export function useFilteredInstances(
@@ -158,7 +164,9 @@ export function useFilteredInstances(
     () =>
       instances.filter(
         (instance) =>
-          (instance.event.show ? instance.event.show.id : null) === show,
+          (instance.event.show
+            ? (instance.event.show as InstancesModelsShow).id
+            : null) === show,
       ),
     [instances, show],
   );

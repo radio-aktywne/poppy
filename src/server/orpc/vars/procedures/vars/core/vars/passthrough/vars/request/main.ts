@@ -9,7 +9,7 @@ export const request = orpcServerRootBase.core.passthrough.request
       await state.current.apis.loris.streamStream({ body: input });
 
     if (streamStreamData === undefined) {
-      if (streamStreamResponse.status === 409) throw errors.CONFLICT();
+      if (streamStreamResponse?.status === 409) throw errors.CONFLICT();
       throw errors.INTERNAL_SERVER_ERROR();
     }
 

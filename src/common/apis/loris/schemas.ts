@@ -3,6 +3,46 @@
 import * as z from "zod";
 
 /**
+ * Codec
+ *
+ * Audio codec.
+ */
+export const CodecSchema = z.enum(["opus"]).register(z.globalRegistry, {
+  description: "Audio codec.",
+});
+
+/**
+ * EventType
+ *
+ * Event types.
+ */
+export const EventTypeSchema = z.enum(["test"]).register(z.globalRegistry, {
+  description: "Event types.",
+});
+
+/**
+ * Format
+ *
+ * Audio format.
+ */
+export const FormatSchema = z.enum(["ogg"]).register(z.globalRegistry, {
+  description: "Audio format.",
+});
+
+/**
+ * Parameters
+ *
+ * Parameters for testing.
+ */
+export const ParametersSchema = z
+  .object({
+    message: z.string().nullish().default(null),
+  })
+  .register(z.globalRegistry, {
+    description: "Parameters for testing.",
+  });
+
+/**
  * STUN
  *
  * STUN configuration.
@@ -21,25 +61,23 @@ export const StunSchema = z
   });
 
 /**
- * Duration of time.
- */
-export const TimedeltaSchema = z.string().register(z.globalRegistry, {
-  description: "Duration of time.",
-});
-
-/**
- * WebRTC
+ * StreamDetails
  *
- * WebRTC configuration.
+ * Details of the stream.
  */
-export const WebRtcSchema = z
+export const StreamDetailsSchema = z
   .object({
-    latency: TimedeltaSchema.optional(),
-    stun: StunSchema.nullish().default(null),
+    stun: StunSchema,
   })
   .register(z.globalRegistry, {
-    description: "WebRTC configuration.",
+    description: "Details of the stream.",
   });
+
+export const SubscribeRequestTypesSchema = z
+  .union([z.string(), z.array(EventTypeSchema)])
+  .nullable();
+
+export const TestRequestParametersSchema = ParametersSchema.nullable();
 
 /**
  * Result
@@ -60,32 +98,11 @@ export const TestResponseResultSchema = z
   });
 
 /**
- * Parameters
- *
- * Parameters for testing.
+ * Duration of time.
  */
-export const ParametersSchema = z
-  .object({
-    message: z.string().nullish().default(null),
-  })
-  .register(z.globalRegistry, {
-    description: "Parameters for testing.",
-  });
-
-export const TestRequestParametersSchema = ParametersSchema.nullable();
-
-/**
- * EventType
- *
- * Event types.
- */
-export const EventTypeSchema = z.enum(["test"]).register(z.globalRegistry, {
-  description: "Event types.",
+export const TimedeltaSchema = z.string().register(z.globalRegistry, {
+  description: "Duration of time.",
 });
-
-export const SubscribeRequestTypesSchema = z
-  .union([z.string(), z.array(EventTypeSchema)])
-  .nullable();
 
 /**
  * SRT
@@ -108,22 +125,18 @@ export const SrtSchema = z
   });
 
 /**
- * Format
+ * WebRTC
  *
- * Audio format.
+ * WebRTC configuration.
  */
-export const FormatSchema = z.enum(["ogg"]).register(z.globalRegistry, {
-  description: "Audio format.",
-});
-
-/**
- * Codec
- *
- * Audio codec.
- */
-export const CodecSchema = z.enum(["opus"]).register(z.globalRegistry, {
-  description: "Audio codec.",
-});
+export const WebRtcSchema = z
+  .object({
+    latency: TimedeltaSchema.optional(),
+    stun: StunSchema.nullish().default(null),
+  })
+  .register(z.globalRegistry, {
+    description: "WebRTC configuration.",
+  });
 
 /**
  * StreamInput
@@ -170,35 +183,10 @@ export const StreamInputSchema = z
   });
 
 /**
- * StreamDetails
- *
- * Details of the stream.
- */
-export const StreamDetailsSchema = z
-  .object({
-    stun: StunSchema,
-  })
-  .register(z.globalRegistry, {
-    description: "Details of the stream.",
-  });
-
-export const PingPingRequestSchema = z.object({
-  body: z.never().optional(),
-  path: z.never().optional(),
-  query: z.never().optional(),
-});
-
-/**
  * Request fulfilled, nothing follows
  */
 export const PingPingResponseSchema = z.void().register(z.globalRegistry, {
   description: "Request fulfilled, nothing follows",
-});
-
-export const PingHeadpingRequestSchema = z.object({
-  body: z.never().optional(),
-  path: z.never().optional(),
-  query: z.never().optional(),
 });
 
 /**
@@ -208,14 +196,8 @@ export const PingHeadpingResponseSchema = z.void().register(z.globalRegistry, {
   description: "Request fulfilled, nothing follows",
 });
 
-export const SseSubscribeRequestSchema = z.object({
-  body: z.never().optional(),
-  path: z.never().optional(),
-  query: z
-    .object({
-      types: z.union([SubscribeRequestTypesSchema, z.string()]).nullish(),
-    })
-    .optional(),
+export const ZSseSubscribeQuery = z.object({
+  types: z.union([SubscribeRequestTypesSchema, z.string()]).nullish(),
 });
 
 /**
@@ -227,28 +209,48 @@ export const SseSubscribeResponseSchema = z
     description: "Request fulfilled, stream of Server-Sent Events follows",
   });
 
-export const StreamStreamRequestSchema = z.object({
-  body: StreamInputSchema,
-  path: z.never().optional(),
-  query: z.never().optional(),
-});
+export const ZStreamStreamBody = StreamInputSchema;
 
 /**
  * Document created, URL follows
  */
 export const StreamStreamResponseSchema = StreamDetailsSchema;
 
-export const TestTestRequestSchema = z.object({
-  body: z.never().optional(),
-  path: z.never().optional(),
-  query: z
-    .object({
-      parameters: z.union([TestRequestParametersSchema, z.string()]).nullish(),
-    })
-    .optional(),
+export const ZTestTestQuery = z.object({
+  parameters: z.union([TestRequestParametersSchema, z.string()]).nullish(),
 });
 
 /**
  * Request fulfilled, document follows
  */
 export const TestTestResponseSchema = TestResponseResultSchema;
+
+export const PingPingRequestSchema = z.object({
+  body: z.never().optional(),
+  path: z.never().optional(),
+  query: z.never().optional(),
+});
+
+export const PingHeadpingRequestSchema = z.object({
+  body: z.never().optional(),
+  path: z.never().optional(),
+  query: z.never().optional(),
+});
+
+export const SseSubscribeRequestSchema = z.object({
+  body: z.never().optional(),
+  path: z.never().optional(),
+  query: ZSseSubscribeQuery.optional(),
+});
+
+export const StreamStreamRequestSchema = z.object({
+  body: ZStreamStreamBody,
+  path: z.never().optional(),
+  query: z.never().optional(),
+});
+
+export const TestTestRequestSchema = z.object({
+  body: z.never().optional(),
+  path: z.never().optional(),
+  query: ZTestTestQuery.optional(),
+});
