@@ -16,7 +16,7 @@ export function IdleWidget({}: IdleWidgetInput) {
 
   const handleReady = useCallback(
     async ({ values }: ReadyFormSubmitInput) => {
-      const { instance, record, title } = values;
+      const { force, instance, record, start, title } = values;
 
       if (!instance) {
         notifications.error({ message: msg({ message: "Invalid input" }) });
@@ -32,19 +32,19 @@ export function IdleWidget({}: IdleWidgetInput) {
         };
       }
 
-      const [event, start, duration] = instance.split("/") as [
-        string,
-        string,
-        string,
-      ];
+      const [instanceEvent, instanceStart, instanceDuration] = instance.split(
+        "/",
+      ) as [string, string, string];
 
       const error = await ready({
+        force: force,
         instance: {
-          duration: duration,
-          event: event,
-          start: start,
+          duration: instanceDuration,
+          event: instanceEvent,
+          start: instanceStart,
         },
         record: record,
+        start: start,
         title: title,
       });
 
@@ -68,10 +68,12 @@ export function IdleWidget({}: IdleWidgetInput) {
   return (
     <ReadyForm
       initialValues={{
+        force: state.data.force,
         instance: state.data.instance
           ? `${state.data.instance.event}/${state.data.instance.start}/${state.data.instance.duration}`
           : undefined,
         record: state.data.recording,
+        start: state.data.start,
         title: state.data.title,
       }}
       onError={handleError}

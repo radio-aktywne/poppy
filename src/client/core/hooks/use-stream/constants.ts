@@ -8,10 +8,18 @@ export const constants = {
   },
 
   webrtc: {
+    connection: {
+      timeout: 5000,
+    },
+
     ice: {
-      candidates: {
+      gathering: {
+        delay: 1000,
+        timeout: 5000,
+      },
+
+      pool: {
         size: 1,
-        timeout: 1000,
       },
 
       server: {

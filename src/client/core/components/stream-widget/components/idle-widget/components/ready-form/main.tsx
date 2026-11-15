@@ -12,7 +12,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { Center } from "@radio-aktywne/ui";
 import { isString } from "es-toolkit/predicate";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MdOutlineAddBox } from "react-icons/md";
 
 import type { InstancesModelsShow } from "../../../../../../../../common/apis/beaver/types";
@@ -72,15 +72,23 @@ export function ReadyForm({
   const [valid, setValid] = useState(
     !!initialValues.instance && !!initialValues.title,
   );
+  const [force, setForce] = useState(initialValues.force);
+
   const { form, handleFormSubmit, submitting } = useForm({
     initialValues: initialValues,
     inputSchema: Schemas.Input,
     onError: onError,
     onSubmit: onSubmit,
-    onValuesChange: ({ current }) =>
-      setValid(!!current.instance && !!current.title),
+    onValuesChange: ({ current }) => {
+      setValid(!!current.instance && !!current.title);
+      setForce(current.force ?? false);
+    },
     outputSchema: Schemas.Output,
   });
+
+  useEffect(() => {
+    if (available && force) form.setFieldValue("force", false);
+  }, [available, force, form.setFieldValue]);
 
   const handleShowChange = useCallback(
     (value: null | string) => {
@@ -252,6 +260,21 @@ export function ReadyForm({
               {...form.getInputProps("title")}
             />
             <Checkbox
+              key={form.key("start")}
+              label={localization.localize(
+                msg({ message: "Use a soft start" }),
+              )}
+              {...form.getInputProps("start", { type: "checkbox" })}
+            />
+            <Checkbox
+              disabled={available}
+              key={form.key("force")}
+              label={localization.localize(
+                msg({ message: "Replace the current stream" }),
+              )}
+              {...form.getInputProps("force", { type: "checkbox" })}
+            />
+            <Checkbox
               key={form.key("record")}
               label={localization.localize(
                 msg({ message: "Record the stream" }),
@@ -261,7 +284,7 @@ export function ReadyForm({
           </Stack>
         </Center>
         <Button
-          disabled={!available || eventCreating || !valid}
+          disabled={(!available && !force) || eventCreating || !valid}
           loaderProps={{ type: "dots" }}
           loading={submitting}
           mt="auto"

@@ -24,19 +24,24 @@ export type InstanceData = {
 };
 
 export type StreamIdleData = {
+  force?: boolean;
   instance?: InstanceData;
   recording?: boolean;
+  start?: "hard" | "soft";
   title?: string;
 };
 
 export type StreamLiveData = StreamStartingData & {
   session: string;
   timestamp: number;
+  unsubscribe: () => void;
 };
 
 export type StreamReadyingData = {
+  force: boolean;
   instance: InstanceData;
   recording: boolean;
+  start: "hard" | "soft";
   title: string;
 };
 

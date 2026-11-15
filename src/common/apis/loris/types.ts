@@ -114,6 +114,12 @@ export type StreamInput = {
    */
   channels?: number;
   codec?: Codec;
+  /**
+   * Force
+   *
+   * Whether to replace an existing stream.
+   */
+  force?: boolean;
   format?: Format;
   /**
    * Metadata

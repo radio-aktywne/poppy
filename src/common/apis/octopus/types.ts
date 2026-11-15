@@ -69,6 +69,13 @@ export type ReserveRequestData = {
   instance: ReserveModelsInstance;
   format?: Format;
   /**
+   * Force
+   *
+   * Whether to replace an existing stream reservation.
+   */
+  force?: boolean;
+  start?: Start;
+  /**
    * Record
    *
    * Whether to record the stream.
@@ -92,6 +99,13 @@ export type ReserveRequestData = {
 export type ReserveResponseReservation = {
   credentials: Credentials;
 };
+
+/**
+ * Start
+ *
+ * Playback start behavior.
+ */
+export type Start = "hard" | "soft";
 
 export type SubscribeRequestTypes = string | Array<EventType> | null;
 

@@ -1,3 +1,4 @@
+import { debounce } from "es-toolkit/function";
 import { SDPInfo } from "semantic-sdp";
 
 import type {
@@ -29,7 +30,7 @@ export function cleanupMedia(media: MediaStream) {
 
 export function createPeer() {
   return new RTCPeerConnection({
-    iceCandidatePoolSize: constants.webrtc.ice.candidates.size,
+    iceCandidatePoolSize: constants.webrtc.ice.pool.size,
     iceServers: [
       {
         urls: `stun:${constants.webrtc.ice.server.host}:${constants.webrtc.ice.server.port}`,
@@ -48,47 +49,6 @@ export function addMediaToPeer(media: MediaStream, peer: RTCPeerConnection) {
     .forEach((track) => peer.addTransceiver(track, { direction: "sendonly" }));
 }
 
-export function createCandidatesPromise(peer: RTCPeerConnection) {
-  return new Promise<void>((resolve) => {
-    const timeouts = [] as ReturnType<typeof setTimeout>[];
-
-    const removeTimeouts = () => {
-      while (timeouts.length > 0) clearTimeout(timeouts.pop());
-    };
-
-    const cleanupAndResolve = () => {
-      peer.removeEventListener("icegatheringstatechange", handleStateChange);
-      peer.removeEventListener("icecandidate", handleCandidate);
-      removeTimeouts();
-      resolve();
-    };
-
-    const handleStateChange = () => {
-      if (peer.iceGatheringState === "complete") cleanupAndResolve();
-    };
-
-    const handleCandidate = (event: RTCPeerConnectionIceEvent) => {
-      if (!event.candidate) return cleanupAndResolve();
-
-      switch (event.candidate.type) {
-        case "host":
-        case "srflx":
-          removeTimeouts();
-          timeouts.push(
-            setTimeout(
-              () => cleanupAndResolve(),
-              constants.webrtc.ice.candidates.timeout,
-            ),
-          );
-          break;
-      }
-    };
-
-    peer.addEventListener("icegatheringstatechange", handleStateChange);
-    peer.addEventListener("icecandidate", handleCandidate);
-  });
-}
-
 export function transformSessionDescription(sdp: string) {
   const parsed = SDPInfo.parse(sdp);
   for (const media of parsed.getMedias()) {
@@ -103,14 +63,74 @@ export function transformSessionDescription(sdp: string) {
   return parsed.toString();
 }
 
-export async function createOffer(peer: RTCPeerConnection) {
-  const candidates = createCandidatesPromise(peer);
+export function waitForCandidates(
+  peer: RTCPeerConnection,
+  signal: AbortSignal,
+) {
+  return new Promise<void>((resolve, reject) => {
+    const cleanup = () => {
+      peer.removeEventListener("icegatheringstatechange", handleStateChange);
+      peer.removeEventListener("icecandidate", handleCandidate);
+      signal.removeEventListener("abort", handleAbort);
+      finish.cancel();
+      clearTimeout(deadline);
+    };
 
+    const finish = debounce(() => {
+      cleanup();
+      resolve();
+    }, constants.webrtc.ice.gathering.delay);
+
+    const handleAbort = () => {
+      cleanup();
+      reject(new Error("ICE gathering cancelled"));
+    };
+
+    const handleStateChange = () => {
+      switch (peer.iceGatheringState) {
+        case "complete":
+          cleanup();
+          resolve();
+          break;
+      }
+    };
+
+    const handleCandidate = (event: RTCPeerConnectionIceEvent) => {
+      switch (event.candidate?.type) {
+        case "host":
+        case "srflx":
+          finish();
+          break;
+      }
+    };
+
+    const deadline = setTimeout(() => {
+      cleanup();
+      reject(new Error("ICE gathering timed out"));
+    }, constants.webrtc.ice.gathering.timeout);
+
+    peer.addEventListener("icegatheringstatechange", handleStateChange);
+    peer.addEventListener("icecandidate", handleCandidate);
+    signal.addEventListener("abort", handleAbort, { once: true });
+
+    if (signal.aborted) handleAbort();
+    else handleStateChange();
+  });
+}
+
+export async function createOffer(peer: RTCPeerConnection) {
   const offer = await peer.createOffer();
   if (offer.sdp) offer.sdp = transformSessionDescription(offer.sdp);
-  await peer.setLocalDescription(offer);
 
-  await candidates;
+  const controller = new AbortController();
+  try {
+    await Promise.all([
+      waitForCandidates(peer, controller.signal),
+      Promise.try(() => peer.setLocalDescription(offer)),
+    ]);
+  } finally {
+    controller.abort();
+  }
 }
 
 export async function reserveStream(data: StreamReadyData) {
@@ -118,6 +138,7 @@ export async function reserveStream(data: StreamReadyData) {
     bitrate: constants.audio.bitrate,
     channels: constants.audio.channels,
     codec: constants.audio.codec,
+    force: data.force,
     format: constants.audio.format,
     instance: {
       event: data.instance.event,
@@ -128,6 +149,7 @@ export async function reserveStream(data: StreamReadyData) {
     },
     record: data.recording,
     samplerate: constants.audio.samplerate,
+    start: data.start,
     webrtc: {
       latency: dayjs
         .duration({ milliseconds: constants.webrtc.latency })
@@ -152,30 +174,72 @@ export async function cleanupSession(session: string) {
   await orpcClientSideClient.core.whip.delete({ session: session });
 }
 
-export function createConnectedPromise(peer: RTCPeerConnection) {
-  return new Promise<void>((resolve) => {
+export async function addAnswerToPeer(peer: RTCPeerConnection, answer: string) {
+  await peer.setRemoteDescription({ sdp: answer, type: "answer" });
+}
+
+export function waitForConnection(peer: RTCPeerConnection) {
+  return new Promise<void>((resolve, reject) => {
+    const cleanup = () => {
+      peer.removeEventListener("connectionstatechange", handle);
+      clearTimeout(timeout);
+    };
+
     const handle = () => {
       switch (peer.connectionState) {
+        case "closed":
+        case "failed":
+          cleanup();
+          reject(new Error(`Peer connection ${peer.connectionState}`));
+          break;
         case "connected":
-          peer.removeEventListener("connectionstatechange", handle);
+          cleanup();
           resolve();
           break;
-        case "failed":
-          peer.removeEventListener("connectionstatechange", handle);
-          throw new Error("Peer connection failed");
       }
     };
 
+    const timeout = setTimeout(() => {
+      cleanup();
+      reject(new Error("Peer connection timed out"));
+    }, constants.webrtc.connection.timeout);
+
     peer.addEventListener("connectionstatechange", handle);
+    handle();
   });
 }
 
-export function addAnswerToPeer(peer: RTCPeerConnection, answer: string) {
-  void peer.setRemoteDescription({ sdp: answer, type: "answer" });
+export function validateStream(data: StreamReadyData) {
+  if (data.peer.connectionState !== "connected")
+    throw new Error("Peer connection is not connected");
+
+  if (data.media.getAudioTracks().some((track) => track.readyState === "ended"))
+    throw new Error("Audio track ended");
 }
 
 export function getTimestamp() {
   return Math.floor(Date.now() / 1000);
+}
+
+export function monitor(data: StreamReadyData, onFailure: () => Promise<void>) {
+  const tracks = data.media.getAudioTracks();
+
+  const handleStateChange = () => {
+    switch (data.peer.connectionState) {
+      case "closed":
+      case "failed":
+        void onFailure();
+        break;
+    }
+  };
+
+  data.peer.addEventListener("connectionstatechange", handleStateChange);
+  tracks.forEach((track) => track.addEventListener("ended", onFailure));
+
+  return () => {
+    data.peer.removeEventListener("connectionstatechange", handleStateChange);
+    tracks.forEach((track) => track.removeEventListener("ended", onFailure));
+  };
 }
 
 export async function ready(data: StreamReadyingData) {
@@ -189,10 +253,12 @@ export async function ready(data: StreamReadyingData) {
       await createOffer(peer);
 
       return {
+        force: data.force,
         instance: data.instance,
         media: media,
         peer: peer,
         recording: data.recording,
+        start: data.start,
         title: data.title,
       };
     } catch (error) {
@@ -205,37 +271,13 @@ export async function ready(data: StreamReadyingData) {
   }
 }
 
-export async function start(data: StreamReadyData) {
-  await reserveStream(data);
-  const offer = getOffer(data.peer);
-  const { answer, session } = await createSession(offer);
-
-  try {
-    const connected = createConnectedPromise(data.peer);
-    addAnswerToPeer(data.peer, answer);
-    await connected;
-
-    return {
-      instance: data.instance,
-      media: data.media,
-      peer: data.peer,
-      recording: data.recording,
-      session: session,
-      timestamp: getTimestamp(),
-      title: data.title,
-    };
-  } catch (error) {
-    await cleanupSession(session);
-    throw error;
-  }
-}
-
 export async function stop(data: StreamLiveData) {
   const cleanups = await Promise.allSettled(
     [
-      async () => await cleanupSession(data.session),
+      () => data.unsubscribe(),
       () => cleanupMedia(data.media),
       () => cleanupPeer(data.peer),
+      async () => await cleanupSession(data.session),
     ].map((fn) => Promise.try(fn)),
   );
 
@@ -246,6 +288,38 @@ export async function stop(data: StreamLiveData) {
       failed.map((result) => result.reason as unknown),
       "Failed to clean up all resources",
     );
+}
+
+export async function start(
+  data: StreamReadyData,
+  onFailure: () => Promise<void>,
+) {
+  await reserveStream(data);
+  const offer = getOffer(data.peer);
+  const { answer, session } = await createSession(offer);
+
+  try {
+    await addAnswerToPeer(data.peer, answer);
+    await waitForConnection(data.peer);
+
+    validateStream(data);
+
+    return {
+      force: data.force,
+      instance: data.instance,
+      media: data.media,
+      peer: data.peer,
+      recording: data.recording,
+      session: session,
+      start: data.start,
+      timestamp: getTimestamp(),
+      title: data.title,
+      unsubscribe: monitor(data, onFailure),
+    };
+  } catch (error) {
+    await cleanupSession(session);
+    throw error;
+  }
 }
 
 export async function unready(data: StreamReadyData) {

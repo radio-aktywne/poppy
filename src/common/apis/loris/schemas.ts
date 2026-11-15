@@ -164,6 +164,13 @@ export const StreamInputSchema = z
       .optional()
       .default(2),
     codec: CodecSchema.optional(),
+    force: z
+      .boolean()
+      .register(z.globalRegistry, {
+        description: "Whether to replace an existing stream.",
+      })
+      .optional()
+      .default(false),
     format: FormatSchema.optional(),
     metadata: z.record(z.string(), z.string()).nullish().default(null),
     samplerate: z

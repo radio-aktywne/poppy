@@ -9,16 +9,24 @@ export type UseStreamInstanceData = {
 };
 
 export type UseStreamReadyInput = {
+  force: boolean;
   instance: UseStreamInstanceData;
   record: boolean;
+  start: "hard" | "soft";
   title: string;
+};
+
+export type UseStreamStartInput = {
+  onFailure?: (error: MessageDescriptor) => void;
 };
 
 export type UseStreamReady = (
   input: UseStreamReadyInput,
 ) => Promise<MessageDescriptor | void>;
 
-export type UseStreamStart = () => Promise<MessageDescriptor | void>;
+export type UseStreamStart = (
+  input?: UseStreamStartInput,
+) => Promise<MessageDescriptor | void>;
 
 export type UseStreamState = StreamState;
 
