@@ -17,7 +17,9 @@ export function ReadyWidget({}: ReadyWidgetInput) {
   const { start, state, unready } = useStream();
 
   const handleStart = useCallback(async () => {
-    const error = await start();
+    const error = await start({
+      onFailure: (error) => notifications.error({ message: error }),
+    });
 
     if (error) notifications.error({ message: error });
     else notifications.success({ message: msg({ message: "Stream started" }) });

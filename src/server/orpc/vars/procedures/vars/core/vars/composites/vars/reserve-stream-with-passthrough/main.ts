@@ -11,15 +11,18 @@ export const reserveStreamWithPassthrough =
     .use(authenticatedMiddleware)
     .handler(async ({ input }) => {
       const streamReserveData = await call(stream.reserve, {
+        force: input.force,
         format: input.format,
         instance: input.instance,
         record: input.record,
+        start: input.start,
       });
 
       const passthroughRequestData = await call(passthrough.request, {
         bitrate: input.bitrate,
         channels: input.channels,
         codec: input.codec,
+        force: input.force,
         format: input.format,
         metadata: input.metadata,
         samplerate: input.samplerate,

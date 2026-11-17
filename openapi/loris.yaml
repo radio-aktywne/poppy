@@ -1,7 +1,7 @@
 openapi: "3.1.0"
 info:
   title: loris
-  version: "0.18.0"
+  version: "0.20.0"
 paths:
   /ping:
     get:
@@ -342,6 +342,11 @@ components:
           default: 2
         codec:
           $ref: "#/components/schemas/Codec"
+        force:
+          type: boolean
+          title: Force
+          description: Whether to replace an existing stream.
+          default: false
         format:
           $ref: "#/components/schemas/Format"
         metadata:

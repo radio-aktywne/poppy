@@ -6,6 +6,7 @@ import type {
   UseStreamInput,
   UseStreamOutput,
   UseStreamReadyInput,
+  UseStreamStartInput,
 } from "./types";
 
 import { useGlobalState } from "../../../../isomorphic/state/hooks/use-global-state";
@@ -29,8 +30,10 @@ export function useStream({}: UseStreamInput = {}): UseStreamOutput {
         });
 
       const currentData = {
+        force: input.force,
         instance: input.instance,
         recording: input.record,
+        start: input.start,
         title: input.title,
       };
       state.current.stream = { data: currentData, state: "readying" };
@@ -40,10 +43,12 @@ export function useStream({}: UseStreamInput = {}): UseStreamOutput {
 
         state.current.stream = {
           data: {
+            force: newData.force,
             instance: newData.instance,
             media: ref(newData.media),
             peer: ref(newData.peer),
             recording: newData.recording,
+            start: newData.start,
             title: newData.title,
           },
           state: "ready",
@@ -55,36 +60,6 @@ export function useStream({}: UseStreamInput = {}): UseStreamOutput {
     },
     [state.current],
   );
-
-  const start = useCallback(async () => {
-    if (state.current.stream?.state !== "ready")
-      return msg({
-        message: "Stream can't be started, because it is not currently ready",
-      });
-
-    const currentData = state.current.stream.data;
-    state.current.stream = { data: currentData, state: "starting" };
-
-    try {
-      const newData = await utils.start(currentData);
-
-      state.current.stream = {
-        data: {
-          instance: newData.instance,
-          media: ref(newData.media),
-          peer: ref(newData.peer),
-          recording: newData.recording,
-          session: newData.session,
-          timestamp: newData.timestamp,
-          title: newData.title,
-        },
-        state: "live",
-      };
-    } catch {
-      state.current.stream = { data: currentData, state: "ready" };
-      return msg({ message: "Failed to start stream" });
-    }
-  }, [state.current]);
 
   const stop = useCallback(async () => {
     if (state.current.stream?.state !== "live")
@@ -107,6 +82,73 @@ export function useStream({}: UseStreamInput = {}): UseStreamOutput {
     }
   }, [state.current]);
 
+  const start = useCallback(
+    async ({ onFailure }: UseStreamStartInput = {}) => {
+      if (state.current.stream?.state !== "ready")
+        return msg({
+          message: "Stream can't be started, because it is not currently ready",
+        });
+
+      const currentData = state.current.stream.data;
+      state.current.stream = { data: currentData, state: "starting" };
+
+      try {
+        const newData = await utils.start(currentData, async () => {
+          if (state.current.stream?.state !== "live") return;
+
+          const error = await stop();
+          onFailure?.(
+            error
+              ? msg({
+                  message:
+                    "Stream ended unexpectedly, and some resources failed to clean up",
+                })
+              : msg({
+                  message: "Stream ended unexpectedly",
+                }),
+          );
+        });
+
+        state.current.stream = {
+          data: {
+            force: newData.force,
+            instance: newData.instance,
+            media: ref(newData.media),
+            peer: ref(newData.peer),
+            recording: newData.recording,
+            session: newData.session,
+            start: newData.start,
+            timestamp: newData.timestamp,
+            title: newData.title,
+            unsubscribe: newData.unsubscribe,
+          },
+          state: "live",
+        };
+      } catch {
+        try {
+          await utils.unready(currentData);
+        } catch {
+          return msg({
+            message:
+              "Failed to start stream, and some resources failed to clean up",
+          });
+        } finally {
+          const newData = {
+            force: currentData.force,
+            instance: currentData.instance,
+            recording: currentData.recording,
+            start: currentData.start,
+            title: currentData.title,
+          };
+          state.current.stream = { data: newData, state: "idle" };
+        }
+
+        return msg({ message: "Failed to start stream" });
+      }
+    },
+    [state.current, stop],
+  );
+
   const unready = useCallback(async () => {
     if (state.current.stream?.state !== "ready")
       return msg({
@@ -125,8 +167,10 @@ export function useStream({}: UseStreamInput = {}): UseStreamOutput {
       });
     } finally {
       const newData = {
+        force: currentData.force,
         instance: currentData.instance,
         recording: currentData.recording,
+        start: currentData.start,
         title: currentData.title,
       };
       state.current.stream = { data: newData, state: "idle" };

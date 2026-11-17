@@ -80,24 +80,27 @@ export function useInitialValues(
   initialValues: ReadyFormInitialValues | undefined,
   instances: ReturnType<typeof useInstances>,
 ) {
-  const [event, start, duration] = initialValues?.instance
-    ? initialValues.instance.split("/")
-    : [null, null, null];
+  const [instanceEvent, instanceStart, instanceDuration] =
+    initialValues?.instance
+      ? initialValues.instance.split("/")
+      : [null, null, null];
 
   const found = instances.find(
     (instance) =>
-      instance.event.id === event &&
-      instance.start === start &&
-      instance.duration === duration,
+      instance.event.id === instanceEvent &&
+      instance.start === instanceStart &&
+      instance.duration === instanceDuration,
   );
   const selected = found ?? instances[0];
 
   return useMemo(
     () => ({
+      force: initialValues?.force ?? false,
       instance: selected
         ? `${selected.event.id}/${selected.start}/${selected.duration}`
         : null,
       record: initialValues?.record ?? false,
+      start: initialValues?.start ?? "hard",
       title:
         found && initialValues?.title
           ? initialValues.title
@@ -138,15 +141,16 @@ export function useSelectedShow(
   initialValues: ReadyFormInitialValues,
   instances: ReturnType<typeof useInstances>,
 ) {
-  const [event, start, duration] = initialValues.instance
-    ? initialValues.instance.split("/")
-    : [null, null, null];
+  const [instanceEvent, instanceStart, instanceDuration] =
+    initialValues.instance
+      ? initialValues.instance.split("/")
+      : [null, null, null];
 
   const selected = instances.find(
     (instance) =>
-      instance.event.id === event &&
-      instance.start === start &&
-      instance.duration === duration,
+      instance.event.id === instanceEvent &&
+      instance.start === instanceStart &&
+      instance.duration === instanceDuration,
   );
 
   return useState(

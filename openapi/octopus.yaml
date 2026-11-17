@@ -1,7 +1,7 @@
 openapi: "3.1.0"
 info:
   title: octopus
-  version: "0.29.0"
+  version: "0.30.0"
 paths:
   /check:
     get:
@@ -316,6 +316,13 @@ components:
           $ref: "#/components/schemas/reserve_models_Instance"
         format:
           $ref: "#/components/schemas/Format"
+        force:
+          type: boolean
+          title: Force
+          description: Whether to replace an existing stream reservation.
+          default: false
+        start:
+          $ref: "#/components/schemas/Start"
         record:
           type: boolean
           title: Record
@@ -344,6 +351,13 @@ components:
         - credentials
       title: Reservation
       description: Reservation of a stream.
+    Start:
+      type: string
+      enum:
+        - hard
+        - soft
+      title: Start
+      description: Playback start behavior.
     SubscribeRequestTypes:
       anyOf:
         - type: string

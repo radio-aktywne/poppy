@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:160
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:175
 #: src/client/test/components/test-widget/main.tsx:50
 msgid "An unexpected error occurred"
 msgstr "Wystąpił nieoczekiwany błąd"
@@ -22,7 +22,7 @@ msgstr "Wystąpił nieoczekiwany błąd"
 msgid "Broadcast streaming app 🎤"
 msgstr "Broadcast streaming app 🎤"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:152
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:167
 msgid "Conflicting input"
 msgstr "Konfliktujące dane"
 
@@ -30,7 +30,7 @@ msgstr "Konfliktujące dane"
 msgid "Create"
 msgstr "Utwórz"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:186
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:201
 msgid "Create one-time event"
 msgstr "Utwórz jednorazową emisję"
 
@@ -52,17 +52,21 @@ msgstr "Błąd"
 msgid "Error • poppy"
 msgstr "Błąd • poppy"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:129
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:144
 msgid "Event created"
 msgstr "Utworzono emisję"
 
-#: src/client/core/hooks/use-stream/main.ts:53
+#: src/client/core/hooks/use-stream/main.ts:58
 msgid "Failed to make stream ready"
 msgstr "Nie udało się przygotować transmisji"
 
-#: src/client/core/hooks/use-stream/main.ts:85
+#: src/client/core/hooks/use-stream/main.ts:146
 msgid "Failed to start stream"
 msgstr "Nie udało się rozpocząć transmisji"
+
+#: src/client/core/hooks/use-stream/main.ts:131
+msgid "Failed to start stream, and some resources failed to clean up"
+msgstr "Nie udało się rozpocząć transmisji, a niektóre zasoby nie zostały poprawnie zwolnione"
 
 #: src/app/(root)/forbidden.tsx:10
 msgid "Forbidden • poppy"
@@ -76,7 +80,7 @@ msgstr "Wolne"
 msgid "Info"
 msgstr "Informacja"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:226
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:241
 msgid "Instance"
 msgstr "Termin transmisji"
 
@@ -84,7 +88,7 @@ msgstr "Termin transmisji"
 msgid "Instance is required"
 msgstr "Termin transmisji jest wymagany"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:140
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:155
 #: src/client/core/components/stream-widget/components/idle-widget/main.tsx:22
 #: src/client/core/components/stream-widget/components/idle-widget/main.tsx:29
 #: src/client/core/components/stream-widget/components/idle-widget/main.tsx:63
@@ -102,7 +106,7 @@ msgid "Logout"
 msgstr "Wyloguj się"
 
 #: src/client/core/components/status-widget/components/busy-badge/main.tsx:43
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:204
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:219
 msgid "No show"
 msgstr "Bez audycji"
 
@@ -125,11 +129,11 @@ msgstr "Nie znaleziono strony"
 msgid "poppy"
 msgstr "poppy"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:264
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:294
 msgid "Ready"
 msgstr "Przygotuj"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:250
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:280
 msgid "Record the stream"
 msgstr "Nagraj transmisję"
 
@@ -137,6 +141,10 @@ msgstr "Nagraj transmisję"
 #: src/client/core/components/stream-widget/components/ready-widget/components/ready-preview/main.tsx:69
 msgid "Recording"
 msgstr "Nagrywanie"
+
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:273
+msgid "Replace the current stream"
+msgstr "Zastąp trwającą transmisję"
 
 #: src/isomorphic/core/components/generic/error-widget/main.tsx:25
 msgid "Retry"
@@ -146,7 +154,7 @@ msgstr "Spróbuj ponownie"
 msgid "Select end date and time"
 msgstr "Wybierz datę i godzinę zakończenia"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:228
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:243
 msgid "Select instance"
 msgstr "Wybierz termin transmisji"
 
@@ -154,11 +162,11 @@ msgstr "Wybierz termin transmisji"
 msgid "Select start date and time"
 msgstr "Wybierz datę i godzinę rozpoczęcia"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:243
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:258
 msgid "Set title"
 msgstr "Ustaw tytuł"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:202
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:217
 msgid "Show"
 msgstr "Audycja"
 
@@ -166,7 +174,7 @@ msgstr "Audycja"
 msgid "Something went wrong"
 msgstr "Coś poszło nie tak"
 
-#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:47
+#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:49
 msgctxt "action"
 msgid "Start"
 msgstr "Start"
@@ -188,27 +196,35 @@ msgstr "Stop"
 msgid "Stream"
 msgstr "Transmisja"
 
-#: src/client/core/hooks/use-stream/main.ts:26
+#: src/client/core/hooks/use-stream/main.ts:27
 msgid "Stream can't be made ready, because it is not currently idle"
 msgstr "Transmisja nie może być przygotowana, ponieważ jest aktualnie w innym stanie"
 
-#: src/client/core/hooks/use-stream/main.ts:112
+#: src/client/core/hooks/use-stream/main.ts:154
 msgid "Stream can't be made unready, because it is not currently ready"
 msgstr "Transmisja nie może być cofnięta z gotowości, ponieważ nie jest aktualnie w stanie gotowości"
 
-#: src/client/core/hooks/use-stream/main.ts:61
+#: src/client/core/hooks/use-stream/main.ts:88
 msgid "Stream can't be started, because it is not currently ready"
 msgstr "Transmisja nie może być rozpoczęta, ponieważ nie jest aktualnie w stanie gotowości"
 
-#: src/client/core/hooks/use-stream/main.ts:91
+#: src/client/core/hooks/use-stream/main.ts:66
 msgid "Stream can't be stopped, because it is not currently live"
 msgstr "Transmisja nie może być zatrzymana, ponieważ nie jest aktualnie uruchomiona"
 
-#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:32
+#: src/client/core/hooks/use-stream/main.ts:106
+msgid "Stream ended unexpectedly"
+msgstr "Transmisja nieoczekiwanie się zakończyła"
+
+#: src/client/core/hooks/use-stream/main.ts:102
+msgid "Stream ended unexpectedly, and some resources failed to clean up"
+msgstr "Transmisja nieoczekiwanie się zakończyła, a niektóre zasoby nie zostały poprawnie zwolnione"
+
+#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:34
 msgid "Stream got unready"
 msgstr "Transmisja została cofnięta z gotowości"
 
-#: src/client/core/hooks/use-stream/main.ts:123
+#: src/client/core/hooks/use-stream/main.ts:165
 msgid "Stream got unready, but some resources failed to clean up"
 msgstr "Transmisja została cofnięta z gotowości, ale niektóre zasoby nie zostały poprawnie zwolnione"
 
@@ -216,7 +232,7 @@ msgstr "Transmisja została cofnięta z gotowości, ale niektóre zasoby nie zos
 msgid "Stream is ready"
 msgstr "Transmisja jest gotowa"
 
-#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:23
+#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:25
 msgid "Stream started"
 msgstr "Rozpoczęto transmisję"
 
@@ -224,7 +240,7 @@ msgstr "Rozpoczęto transmisję"
 msgid "Stream stopped"
 msgstr "Zakończono transmisję"
 
-#: src/client/core/hooks/use-stream/main.ts:101
+#: src/client/core/hooks/use-stream/main.ts:76
 msgid "Stream stopped, but some resources failed to clean up"
 msgstr "Transmisja została zakończona, ale niektóre zasoby nie zostały poprawnie zwolnione"
 
@@ -236,7 +252,7 @@ msgstr "Wyślij"
 msgid "Success"
 msgstr "Sukces"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:242
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:257
 msgid "Title"
 msgstr "Tytuł"
 
@@ -244,9 +260,13 @@ msgstr "Tytuł"
 msgid "Title is required"
 msgstr "Tytuł jest wymagany"
 
-#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:55
+#: src/client/core/components/stream-widget/components/ready-widget/main.tsx:57
 msgid "Unready"
 msgstr "Cofnij"
+
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:265
+msgid "Use a soft start"
+msgstr "Rozpocznij bez przerywania odtwarzania"
 
 #: src/isomorphic/notifications/hooks/use-notifications/main.ts:73
 msgid "Warning"
@@ -260,6 +280,6 @@ msgstr "Dlaczego kura przeszła przez ulicę? Żeby dostać się na drugą stron
 msgid "You are not allowed to access this page"
 msgstr "Nie masz dostępu do tej strony"
 
-#: src/isomorphic/identity/components/identity-provider/components/user-synchronizer/main.tsx:56
+#: src/isomorphic/identity/components/identity-provider/components/user-synchronizer/main.tsx:36
 msgid "You are not authenticated. Reload the page to authenticate again."
 msgstr "Nie jesteś uwierzytelniony. Odśwież stronę, aby ponownie się uwierzytelnić."

@@ -35,6 +35,15 @@ export const ParametersSchema = z
     description: "Parameters for testing.",
   });
 
+/**
+ * Start
+ *
+ * Playback start behavior.
+ */
+export const StartSchema = z.enum(["hard", "soft"]).register(z.globalRegistry, {
+  description: "Playback start behavior.",
+});
+
 export const SubscribeRequestTypesSchema = z
   .union([z.string(), z.array(EventTypeSchema)])
   .nullable();
@@ -141,6 +150,14 @@ export const ReserveRequestDataSchema = z
   .object({
     instance: ReserveModelsInstanceSchema,
     format: FormatSchema.optional(),
+    force: z
+      .boolean()
+      .register(z.globalRegistry, {
+        description: "Whether to replace an existing stream reservation.",
+      })
+      .optional()
+      .default(false),
+    start: StartSchema.optional(),
     record: z
       .boolean()
       .register(z.globalRegistry, {
