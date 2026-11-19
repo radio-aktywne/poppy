@@ -48,6 +48,8 @@ export function LivePreview({ data }: LivePreviewInput) {
   const parsedNow = dayjs.unix(timestamp);
   const parsedStart = dayjs.unix(data.timestamp);
   const elapsed = dayjs.duration(parsedNow.diff(parsedStart));
+  const remaining = dayjs.duration(Math.abs(end.diff(parsedNow)));
+  const overtime = !parsedNow.isBefore(end);
 
   return (
     <Center>
@@ -67,6 +69,20 @@ export function LivePreview({ data }: LivePreviewInput) {
         >
           {elapsed.format("HH:mm:ss")}
         </Title>
+        <Stack
+          align="center"
+          c={overtime ? "var(--mantine-color-ra-red-filled)" : "dimmed"}
+          gap="xs"
+        >
+          <Text size="sm">
+            {overtime
+              ? localization.localize(msg({ message: "Overtime" }))
+              : localization.localize(msg({ message: "Time left" }))}
+          </Text>
+          <Text fw="bold" size="xl" ta="center">
+            {remaining.format("HH:mm:ss")}
+          </Text>
+        </Stack>
         <Group
           c={data.recording ? "var(--mantine-color-ra-red-filled)" : "dimmed"}
           fz="sm"

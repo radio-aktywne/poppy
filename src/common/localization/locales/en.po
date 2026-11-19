@@ -116,10 +116,14 @@ msgstr "No show"
 msgid "Not Found • poppy"
 msgstr "Not Found • poppy"
 
-#: src/client/core/components/stream-widget/components/live-widget/components/live-preview/main.tsx:83
+#: src/client/core/components/stream-widget/components/live-widget/components/live-preview/main.tsx:99
 #: src/client/core/components/stream-widget/components/ready-widget/components/ready-preview/main.tsx:70
 msgid "Not recording"
 msgstr "Not recording"
+
+#: src/client/core/components/stream-widget/components/live-widget/components/live-preview/main.tsx:79
+msgid "Overtime"
+msgstr "Overtime"
 
 #: src/isomorphic/core/components/generic/not-found-widget/main.tsx:15
 msgid "Page not found"
@@ -138,7 +142,7 @@ msgstr "Ready"
 msgid "Record the stream"
 msgstr "Record the stream"
 
-#: src/client/core/components/stream-widget/components/live-widget/components/live-preview/main.tsx:82
+#: src/client/core/components/stream-widget/components/live-widget/components/live-preview/main.tsx:98
 #: src/client/core/components/stream-widget/components/ready-widget/components/ready-preview/main.tsx:69
 msgid "Recording"
 msgstr "Recording"
@@ -253,6 +257,10 @@ msgstr "Submit"
 #: src/isomorphic/notifications/hooks/use-notifications/main.ts:62
 msgid "Success"
 msgstr "Success"
+
+#: src/client/core/components/stream-widget/components/live-widget/components/live-preview/main.tsx:80
+msgid "Time left"
+msgstr "Time left"
 
 #: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:265
 msgid "Title"
