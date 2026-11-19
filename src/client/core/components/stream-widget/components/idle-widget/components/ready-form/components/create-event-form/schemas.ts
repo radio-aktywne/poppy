@@ -10,6 +10,10 @@ export const Schemas = {
         encode: (value) => value?.replace("T", " ") ?? null,
       },
     ),
+    show: z.codec(z.string().nullable(), z.string().nullish(), {
+      decode: (value) => value ?? undefined,
+      encode: (value) => value ?? null,
+    }),
     start: z.codec(
       z.string().nullable(),
       z.iso.datetime({ local: true }).optional(),
@@ -29,6 +33,7 @@ export const Schemas = {
           .transform((value) => value.replace(" ", "T"))
           .pipe(z.iso.datetime({ local: true })),
       ),
+    show: z.string().nullable(),
     start: z
       .string()
       .nullable()
