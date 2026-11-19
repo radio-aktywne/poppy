@@ -1,3 +1,4 @@
+import type { Dayjs } from "dayjs";
 import type { HasRequiredKeys } from "type-fest";
 import type * as z from "zod";
 
@@ -62,6 +63,7 @@ export type CreateEventFormInput = (HasRequiredKeys<
 > extends true
   ? { initialValues: CreateEventFormInitialValues }
   : { initialValues?: CreateEventFormInitialValues }) & {
+  now: Dayjs;
   onError?: CreateEventFormOnError;
   onSubmit: CreateEventFormOnSubmit;
 };

@@ -55,8 +55,10 @@ export function ReadyForm({
   const { localization } = useLocalization();
   const { notifications } = useNotifications();
 
+  const [now] = useState(dayjs().locale(localization.locale).local());
+
   const available = useAvailable();
-  const instances = useInstances();
+  const instances = useInstances(now);
   const shows = useShows(instances);
   const initialValues = useInitialValues(initialInitialValues, instances);
   const [earliest, latest] = useEarliestLatest(instances);
@@ -134,15 +136,18 @@ export function ReadyForm({
                   .diff(dayjs.tz(values.start, timezone)),
               )
               .toISOString(),
-            showId: selectedShow,
+            showId: values.show,
             start: values.start,
             timezone: timezone,
             type: "live",
           },
+          include: { show: true },
         });
 
         notifications.success({ message: msg({ message: "Event created" }) });
 
+        setSelectedShow(values.show);
+        form.setFieldValue("title", event.show?.title ?? "");
         form.setFieldValue(
           "instance",
           `${event.id}/${event.start}/${event.duration}`,
@@ -187,7 +192,6 @@ export function ReadyForm({
       form.setFieldValue,
       notifications.error,
       notifications.success,
-      selectedShow,
       startEventCreating,
       stopEventCreating,
     ],
@@ -201,7 +205,11 @@ export function ReadyForm({
         title={localization.localize(msg({ message: "Create one-time event" }))}
       >
         <Stack>
-          <CreateEventForm onSubmit={handleCreateEventSubmit} />
+          <CreateEventForm
+            initialValues={{ show: selectedShow }}
+            now={now}
+            onSubmit={handleCreateEventSubmit}
+          />
         </Stack>
       </Modal>
       <form onSubmit={handleFormSubmit} style={{ display: "contents" }}>
@@ -213,10 +221,10 @@ export function ReadyForm({
                 label: show.title,
                 value: show.id,
               }))}
-              defaultValue={selectedShow}
               label={localization.localize(msg({ message: "Show" }))}
               onChange={handleShowChange}
               placeholder={localization.localize(msg({ message: "No show" }))}
+              value={selectedShow}
             />
             <Group align="flex-end" gap="xs">
               <Select

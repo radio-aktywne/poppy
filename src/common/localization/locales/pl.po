@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:175
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:180
 #: src/client/test/components/test-widget/main.tsx:50
 msgid "An unexpected error occurred"
 msgstr "Wystąpił nieoczekiwany błąd"
@@ -22,19 +22,19 @@ msgstr "Wystąpił nieoczekiwany błąd"
 msgid "Broadcast streaming app 🎤"
 msgstr "Broadcast streaming app 🎤"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:167
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:172
 msgid "Conflicting input"
 msgstr "Konfliktujące dane"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/components/create-event-form/main.tsx:67
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/components/create-event-form/main.tsx:109
 msgid "Create"
 msgstr "Utwórz"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:201
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:205
 msgid "Create one-time event"
 msgstr "Utwórz jednorazową emisję"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/components/create-event-form/main.tsx:58
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/components/create-event-form/main.tsx:99
 msgctxt "time"
 msgid "End"
 msgstr "Czas zakończenia"
@@ -52,7 +52,7 @@ msgstr "Błąd"
 msgid "Error • poppy"
 msgstr "Błąd • poppy"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:144
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:147
 msgid "Event created"
 msgstr "Utworzono emisję"
 
@@ -80,7 +80,7 @@ msgstr "Wolne"
 msgid "Info"
 msgstr "Informacja"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:241
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:249
 msgid "Instance"
 msgstr "Termin transmisji"
 
@@ -88,7 +88,7 @@ msgstr "Termin transmisji"
 msgid "Instance is required"
 msgstr "Termin transmisji jest wymagany"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:155
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:160
 #: src/client/core/components/stream-widget/components/idle-widget/main.tsx:22
 #: src/client/core/components/stream-widget/components/idle-widget/main.tsx:29
 #: src/client/core/components/stream-widget/components/idle-widget/main.tsx:63
@@ -106,7 +106,8 @@ msgid "Logout"
 msgstr "Wyloguj się"
 
 #: src/client/core/components/status-widget/components/busy-badge/main.tsx:43
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:219
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/components/create-event-form/main.tsx:72
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:226
 msgid "No show"
 msgstr "Bez audycji"
 
@@ -129,11 +130,11 @@ msgstr "Nie znaleziono strony"
 msgid "poppy"
 msgstr "poppy"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:294
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:302
 msgid "Ready"
 msgstr "Przygotuj"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:280
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:288
 msgid "Record the stream"
 msgstr "Nagraj transmisję"
 
@@ -142,7 +143,7 @@ msgstr "Nagraj transmisję"
 msgid "Recording"
 msgstr "Nagrywanie"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:273
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:281
 msgid "Replace the current stream"
 msgstr "Zastąp trwającą transmisję"
 
@@ -150,23 +151,24 @@ msgstr "Zastąp trwającą transmisję"
 msgid "Retry"
 msgstr "Spróbuj ponownie"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/components/create-event-form/main.tsx:60
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/components/create-event-form/main.tsx:102
 msgid "Select end date and time"
 msgstr "Wybierz datę i godzinę zakończenia"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:243
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:251
 msgid "Select instance"
 msgstr "Wybierz termin transmisji"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/components/create-event-form/main.tsx:46
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/components/create-event-form/main.tsx:87
 msgid "Select start date and time"
 msgstr "Wybierz datę i godzinę rozpoczęcia"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:258
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:266
 msgid "Set title"
 msgstr "Ustaw tytuł"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:217
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/components/create-event-form/main.tsx:71
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:224
 msgid "Show"
 msgstr "Audycja"
 
@@ -179,7 +181,7 @@ msgctxt "action"
 msgid "Start"
 msgstr "Start"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/components/create-event-form/main.tsx:43
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/components/create-event-form/main.tsx:82
 msgctxt "time"
 msgid "Start"
 msgstr "Czas rozpoczęcia"
@@ -252,7 +254,7 @@ msgstr "Wyślij"
 msgid "Success"
 msgstr "Sukces"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:257
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:265
 msgid "Title"
 msgstr "Tytuł"
 
@@ -264,7 +266,7 @@ msgstr "Tytuł jest wymagany"
 msgid "Unready"
 msgstr "Cofnij"
 
-#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:265
+#: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:273
 msgid "Use a soft start"
 msgstr "Rozpocznij bez przerywania odtwarzania"
 

@@ -23,9 +23,8 @@ export function useAvailable() {
   return streamCheckQuery.data.instance === null;
 }
 
-export function useInstances() {
+export function useInstances(now: Dayjs) {
   const { localization } = useLocalization();
-  const [now] = useState(dayjs().locale(localization.locale).local());
 
   const instancesListInput = {
     end: now.add(1, "hour").utc().format("YYYY-MM-DDTHH:mm:ss[Z]"),
