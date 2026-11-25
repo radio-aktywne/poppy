@@ -128,6 +128,36 @@ export const ConfigSchemas = {
             .prefault({}),
         })
         .prefault({}),
+      urls: z
+        .object({
+          orchid: z
+            .object({
+              host: z.string().default("localhost"),
+              path: z.string().nullish(),
+              port: z.coerce
+                .number()
+                .min(0)
+                .max(65535)
+                .nullish()
+                .default(20120),
+              scheme: z.string().default("http"),
+            })
+            .prefault({}),
+          sunflower: z
+            .object({
+              host: z.string().default("localhost"),
+              path: z.string().nullish(),
+              port: z.coerce
+                .number()
+                .min(0)
+                .max(65535)
+                .nullish()
+                .default(30000),
+              scheme: z.string().default("http"),
+            })
+            .prefault({}),
+        })
+        .prefault({}),
     })
     .prefault({}),
 };
