@@ -97,3 +97,27 @@ You can configure the app at runtime using various environment variables:
 - `POPPY__SRT__OCTOPUS__PORT` -
   port of the octopus SRT server
   (default: `10300`)
+- `POPPY__URLS__ORCHID__HOST` -
+  host of the public URL of the orchid app
+  (default: `localhost`)
+- `POPPY__URLS__ORCHID__PATH` -
+  path of the public URL of the orchid app
+  (default: ``)
+- `POPPY__URLS__ORCHID__PORT` -
+  port of the public URL of the orchid app
+  (default: `20120`)
+- `POPPY__URLS__ORCHID__SCHEME` -
+  scheme of the public URL of the orchid app
+  (default: `http`)
+- `POPPY__URLS__SUNFLOWER__HOST` -
+  host of the public URL of the sunflower app
+  (default: `localhost`)
+- `POPPY__URLS__SUNFLOWER__PATH` -
+  path of the public URL of the sunflower app
+  (default: ``)
+- `POPPY__URLS__SUNFLOWER__PORT` -
+  port of the public URL of the sunflower app
+  (default: `30000`)
+- `POPPY__URLS__SUNFLOWER__SCHEME` -
+  scheme of the public URL of the sunflower app
+  (default: `http`)
