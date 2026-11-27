@@ -13,12 +13,16 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/common/routing/constants.ts:5
+msgid "/"
+msgstr "/"
+
 #: src/isomorphic/identity/components/identity-widget/main.tsx:59
 msgid "Account"
 msgstr "Account"
 
 #: src/client/core/components/stream-widget/components/idle-widget/components/ready-form/main.tsx:180
-#: src/client/test/components/test-widget/main.tsx:50
+#: src/client/example/components/example-widget/main.tsx:50
 msgid "An unexpected error occurred"
 msgstr "An unexpected error occurred"
 
@@ -26,7 +30,7 @@ msgstr "An unexpected error occurred"
 msgid "Apps"
 msgstr "Apps"
 
-#: src/app/(root)/layout.tsx:37
+#: src/app/(root)/layout.tsx:39
 msgid "Broadcast streaming app 🎤"
 msgstr "Broadcast streaming app 🎤"
 
@@ -47,7 +51,7 @@ msgctxt "time"
 msgid "End"
 msgstr "End"
 
-#: src/client/test/components/test-widget/components/test-form/main.tsx:30
+#: src/client/example/components/example-widget/components/example-form/main.tsx:34
 msgid "Enter some value"
 msgstr "Enter some value"
 
@@ -100,8 +104,8 @@ msgstr "Instance is required"
 #: src/client/core/components/stream-widget/components/idle-widget/main.tsx:22
 #: src/client/core/components/stream-widget/components/idle-widget/main.tsx:29
 #: src/client/core/components/stream-widget/components/idle-widget/main.tsx:63
-#: src/client/test/components/test-widget/main.tsx:39
-#: src/client/test/components/test-widget/main.tsx:60
+#: src/client/example/components/example-widget/main.tsx:39
+#: src/client/example/components/example-widget/main.tsx:60
 msgid "Invalid input"
 msgstr "Invalid input"
 
@@ -138,7 +142,7 @@ msgid "Page not found"
 msgstr "Page not found"
 
 #: src/app/(root)/(stream)/(master)/(detail)/(home)/page.tsx:21
-#: src/app/(root)/layout.tsx:43
+#: src/app/(root)/layout.tsx:45
 msgid "poppy"
 msgstr "poppy"
 
@@ -258,7 +262,7 @@ msgstr "Stream stopped"
 msgid "Stream stopped, but some resources failed to clean up"
 msgstr "Stream stopped, but some resources failed to clean up"
 
-#: src/client/test/components/test-widget/components/test-form/main.tsx:36
+#: src/client/example/components/example-widget/components/example-form/main.tsx:40
 msgid "Submit"
 msgstr "Submit"
 
@@ -290,7 +294,7 @@ msgstr "Use a soft start"
 msgid "Warning"
 msgstr "Warning"
 
-#: src/server/orpc/vars/procedures/vars/test/vars/validate/main.ts:29
+#: src/server/orpc/vars/procedures/vars/example/vars/validate/main.ts:29
 msgid "Why did the chicken cross the road? To get to the other side."
 msgstr "Why did the chicken cross the road? To get to the other side."
 
